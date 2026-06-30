@@ -5,6 +5,7 @@ import type { SopFormValues } from "./schemas";
 import { ALCANCE_SOP_DEFAULT, OBJETIVO_SOP_DEFAULT } from "./formDefaults";
 
 const TEMPLATE_PATH = path.join(process.cwd(), "formats", "formato_SOP.xlsx");
+const LOGO_PATH = path.join(process.cwd(), "public", "logo_turinza.png");
 
 // Filas fijas de cada bloque repetible en la hoja "SOP" del template real
 // (ver formats/formato_SOP.xlsx). Cada arreglo dinámico del formulario web
@@ -40,6 +41,31 @@ export async function generarExcelSop(data: SopFormValues): Promise<Buffer> {
 
   const sheet = workbook.getWorksheet("SOP");
   if (!sheet) throw new Error("La plantilla no tiene una hoja llamada 'SOP'");
+
+  // El logo del header (celda combinada B2:C2 en el template) viene roto en
+  // el archivo original (#VALUE!); se reemplaza por el logo real de Turinza.
+  sheet.getCell("B2").value = null;
+  const logoBuffer = await fs.readFile(LOGO_PATH);
+  // Mismo desfase de tipos de Buffer entre exceljs y la versión de @types/node del proyecto
+  // que en `workbook.xlsx.load` más arriba; en tiempo de ejecución es un Buffer válido.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const logoImageId = workbook.addImage({ buffer: logoBuffer as any, extension: "png" });
+
+  // Ancla el logo por tamaño (no por rango B2:C2) para no deformar su proporción:
+  // "B2:C2" estiraría la imagen a la forma exacta de la celda combinada.
+  const LOGO_RATIO = 952 / 319; // dimensiones reales de public/logo_turinza.png
+  const colWidthPx = (chars: number) => chars * 7 + 5; // aproximación estándar de Excel
+  const cellWidthPx =
+    colWidthPx(sheet.getColumn("B").width ?? 8) + colWidthPx(sheet.getColumn("C").width ?? 17);
+  const cellHeightPx = ((sheet.getRow(2).height ?? 67.5) * 4) / 3; // puntos -> píxeles
+  const margin = 6;
+  let width = cellWidthPx - margin * 2;
+  let height = width / LOGO_RATIO;
+  if (height > cellHeightPx - margin * 2) {
+    height = cellHeightPx - margin * 2;
+    width = height * LOGO_RATIO;
+  }
+  sheet.addImage(logoImageId, { tl: { col: 1.1, row: 1.1 }, ext: { width, height } });
 
   const set = (cellRef: string, value: string) => {
     sheet.getCell(cellRef).value = value ?? "";

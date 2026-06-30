@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   title: "SOP Cliente | Turinza",
   description: "Formulario digital del Standard Operating Procedure (SOP) de cliente logístico de Turinza.",
   icons: {
-    icon: "/favicon.svg",
+    icon: "/icon_turinza.png",
   },
 };
 
