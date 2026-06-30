@@ -86,7 +86,7 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
           <Campo label="Sector o Industria" value={data.datosGenerales.sectorIndustria} />
           <Campo label="Tipo de operación" value={data.datosGenerales.tipoOperacion} />
           <Campo label="Tipo de mercancía" value={data.datosGenerales.tipoMercancia} />
-          <Campo label="País / Ciudad" value={data.datosGenerales.paisCiudad} />
+          <Campo label="País / Ciudad" value={`${data.datosGenerales.ciudad}, ${data.datosGenerales.pais}`} />
           <Campo label="Dirección principal" value={data.datosGenerales.direccionPrincipal} />
           <Campo label="Fecha de implementación" value={data.datosGenerales.fechaImplementacion} />
           <Campo

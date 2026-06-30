@@ -38,7 +38,7 @@ export async function generarExcelSop(data: SopFormValues): Promise<Buffer> {
   set("B8", data.datosGenerales.tipoMercancia);
   set("F8", data.datosGenerales.serviciosContratados.join(", "));
   set("B10", data.datosGenerales.direccionPrincipal);
-  set("J10", data.datosGenerales.paisCiudad);
+  set("J10", `${data.datosGenerales.ciudad}, ${data.datosGenerales.pais}`);
   set("M10", data.datosGenerales.fechaImplementacion);
   set("B12", data.datosGenerales.objetivoSOP);
   set("I12", data.datosGenerales.alcanceSOP);

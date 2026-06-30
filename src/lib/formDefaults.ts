@@ -27,10 +27,13 @@ export function crearSopFormVacio(): SopFormValues {
       tipoMercancia: "",
       serviciosContratados: [],
       direccionPrincipal: "",
-      paisCiudad: "",
+      pais: "",
+      ciudad: "",
       fechaImplementacion: "",
-      objetivoSOP: "",
-      alcanceSOP: "",
+      objetivoSOP:
+        "Describir el Procedimiento Operativo Estándar (SOP) para la prestación de servicios logísticos integrales al Cliente, estableciendo lineamientos y métodos de trabajo que garantizan un servicio consistente, personalizado y eficiente.",
+      alcanceSOP:
+        "Este SOP aplica a los servicios contratados por el cliente, incluyendo los servicios relacionados en el apartado de servicios contratados. Cubre desde la recepción de solicitudes del cliente hasta la entrega final de la carga y facturación, integrando a todas las áreas involucradas en la operación.",
     },
     resumenEjecutivo: {
       resumenNegocioCliente: "",

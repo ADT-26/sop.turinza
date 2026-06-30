@@ -1,8 +1,14 @@
 "use client";
 
 import { Controller, useFormContext } from "react-hook-form";
-import { Field, TextInput, TextArea, Select } from "@/components/ui";
-import { OPCIONES_MODO_TRANSPORTE, OPCIONES_SERVICIOS, OPCIONES_TIPO_OPERACION } from "@/lib/options";
+import { Field, TextInput, Select } from "@/components/ui";
+import {
+  CIUDADES_SUGERIDAS_COLOMBIA,
+  OPCIONES_MODO_TRANSPORTE,
+  OPCIONES_PAIS,
+  OPCIONES_SERVICIOS,
+  OPCIONES_TIPO_OPERACION,
+} from "@/lib/options";
 import type { SopFormValues } from "@/lib/schemas";
 
 export function Section1DatosGenerales() {
@@ -39,9 +45,22 @@ export function Section1DatosGenerales() {
             {...register("datosGenerales.tipoMercancia")}
           />
         </Field>
-        <Field label="País / Ciudad" htmlFor="paisCiudad" required error={e?.paisCiudad?.message}>
-          <TextInput id="paisCiudad" {...register("datosGenerales.paisCiudad")} />
+        <Field label="País" htmlFor="pais" required error={e?.pais?.message}>
+          <Select id="pais" options={OPCIONES_PAIS} {...register("datosGenerales.pais")} />
         </Field>
+        <Field label="Ciudad" htmlFor="ciudad" required error={e?.ciudad?.message}>
+          <TextInput
+            id="ciudad"
+            list="ciudades-sugeridas"
+            autoComplete="address-level2"
+            {...register("datosGenerales.ciudad")}
+          />
+        </Field>
+        <datalist id="ciudades-sugeridas">
+          {CIUDADES_SUGERIDAS_COLOMBIA.map((ciudad) => (
+            <option key={ciudad} value={ciudad} />
+          ))}
+        </datalist>
         <Field
           label="Dirección principal"
           htmlFor="direccion"
@@ -95,13 +114,6 @@ export function Section1DatosGenerales() {
             </div>
           )}
         />
-      </Field>
-
-      <Field label="Objetivo del SOP" htmlFor="objetivo">
-        <TextArea id="objetivo" {...register("datosGenerales.objetivoSOP")} />
-      </Field>
-      <Field label="Alcance del SOP" htmlFor="alcance">
-        <TextArea id="alcance" {...register("datosGenerales.alcanceSOP")} />
       </Field>
     </div>
   );
