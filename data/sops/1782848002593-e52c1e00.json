@@ -33,38 +33,38 @@
       "internos": {
         "departamentos": [
           {
-            "nombreCargo": "",
-            "telefono": "",
-            "correo": "",
+            "nombreCargo": "test 1",
+            "telefono": "12345678",
+            "correo": "correo@correo.correo",
             "area": "Operaciones / Logística",
-            "backus": ""
+            "backus": "N/A"
           },
           {
-            "nombreCargo": "",
-            "telefono": "",
-            "correo": "",
+            "nombreCargo": "test 2",
+            "telefono": "12345678",
+            "correo": "correo@correo.correo",
             "area": "Contabilidad / Facturación",
             "backus": ""
           },
           {
-            "nombreCargo": "",
-            "telefono": "",
-            "correo": "",
+            "nombreCargo": "test 3",
+            "telefono": "12345678",
+            "correo": "correo@correo.correo",
             "area": "Tesorería / Pagos",
-            "backus": ""
+            "backus": "N/A"
           },
           {
-            "nombreCargo": "",
-            "telefono": "",
-            "correo": "",
+            "nombreCargo": "test 4",
+            "telefono": "12345678",
+            "correo": "correo@correo.correo",
             "area": "Calidad / Servicio al cliente",
-            "backus": ""
+            "backus": "N/A"
           }
         ],
         "escalonamiento": {
-          "nombreCargo": "",
-          "telefono": "",
-          "correo": ""
+          "nombreCargo": "test 5",
+          "telefono": "12345678",
+          "correo": "correo@correo.correo"
         }
       },
       "cliente": {
