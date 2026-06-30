@@ -132,16 +132,24 @@ export const preferenciasSchema = z.object({
   comunicacion: z.array(comunicacionBloqueSchema),
 });
 
-const procesoSchema = z.object({
-  proceso: z.string(),
-  aplica: opcionRequerida(OPCIONES_SI_NO_NA),
-  actividadHito: z.string(),
-  personalizacionAcordada: z.string(),
-  responsable: opcionRequerida(OPCIONES_AREA_RESPONSABLE),
-  slaTiempo: opcionOpcional(OPCIONES_FRECUENCIA_CORTA),
-  kpiAsociado: z.string(),
-  controlEvidencia: z.string(),
-});
+// "Responsable" solo es obligatorio cuando "Aplica" = Sí: si el proceso no aplica
+// (No / N/A), no tiene sentido exigir el resto de la fila.
+const procesoSchema = z
+  .object({
+    proceso: z.string(),
+    aplica: opcionRequerida(OPCIONES_SI_NO_NA),
+    actividadHito: z.string(),
+    personalizacionAcordada: z.string(),
+    responsable: z.string(),
+    slaTiempo: opcionOpcional(OPCIONES_FRECUENCIA_CORTA),
+    kpiAsociado: z.string(),
+    controlEvidencia: z.string(),
+  })
+  .superRefine((val, ctx) => {
+    if (val.aplica === "Sí" && !val.responsable) {
+      ctx.addIssue({ code: "custom", path: ["responsable"], message: REQUERIDO });
+    }
+  });
 
 export const matrizProcesosSchema = z.array(procesoSchema);
 
@@ -154,12 +162,20 @@ const interaccionAreaSchema = z.object({
 
 export const interaccionAreasSchema = z.array(interaccionAreaSchema);
 
-const requisitoCumplimientoSchema = z.object({
-  requisito: z.string(),
-  aplica: opcionRequerida(OPCIONES_SI_NO_NA),
-  detalleEvidenciaControl: z.string(),
-  responsable: opcionRequerida(OPCIONES_AREA_RESPONSABLE),
-});
+// Mismo criterio que en la Matriz de Procesos: "Responsable" solo es obligatorio
+// cuando "¿Aplica?" = Sí.
+const requisitoCumplimientoSchema = z
+  .object({
+    requisito: z.string(),
+    aplica: opcionRequerida(OPCIONES_SI_NO_NA),
+    detalleEvidenciaControl: z.string(),
+    responsable: z.string(),
+  })
+  .superRefine((val, ctx) => {
+    if (val.aplica === "Sí" && !val.responsable) {
+      ctx.addIssue({ code: "custom", path: ["responsable"], message: REQUERIDO });
+    }
+  });
 
 export const cumplimientoSchema = z.array(requisitoCumplimientoSchema);
 

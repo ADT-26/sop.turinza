@@ -92,6 +92,12 @@
 - **Enlace "Saltar al contenido principal"** agregado en el layout raíz (visible solo al recibir foco de teclado).
 - Verificado con `npx tsc --noEmit`, `npm run build` y contra el servidor de desarrollo: se confirmó en el HTML/CSS real servido que el botón "Siguiente" usa `bg-primary-dark`, que `aria-current="step"` y el skip link están presentes, y que el CSS generado incluye el nuevo valor de `ink-muted` (ya no aparece el anterior) y las utilidades `has-`/`aria-invalid`.
 
+**Correcciones post-Fase 8 (reportadas por el usuario tras probar en su navegador):**
+1. **Header ilegible:** el logo (`Logo-Turniza_5.gif`) trae texto en blanco pensado para fondo oscuro; sobre el `bg-white` del Header quedaba invisible. Se cambió el Header a `bg-primary-dark` (azul institucional) con el texto en blanco — contraste verificado (~6:1).
+2. **Bug real de validación:** en Matriz de Procesos (Sección 5) y Cumplimiento (Sección 7), el campo "Responsable" era obligatorio sin importar la respuesta de "Aplica" — si el usuario respondía "No" o "N/A", igual lo bloqueaba pidiendo ese campo. Se corrigió en `schemas.ts` con `.superRefine()`: "Responsable" ahora solo es obligatorio cuando "Aplica"/"¿Aplica?" = "Sí". Verificado con un script de validación directo contra el esquema (Aplica=No/N-A sin Responsable → válido; Aplica=Sí sin Responsable → sigue exigiendo el campo).
+3. **Prompt de credenciales inesperado al hacer scroll:** causado por el `<Link href="/dashboard">` del Footer — Next.js precarga (*prefetch*) automáticamente los links en cuanto entran al viewport, y esa precarga disparaba el 401 de `/dashboard` (protegido con Basic Auth), lo que el navegador muestra como su diálogo nativo de login sin que el usuario haya hecho clic. Se corrigió con `prefetch={false}` en ese link.
+- Verificado con `npx tsc --noEmit` y `npm run build` tras los tres cambios.
+
 ## 0. Resumen de la decisión arquitectónica
 
 El proyecto actual es un scaffold de **Vite + TypeScript vanilla** (sin framework, sin backend). El documento `formulario-empresarial.md` describe una arquitectura **Next.js + Vercel Postgres + OneDrive (Graph API) + Resend**.

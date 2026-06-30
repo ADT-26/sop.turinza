@@ -8,7 +8,11 @@ export function Footer() {
           Documento controlado del SIG · Turinza — Toda modificación debe registrarse en el Control
           de Cambios.
         </span>
-        <Link href="/dashboard" className="shrink-0 hover:text-primary-dark hover:underline">
+        <Link
+          href="/dashboard"
+          prefetch={false}
+          className="shrink-0 hover:text-primary-dark hover:underline"
+        >
           Panel interno
         </Link>
       </div>
