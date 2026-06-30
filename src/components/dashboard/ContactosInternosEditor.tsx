@@ -48,7 +48,7 @@ export function ContactosInternosEditor({
           });
         };
         return (
-          <div key={area} className="rounded-lg border border-line bg-surface p-4">
+          <div key={area} className="rounded-lg border border-line bg-white p-4">
             <div className="grid gap-4 sm:grid-cols-2">
               <p className="text-sm font-medium text-ink-muted sm:col-span-2">{area}</p>
               <TextInput
@@ -118,7 +118,7 @@ export function ContactosInternosEditor({
           type="button"
           onClick={guardar}
           disabled={guardando}
-          className="rounded-md bg-primary-dark px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark/90 disabled:opacity-50"
+          className="rounded-md bg-admin px-4 py-2 text-sm font-semibold text-white hover:bg-admin/90 disabled:opacity-50"
         >
           {guardando ? "Guardando..." : "Guardar contactos internos"}
         </button>

@@ -40,7 +40,7 @@ export function FirmaTurinzaEditor({
   };
 
   return (
-    <div className="rounded-lg border border-line bg-surface p-4">
+    <div className="rounded-lg border border-line bg-white p-4">
       <p className="mb-3 text-sm font-semibold text-ink">{titulo}</p>
       <div className="grid gap-3 sm:grid-cols-2">
         <TextInput
@@ -59,7 +59,7 @@ export function FirmaTurinzaEditor({
           type="button"
           onClick={guardar}
           disabled={guardando}
-          className="rounded-md bg-primary-dark px-3 py-1.5 text-xs font-semibold text-white hover:bg-primary-dark/90 disabled:opacity-50"
+          className="rounded-md bg-admin px-3 py-1.5 text-xs font-semibold text-white hover:bg-admin/90 disabled:opacity-50"
         >
           {guardando ? "Guardando..." : "Guardar"}
         </button>

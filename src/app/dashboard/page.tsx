@@ -4,6 +4,22 @@ import { listarSops, type SopResumen } from "@/lib/sopStore";
 
 export const dynamic = "force-dynamic";
 
+// Mismo lenguaje visual violeta del detalle: marca de un vistazo qué SOPs
+// todavía tienen pendiente el Nivel Cliente (la primera de las 3 acciones
+// que le corresponden a Turinza), antes de entrar al registro.
+function PendienteDot({ sop }: { sop: SopResumen }) {
+  if (sop.nivelCliente) return null;
+  return (
+    <span
+      className="inline-flex items-center gap-1 rounded-full border border-admin/30 bg-admin-light px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wide text-admin"
+      title="Falta asignar el Nivel Cliente"
+    >
+      <span className="h-1.5 w-1.5 rounded-full bg-admin" aria-hidden="true" />
+      Pendiente
+    </span>
+  );
+}
+
 export default async function DashboardPage() {
   let sops: SopResumen[] = [];
   let error: string | null = null;
@@ -43,7 +59,10 @@ export default async function DashboardPage() {
                   >
                     {sop.cliente}
                   </Link>
-                  <Badge>{sop.estado}</Badge>
+                  <div className="flex items-center gap-2">
+                    <PendienteDot sop={sop} />
+                    <Badge>{sop.estado}</Badge>
+                  </div>
                 </div>
                 <dl className="mt-3 grid grid-cols-2 gap-2 text-xs text-ink-muted">
                   <div>
@@ -95,7 +114,9 @@ export default async function DashboardPage() {
                     </td>
                     <td className="px-4 py-3 font-mono text-ink-muted">{sop.nit}</td>
                     <td className="px-4 py-3 text-ink-muted">{sop.tipoOperacion}</td>
-                    <td className="px-4 py-3 text-ink-muted">{sop.nivelCliente}</td>
+                    <td className="px-4 py-3 text-ink-muted">
+                      {sop.nivelCliente || <PendienteDot sop={sop} />}
+                    </td>
                     <td className="px-4 py-3">
                       <Badge>{sop.estado}</Badge>
                     </td>

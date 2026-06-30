@@ -4,6 +4,7 @@ export { TextArea } from "./TextArea";
 export { Select } from "./Select";
 export { RadioGroup } from "./RadioGroup";
 export { SectionCard } from "./SectionCard";
+export { DetailsSection } from "./DetailsSection";
 export { Badge } from "./Badge";
 export { RepeatableTable } from "./RepeatableTable";
 export { Stepper } from "./Stepper";
