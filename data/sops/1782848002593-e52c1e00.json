@@ -273,8 +273,8 @@
         "cargo": ""
       },
       "aproboTurinza": {
-        "nombre": "",
-        "cargo": ""
+        "nombre": "tester",
+        "cargo": "tester"
       }
     }
   }
