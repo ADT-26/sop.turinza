@@ -1,0 +1,21 @@
+@import "tailwindcss" source(none);
+@source "../**/*.{ts,tsx}";
+
+@theme {
+  --color-primary: #18b2d7;
+  --color-primary-light: #5fd1ee;
+  --color-primary-dark: #00699a;
+  --color-accent: #c32855;
+  --color-surface: #f4fbfd;
+  --color-line: #d7ecf2;
+  --color-ink: #14313d;
+  --color-ink-muted: #4a6570;
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: #ffffff;
+  color: var(--color-ink);
+}
