@@ -269,8 +269,8 @@
         "cargo": "analista"
       },
       "revisoTurinza": {
-        "nombre": "",
-        "cargo": ""
+        "nombre": "tester",
+        "cargo": "tester"
       },
       "aproboTurinza": {
         "nombre": "tester",
