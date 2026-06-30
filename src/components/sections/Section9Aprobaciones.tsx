@@ -4,11 +4,11 @@ import { useFormContext } from "react-hook-form";
 import { Field, TextInput, TextArea } from "@/components/ui";
 import type { SopFormValues } from "@/lib/schemas";
 
+// Revisó/Aprobó Turinza no las diligencia el cliente: las asigna el
+// administrador desde el panel interno una vez recibe el SOP.
 const BLOQUES = [
   { key: "revisoCliente", titulo: "Revisó Cliente" },
   { key: "aproboCliente", titulo: "Aprobó Cliente" },
-  { key: "revisoTurinza", titulo: "Revisó Turinza" },
-  { key: "aproboTurinza", titulo: "Aprobó Turinza" },
 ] as const;
 
 export function Section9Aprobaciones() {

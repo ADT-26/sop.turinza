@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import { Badge, SectionCard } from "@/components/ui";
 import { obtenerSopPorId } from "@/lib/sopStore";
+import { ALCANCE_SOP_DEFAULT, OBJETIVO_SOP_DEFAULT } from "@/lib/formDefaults";
 import { NivelClienteEditor } from "@/components/dashboard/NivelClienteEditor";
+import { FirmaTurinzaEditor } from "@/components/dashboard/FirmaTurinzaEditor";
 
 export const dynamic = "force-dynamic";
 
@@ -45,11 +47,9 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
   if (!sop) notFound();
 
   const { data } = sop;
-  const firmas = [
+  const firmasCliente = [
     { titulo: "Revisó Cliente", valor: data.aprobaciones.revisoCliente },
     { titulo: "Aprobó Cliente", valor: data.aprobaciones.aproboCliente },
-    { titulo: "Revisó Turinza", valor: data.aprobaciones.revisoTurinza },
-    { titulo: "Aprobó Turinza", valor: data.aprobaciones.aproboTurinza },
   ];
 
   return (
@@ -95,8 +95,8 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
           />
         </dl>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
-          <Campo label="Objetivo del SOP" value={data.datosGenerales.objetivoSOP} />
-          <Campo label="Alcance del SOP" value={data.datosGenerales.alcanceSOP} />
+          <Campo label="Objetivo del SOP" value={OBJETIVO_SOP_DEFAULT} />
+          <Campo label="Alcance del SOP" value={ALCANCE_SOP_DEFAULT} />
         </div>
       </SectionCard>
 
@@ -241,7 +241,7 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
         <div className="space-y-4">
           <Campo label="Observaciones" value={data.aprobaciones.observaciones} />
           <div className="grid gap-4 sm:grid-cols-2">
-            {firmas.map(({ titulo, valor }) => (
+            {firmasCliente.map(({ titulo, valor }) => (
               <div key={titulo} className="rounded-lg border border-line bg-surface p-4">
                 <p className="mb-3 text-sm font-semibold text-ink">{titulo}</p>
                 <dl className="grid gap-3 sm:grid-cols-2">
@@ -250,6 +250,25 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
                 </dl>
               </div>
             ))}
+          </div>
+          <div>
+            <p className="mb-3 text-sm font-semibold text-ink">
+              Revisó / Aprobó Turinza (lo diligencia el administrador)
+            </p>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <FirmaTurinzaEditor
+                id={sop.id}
+                campo="revisoTurinza"
+                titulo="Revisó Turinza"
+                valorInicial={data.aprobaciones.revisoTurinza}
+              />
+              <FirmaTurinzaEditor
+                id={sop.id}
+                campo="aproboTurinza"
+                titulo="Aprobó Turinza"
+                valorInicial={data.aprobaciones.aproboTurinza}
+              />
+            </div>
           </div>
         </div>
       </SectionCard>

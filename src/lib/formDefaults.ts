@@ -2,6 +2,15 @@ import { AREAS_CONTACTO, AREAS_INTERACCION, PROCESOS_OPERATIVOS, REQUISITOS_CUMP
 import { OPCIONES_TIPO_COMUNICACION } from "./options";
 import type { Contacto, Riesgo, SopFormValues, TablaContactos } from "./schemas";
 
+// Objetivo y Alcance del SOP son texto fijo del formato — el cliente no los
+// diligencia. Se exportan también desde aquí para que el Excel y el panel
+// admin los muestren siempre, sin depender de lo que traiga el registro
+// guardado (p. ej. borradores o registros de prueba anteriores a este texto).
+export const OBJETIVO_SOP_DEFAULT =
+  "Describir el Procedimiento Operativo Estándar (SOP) para la prestación de servicios logísticos integrales al Cliente, estableciendo lineamientos y métodos de trabajo que garantizan un servicio consistente, personalizado y eficiente.";
+export const ALCANCE_SOP_DEFAULT =
+  "Este SOP aplica a los servicios contratados por el cliente, incluyendo los servicios relacionados en el apartado de servicios contratados. Cubre desde la recepción de solicitudes del cliente hasta la entrega final de la carga y facturación, integrando a todas las áreas involucradas en la operación.";
+
 const crearContactoVacio = (): Contacto => ({ nombreCargo: "", telefono: "", correo: "" });
 
 const crearTablaContactosVacia = (): TablaContactos => ({
@@ -30,10 +39,8 @@ export function crearSopFormVacio(): SopFormValues {
       pais: "",
       ciudad: "",
       fechaImplementacion: "",
-      objetivoSOP:
-        "Describir el Procedimiento Operativo Estándar (SOP) para la prestación de servicios logísticos integrales al Cliente, estableciendo lineamientos y métodos de trabajo que garantizan un servicio consistente, personalizado y eficiente.",
-      alcanceSOP:
-        "Este SOP aplica a los servicios contratados por el cliente, incluyendo los servicios relacionados en el apartado de servicios contratados. Cubre desde la recepción de solicitudes del cliente hasta la entrega final de la carga y facturación, integrando a todas las áreas involucradas en la operación.",
+      objetivoSOP: OBJETIVO_SOP_DEFAULT,
+      alcanceSOP: ALCANCE_SOP_DEFAULT,
     },
     resumenEjecutivo: {
       resumenNegocioCliente: "",

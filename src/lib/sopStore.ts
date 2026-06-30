@@ -142,3 +142,31 @@ export async function actualizarNivelCliente(
 
   return registro;
 }
+
+// Revisó/Aprobó Turinza tampoco las diligencia el cliente — el administrador
+// las completa desde el panel interno. No requieren tocar el índice porque
+// no aparecen en el listado de SOPs.
+export async function actualizarFirmaTurinza(
+  id: string,
+  campo: "revisoTurinza" | "aproboTurinza",
+  firma: { nombre: string; cargo: string },
+): Promise<SopRegistro | null> {
+  if (!idValido(id)) return null;
+  const archivo = await leerArchivo(`${SOPS_DIR}/${id}.json`);
+  if (!archivo) return null;
+
+  const registro: SopRegistro = JSON.parse(archivo.content);
+  registro.data = {
+    ...registro.data,
+    aprobaciones: { ...registro.data.aprobaciones, [campo]: firma },
+  };
+
+  await escribirArchivo(
+    `${SOPS_DIR}/${id}.json`,
+    JSON.stringify(registro, null, 2),
+    `${campo} -> ${firma.nombre || "(vacío)"} (${id})`,
+    archivo.sha,
+  );
+
+  return registro;
+}

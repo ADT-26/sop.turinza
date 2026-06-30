@@ -198,12 +198,19 @@ const firmaSchema = z.object({
   cargo: z.string().min(1, REQUERIDO),
 });
 
+// Revisó/Aprobó Turinza no las diligencia el cliente: las asigna el
+// administrador desde el panel interno, por eso no son obligatorias aquí.
+const firmaOpcionalSchema = z.object({
+  nombre: z.string(),
+  cargo: z.string(),
+});
+
 export const aprobacionesSchema = z.object({
   observaciones: z.string(),
   revisoCliente: firmaSchema,
   aproboCliente: firmaSchema,
-  revisoTurinza: firmaSchema,
-  aproboTurinza: firmaSchema,
+  revisoTurinza: firmaOpcionalSchema,
+  aproboTurinza: firmaOpcionalSchema,
 });
 
 export const sopFormSchema = z.object({

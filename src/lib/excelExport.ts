@@ -2,6 +2,7 @@ import path from "node:path";
 import fs from "node:fs/promises";
 import ExcelJS from "exceljs";
 import type { SopFormValues } from "./schemas";
+import { ALCANCE_SOP_DEFAULT, OBJETIVO_SOP_DEFAULT } from "./formDefaults";
 
 const TEMPLATE_PATH = path.join(process.cwd(), "formats", "formato_SOP.xlsx");
 
@@ -23,6 +24,20 @@ export async function generarExcelSop(data: SopFormValues): Promise<Buffer> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   await workbook.xlsx.load(buffer as any);
 
+  // El template trae 3 "Tablas" de Excel (en hojas que no tocamos: Listas,
+  // Matriz KPI, Control de Cambios) sin ninguna validación de datos ni fórmula
+  // que dependa de ellas. exceljs no las serializa de forma 100% fiel al
+  // reescribir el archivo, lo que hace que Excel marque el .xlsx como dañado
+  // y tenga que "reparar" quitándoles el autofiltro. Se eliminan aquí (solo
+  // se pierde el botón de filtro de esas tablas; el contenido y formato
+  // quedan intactos) para evitar la advertencia de archivo dañado.
+  workbook.worksheets.forEach((ws) => {
+    // El tipo de getTables() en @types/exceljs ("[Table, void][]") no coincide con
+    // lo que devuelve en tiempo de ejecución (Table[], ver node_modules/exceljs/lib/doc/worksheet.js).
+    const tablas = ws.getTables() as unknown as ExcelJS.Table[];
+    tablas.forEach((table) => ws.removeTable(table.name));
+  });
+
   const sheet = workbook.getWorksheet("SOP");
   if (!sheet) throw new Error("La plantilla no tiene una hoja llamada 'SOP'");
 
@@ -40,8 +55,8 @@ export async function generarExcelSop(data: SopFormValues): Promise<Buffer> {
   set("B10", data.datosGenerales.direccionPrincipal);
   set("J10", `${data.datosGenerales.ciudad}, ${data.datosGenerales.pais}`);
   set("M10", data.datosGenerales.fechaImplementacion);
-  set("B12", data.datosGenerales.objetivoSOP);
-  set("I12", data.datosGenerales.alcanceSOP);
+  set("B12", OBJETIVO_SOP_DEFAULT);
+  set("I12", ALCANCE_SOP_DEFAULT);
 
   // 2. Resumen ejecutivo del cliente
   set("B16", data.resumenEjecutivo.resumenNegocioCliente);
