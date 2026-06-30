@@ -1,0 +1,281 @@
+{
+  "id": "1782848002593-e52c1e00",
+  "estado": "Abierto",
+  "createdAt": "2026-06-30T19:33:22.593Z",
+  "data": {
+    "datosGenerales": {
+      "cliente": "test_rs",
+      "nit": "12345678",
+      "sectorIndustria": "tecnologica",
+      "tipoOperacion": "Importación",
+      "tipoMercancia": "Aéreo",
+      "serviciosContratados": [
+        "Transporte nacional",
+        "Transporte internacional",
+        "Aduanas"
+      ],
+      "direccionPrincipal": "CRA 123# 22-33",
+      "pais": "Colombia",
+      "ciudad": "Bogotá D.C.",
+      "fechaImplementacion": "2026-06-30",
+      "objetivoSOP": "Describir el Procedimiento Operativo Estándar (SOP) para la prestación de servicios logísticos integrales al Cliente, estableciendo lineamientos y métodos de trabajo que garantizan un servicio consistente, personalizado y eficiente.",
+      "alcanceSOP": "Este SOP aplica a los servicios contratados por el cliente, incluyendo los servicios relacionados en el apartado de servicios contratados. Cubre desde la recepción de solicitudes del cliente hasta la entrega final de la carga y facturación, integrando a todas las áreas involucradas en la operación."
+    },
+    "resumenEjecutivo": {
+      "resumenNegocioCliente": "test resumen",
+      "riesgosCriticosAlertas": "test riesgo",
+      "requiereAtencion247": "N/A",
+      "requiereReunionesKPI": "N/A",
+      "periodicidadRevisionSOP": "Mensual",
+      "nivelCliente": ""
+    },
+    "contactos": {
+      "internos": {
+        "departamentos": [
+          {
+            "nombreCargo": "",
+            "telefono": "",
+            "correo": "",
+            "area": "Operaciones / Logística",
+            "backus": ""
+          },
+          {
+            "nombreCargo": "",
+            "telefono": "",
+            "correo": "",
+            "area": "Contabilidad / Facturación",
+            "backus": ""
+          },
+          {
+            "nombreCargo": "",
+            "telefono": "",
+            "correo": "",
+            "area": "Tesorería / Pagos",
+            "backus": ""
+          },
+          {
+            "nombreCargo": "",
+            "telefono": "",
+            "correo": "",
+            "area": "Calidad / Servicio al cliente",
+            "backus": ""
+          }
+        ],
+        "escalonamiento": {
+          "nombreCargo": "",
+          "telefono": "",
+          "correo": ""
+        }
+      },
+      "cliente": {
+        "departamentos": [
+          {
+            "nombreCargo": "Test",
+            "telefono": "12345678",
+            "correo": "test@test.test",
+            "area": "Operaciones / Logística",
+            "backus": "test backus"
+          },
+          {
+            "nombreCargo": "",
+            "telefono": "",
+            "correo": "",
+            "area": "Contabilidad / Facturación",
+            "backus": ""
+          },
+          {
+            "nombreCargo": "Test2",
+            "telefono": "12345678",
+            "correo": "test@test.test",
+            "area": "Tesorería / Pagos",
+            "backus": "test backus"
+          },
+          {
+            "nombreCargo": "",
+            "telefono": "",
+            "correo": "",
+            "area": "Calidad / Servicio al cliente",
+            "backus": ""
+          }
+        ],
+        "escalonamiento": {
+          "nombreCargo": "Test3",
+          "telefono": "12345678",
+          "correo": "test@test.test"
+        }
+      }
+    },
+    "preferencias": {
+      "trazabilidad": {
+        "frecuenciaReportes": "1 por semana",
+        "formatoCanal": "Sistema Odoo",
+        "contenidoMinimoRequerido": "estado del envio",
+        "instructivoOdooCliente": ""
+      },
+      "comunicacion": [
+        {
+          "tipo": "Informativa",
+          "canalesPreferidos": "Correo - Odoo",
+          "frecuencia": "1 por semana",
+          "conCopiaContactosInternos": "Sí"
+        },
+        {
+          "tipo": "Preventiva",
+          "canalesPreferidos": "Correo - Odoo",
+          "frecuencia": "1 por semana",
+          "conCopiaContactosInternos": "Sí"
+        },
+        {
+          "tipo": "Alertas",
+          "canalesPreferidos": "Correo - Odoo",
+          "frecuencia": "Quincenal",
+          "conCopiaContactosInternos": "No"
+        }
+      ]
+    },
+    "matrizProcesos": [
+      {
+        "proceso": "Transporte nacional",
+        "aplica": "N/A",
+        "actividadHito": "",
+        "personalizacionAcordada": "",
+        "responsable": "",
+        "slaTiempo": "",
+        "kpiAsociado": "",
+        "controlEvidencia": ""
+      },
+      {
+        "proceso": "Transporte internacional",
+        "aplica": "Sí",
+        "actividadHito": "Test",
+        "personalizacionAcordada": "testeo",
+        "responsable": "Comercial",
+        "slaTiempo": "Diario",
+        "kpiAsociado": "barras",
+        "controlEvidencia": "test"
+      },
+      {
+        "proceso": "Agenciamiento aduanero",
+        "aplica": "No",
+        "actividadHito": "",
+        "personalizacionAcordada": "",
+        "responsable": "",
+        "slaTiempo": "",
+        "kpiAsociado": "",
+        "controlEvidencia": ""
+      },
+      {
+        "proceso": "Almacenamiento / Bodega",
+        "aplica": "No",
+        "actividadHito": "",
+        "personalizacionAcordada": "",
+        "responsable": "",
+        "slaTiempo": "",
+        "kpiAsociado": "",
+        "controlEvidencia": ""
+      },
+      {
+        "proceso": "OTM / DTA",
+        "aplica": "No",
+        "actividadHito": "",
+        "personalizacionAcordada": "",
+        "responsable": "",
+        "slaTiempo": "",
+        "kpiAsociado": "",
+        "controlEvidencia": ""
+      }
+    ],
+    "interaccionAreas": [
+      {
+        "area": "Comercial / Pricing",
+        "reglaCondicionAcordada": "test",
+        "impactoOperativo": "test",
+        "observaciones": "ojo"
+      },
+      {
+        "area": "Facturación & Cartera",
+        "reglaCondicionAcordada": "",
+        "impactoOperativo": "",
+        "observaciones": ""
+      },
+      {
+        "area": "Crédito / Riesgo",
+        "reglaCondicionAcordada": "",
+        "impactoOperativo": "",
+        "observaciones": ""
+      },
+      {
+        "area": "Gerencia / Dirección",
+        "reglaCondicionAcordada": "",
+        "impactoOperativo": "",
+        "observaciones": ""
+      }
+    ],
+    "cumplimiento": [
+      {
+        "requisito": "BASC",
+        "aplica": "No",
+        "detalleEvidenciaControl": "",
+        "responsable": ""
+      },
+      {
+        "requisito": "OEA",
+        "aplica": "No",
+        "detalleEvidenciaControl": "",
+        "responsable": ""
+      },
+      {
+        "requisito": "Seguro especial de mercancía",
+        "aplica": "Sí",
+        "detalleEvidenciaControl": "evidencia",
+        "responsable": "Comercial"
+      },
+      {
+        "requisito": "Auditorías especiales del cliente",
+        "aplica": "No",
+        "detalleEvidenciaControl": "",
+        "responsable": ""
+      },
+      {
+        "requisito": "Requisito documental adicional",
+        "aplica": "No",
+        "detalleEvidenciaControl": "",
+        "responsable": ""
+      },
+      {
+        "requisito": "Otro requisito especial",
+        "aplica": "No",
+        "detalleEvidenciaControl": "",
+        "responsable": ""
+      }
+    ],
+    "riesgos": [
+      {
+        "riesgoCambioIdentificado": "riesgo",
+        "impacto": "Alta",
+        "accionCorrectiva": "test correctivo",
+        "responsable": "Calidad",
+        "eficacia": "Alta"
+      }
+    ],
+    "aprobaciones": {
+      "observaciones": "ojo",
+      "revisoCliente": {
+        "nombre": "Test",
+        "cargo": "analista"
+      },
+      "aproboCliente": {
+        "nombre": "Test",
+        "cargo": "analista"
+      },
+      "revisoTurinza": {
+        "nombre": "",
+        "cargo": ""
+      },
+      "aproboTurinza": {
+        "nombre": "",
+        "cargo": ""
+      }
+    }
+  }
+}
