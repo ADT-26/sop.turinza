@@ -1,0 +1,11 @@
+[
+  {
+    "id": "1782793432899-c2d26518",
+    "cliente": "test",
+    "nit": "1",
+    "tipoOperacion": "Ambos",
+    "nivelCliente": "Nivel 1",
+    "estado": "Abierto",
+    "createdAt": "2026-06-30T04:23:52.899Z"
+  }
+]
