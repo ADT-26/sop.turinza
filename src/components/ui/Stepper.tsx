@@ -7,14 +7,14 @@ interface StepperProps {
 export function Stepper({ steps, current, onStepClick }: StepperProps) {
   return (
     <nav aria-label="Progreso del formulario">
-      <ol className="flex items-center overflow-x-auto pb-2 sm:overflow-visible">
+      <ol className="scroll-fade-right flex items-center overflow-x-auto pb-2 sm:overflow-visible">
         {steps.map((label, index) => {
           const isCurrent = index === current;
           const isDone = index < current;
           const isLast = index === steps.length - 1;
           return (
-            <li key={label} className="flex shrink-0 items-center">
-              <div className="flex flex-col items-center">
+            <li key={label} className="flex flex-1 items-center">
+              <div className="flex shrink-0 flex-col items-center">
                 <button
                   type="button"
                   onClick={() => onStepClick?.(index)}
@@ -42,7 +42,7 @@ export function Stepper({ steps, current, onStepClick }: StepperProps) {
               </div>
               {!isLast && (
                 <span
-                  className={`mx-1 h-px w-6 shrink-0 sm:w-10 ${isDone ? "bg-primary-dark" : "bg-line"}`}
+                  className={`mx-1 h-px min-w-3 flex-1 ${isDone ? "bg-primary-dark" : "bg-line"}`}
                   aria-hidden="true"
                 />
               )}

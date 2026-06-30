@@ -127,6 +127,12 @@
 - **Registro visual más "ficha/manifiesto"**: radios de 4px en vez de píldoras (`rounded-full`) en `RadioGroup`, el grupo de checkboxes de servicios, `Badge` y `SectionCard`; barra de progreso delgada sin bordes redondeados; `Badge` ahora en monoespaciada mayúscula (como un sello de estado). Colores de marca de Turinza sin cambios (ya estaban calibrados en contraste).
 - Verificado con `tsc`, `build`, y contra el HTML/CSS real servido: las 3 variantes de Plex están en el CSS, Geist ya no aparece, los rombos del Stepper y el sello del Header están en el HTML, y se confirmó que los estados de contraste corregidos en la Fase 8 (radios/checkboxes/badges) no sufrieron regresión.
 
+**Ajustes al rediseño visual (feedback del usuario tras probarlo):**
+- **Tipografía "rara" corregida:** se quitó IBM Plex Serif por completo (títulos, dashboard, Header, SectionCard) — en un formulario corporativo denso, el serif se sentía editorial/fuera de lugar en vez de profesional. Todo quedó unificado en **IBM Plex Sans** con jerarquía por peso (`font-bold` en títulos), más Plex Mono para códigos/IDs (sin cambios ahí). Se quitó también la carga de la fuente serif de `layout.tsx` y el token `--font-serif` de `globals.css` (ya no se usa).
+- **Stepper no uniforme corregido:** cada paso ahora ocupa el mismo ancho flexible (`flex-1` en cada `<li>`, en vez de ancho dependiente del largo de la etiqueta), así los 9 rombos quedan parejos sin importar que algunas secciones tengan nombres mucho más largos que otras.
+- **Desvanecido en el borde derecho:** agregado vía una clase utilitaria (`.scroll-fade-right`, `mask-image` con fallback `-webkit-`) que solo se activa en móvil (donde el Stepper tiene scroll horizontal) y se desactiva automáticamente en `sm:` en adelante, donde ya no hace falta.
+- Verificado con `tsc`, `build`, y contra el HTML/CSS real: Plex Serif ya no se carga ni aparece en el CSS, la clase `scroll-fade-right` y el `mask-image` están presentes, y los `<li>` del Stepper usan `flex-1` uniforme.
+
 ## 0. Resumen de la decisión arquitectónica
 
 El proyecto actual es un scaffold de **Vite + TypeScript vanilla** (sin framework, sin backend). El documento `formulario-empresarial.md` describe una arquitectura **Next.js + Vercel Postgres + OneDrive (Graph API) + Resend**.

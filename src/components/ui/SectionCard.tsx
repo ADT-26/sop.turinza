@@ -14,7 +14,7 @@ export function SectionCard({ index, title, description, children }: SectionCard
         <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-primary-dark">
           Sección {String(index).padStart(2, "0")}
         </p>
-        <h2 className="mt-1 font-serif text-lg font-semibold leading-snug text-ink">{title}</h2>
+        <h2 className="mt-1 text-lg font-bold tracking-tight text-ink">{title}</h2>
         {description && <p className="mt-1 text-sm text-ink-muted">{description}</p>}
       </header>
       <div className="space-y-5 px-5 py-5">{children}</div>

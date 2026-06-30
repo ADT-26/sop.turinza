@@ -12,11 +12,24 @@
   --color-ink-muted: #4a6570;
 
   --font-sans: var(--font-plex-sans);
-  --font-serif: var(--font-plex-serif);
   --font-mono: var(--font-plex-mono);
 }
 
 body {
   background: #ffffff;
   color: var(--color-ink);
+}
+
+/* Desvanecido en el borde derecho para listas con scroll horizontal en móvil
+   (p.ej. el Stepper) — solo es necesario mientras el contenido pueda desbordar. */
+.scroll-fade-right {
+  mask-image: linear-gradient(to right, black calc(100% - 28px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, black calc(100% - 28px), transparent 100%);
+}
+
+@media (min-width: 640px) {
+  .scroll-fade-right {
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
 }

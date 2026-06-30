@@ -20,7 +20,7 @@ export default async function DashboardPage() {
         <p className="font-mono text-[11px] font-semibold uppercase tracking-widest text-primary-dark">
           Panel interno
         </p>
-        <h1 className="mt-1 font-serif text-2xl font-semibold text-ink">SOPs recibidos</h1>
+        <h1 className="mt-1 text-2xl font-bold tracking-tight text-ink">SOPs recibidos</h1>
         <p className="mt-1 text-sm text-ink-muted">{sops.length} registro(s)</p>
       </div>
 

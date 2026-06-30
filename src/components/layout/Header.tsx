@@ -6,7 +6,7 @@ export function Header() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/Logo-Turniza_5.gif" alt="Turinza" className="h-10 w-auto" />
           <div>
-            <p className="font-serif text-base font-semibold leading-tight tracking-tight text-white">
+            <p className="text-base font-bold leading-tight tracking-tight text-white">
               SOP de Cliente Logístico
             </p>
             <p className="text-xs text-white/80">Sistema Integrado de Gestión</p>
