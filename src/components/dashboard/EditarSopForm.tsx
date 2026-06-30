@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SectionCard, Stepper } from "@/components/ui";
 import { sopFormSchema, type SopFormValues } from "@/lib/schemas";
 import { SECTIONS, SECTION_KEYS } from "@/lib/formSections";
+import { useScrollTopOnChange } from "@/lib/useScrollTopOnChange";
 import { Section1DatosGenerales } from "@/components/sections/Section1DatosGenerales";
 import { Section2ResumenEjecutivo } from "@/components/sections/Section2ResumenEjecutivo";
 import { Section3Contactos } from "@/components/sections/Section3Contactos";
@@ -32,6 +33,7 @@ export function EditarSopForm({ id, valoresIniciales }: { id: string; valoresIni
   });
   const { handleSubmit, trigger, formState } = methods;
   const [step, setStep] = useState(0);
+  useScrollTopOnChange(step);
   const [errorGuardado, setErrorGuardado] = useState<string | null>(null);
   const [guardadoOk, setGuardadoOk] = useState(false);
 

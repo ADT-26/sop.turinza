@@ -7,6 +7,7 @@ import { SectionCard, Stepper } from "@/components/ui";
 import { crearSopFormVacio } from "@/lib/formDefaults";
 import { sopFormSchema, type SopFormValues } from "@/lib/schemas";
 import { SECTIONS, SECTION_KEYS } from "@/lib/formSections";
+import { useScrollTopOnChange } from "@/lib/useScrollTopOnChange";
 import { Section1DatosGenerales } from "@/components/sections/Section1DatosGenerales";
 import { Section2ResumenEjecutivo } from "@/components/sections/Section2ResumenEjecutivo";
 import { Section3Contactos } from "@/components/sections/Section3Contactos";
@@ -37,6 +38,7 @@ export function SopForm() {
   });
   const { handleSubmit, trigger, watch, reset, formState } = methods;
   const [step, setStep] = useState(0);
+  useScrollTopOnChange(step);
   const [enviado, setEnviado] = useState(false);
   const [sopId, setSopId] = useState<string | null>(null);
   const [errorEnvio, setErrorEnvio] = useState<string | null>(null);
