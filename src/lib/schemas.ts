@@ -71,10 +71,13 @@ export const REQUISITOS_CUMPLIMIENTO = [
   "Otro requisito especial",
 ] as const;
 
+// Ningún campo de la Matriz de contactos es obligatorio: a veces el cliente
+// no tiene todavía un dato (p. ej. el contacto de escalonamiento), y exigirlo
+// solo bloqueaba el avance del wizard sin necesidad.
 const contactoSchema = z.object({
-  nombreCargo: z.string().min(1, REQUERIDO),
-  telefono: z.string().min(7, "Teléfono inválido"),
-  correo: z.string().email("Correo inválido"),
+  nombreCargo: z.string(),
+  telefono: z.string(),
+  correo: z.string(),
 });
 
 const contactoDepartamentoSchema = contactoSchema.extend({
@@ -87,26 +90,8 @@ const tablaContactosSchema = z.object({
   escalonamiento: contactoSchema,
 });
 
-// Los Contactos internos Turinza / Cuenta no los diligencia el cliente: los
-// asigna el administrador desde el panel interno, por eso no son obligatorios.
-const contactoOpcionalSchema = z.object({
-  nombreCargo: z.string(),
-  telefono: z.string(),
-  correo: z.string(),
-});
-
-const contactoDepartamentoOpcionalSchema = contactoOpcionalSchema.extend({
-  area: z.string(),
-  backus: z.string(),
-});
-
-const tablaContactosOpcionalSchema = z.object({
-  departamentos: z.array(contactoDepartamentoOpcionalSchema).length(AREAS_CONTACTO.length),
-  escalonamiento: contactoOpcionalSchema,
-});
-
 export const matrizContactosSchema = z.object({
-  internos: tablaContactosOpcionalSchema,
+  internos: tablaContactosSchema,
   cliente: tablaContactosSchema,
 });
 

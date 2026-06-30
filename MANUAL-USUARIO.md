@@ -91,12 +91,14 @@ Por cada una de las 4 áreas fijas — **Operaciones / Logística, Contabilidad 
 
 | Campo | Tipo | Obligatorio |
 |---|---|---|
-| Nombre / Cargo | Texto | Sí |
-| Teléfono | Texto (mín. 7 caracteres) | Sí |
-| Correo | Correo válido | Sí |
+| Nombre / Cargo | Texto | No |
+| Teléfono | Texto | No |
+| Correo | Texto | No |
 | Backus | Texto (contacto de respaldo) | No |
 
-Además, un **Contacto de escalonamiento** único (Nombre/Cargo, Teléfono, Correo — todos obligatorios) para cuando los contactos normales no resuelven algo.
+Ningún campo de esta sección es obligatorio: si el cliente no tiene todavía algún dato (p. ej. el contacto de escalonamiento), puede dejarlo en blanco y seguir avanzando sin que el formulario lo bloquee.
+
+Además, un **Contacto de escalonamiento** único (Nombre/Cargo, Teléfono, Correo) para cuando los contactos normales no resuelven algo.
 
 `[Captura: una fila de la matriz de contactos del cliente con sus 4 campos]`
 
@@ -231,7 +233,9 @@ Tabla (o tarjetas en pantallas pequeñas) con todos los SOP recibidos, mostrando
 
 Si un SOP todavía no tiene **Nivel Cliente** asignado, aparece una etiqueta roja **"● Pendiente"** junto al nombre del cliente, para detectar de un vistazo qué registros necesitan revisión.
 
-`[Captura: listado de SOPs con la etiqueta "Pendiente" visible en alguna fila]`
+Cada fila tiene también un botón **"Eliminar SOP"** para borrar el registro sin entrar al detalle (pide confirmación antes de borrar — ver sección 3.6).
+
+`[Captura: listado de SOPs con la etiqueta "Pendiente" y el botón "Eliminar SOP" visibles en alguna fila]`
 
 ### 3.3 Detalle de un SOP (`/dashboard/[id]`)
 
@@ -255,9 +259,26 @@ Las 9 secciones que el cliente diligenció, en **modo solo lectura**, mostradas 
 
 `[Captura: acordeón con la primera sección abierta y el resto colapsado, mostrando las flechas de expandir]`
 
-### 3.4 Descargar el Excel desde el panel
+### 3.4 Editar los datos que el cliente diligenció
+
+En la parte superior del detalle hay un botón **"Editar datos del cliente"** que abre `/dashboard/[id]/editar`: el mismo formulario de 9 pasos que usa el cliente (idénticas validaciones y listas desplegables), pero precargado con los datos ya guardados, para que el administrador pueda corregir errores de digitación, actualizar información desactualizada, etc.
+
+- Se navega igual que en el formulario público (botones **Anterior** / **Siguiente**, o haciendo clic en el indicador de pasos).
+- El botón **"Cancelar y volver al detalle"** descarta cualquier cambio sin guardar.
+- En el último paso, el botón **"Guardar cambios"** reemplaza los datos del cliente en el registro y devuelve al detalle del SOP.
+- Esta pantalla **no** incluye los 3 campos de "Acciones de Turinza" (Nivel Cliente, Contactos internos, Revisó/Aprobó Turinza) — esos se editan desde el panel principal del detalle (sección 3.3.A), no desde aquí.
+
+`[Captura: pantalla de edición con el botón "Guardar cambios" en el último paso]`
+
+### 3.5 Descargar el Excel desde el panel
 
 En la parte superior del detalle hay un botón **"Descargar Excel"** que genera y descarga, en cualquier momento, la copia en el formato oficial de Turinza con los datos actuales del SOP (incluye lo que el cliente envió **y** lo que Turinza ya haya diligenciado en "Acciones de Turinza").
+
+### 3.6 Eliminar un SOP
+
+El botón **"Eliminar SOP"** (en el listado o en el detalle) borra el registro por completo, tras una confirmación ("¿Eliminar el SOP de '{cliente}'? Esta acción no se puede deshacer."). Al eliminar desde el detalle, el panel regresa automáticamente al listado.
+
+> ⚠️ Eliminar un SOP es **irreversible**: borra tanto el registro guardado como su entrada en el listado. No hay una papelera ni forma de recuperarlo desde el panel — antes de eliminar, considera descargar el Excel (sección 3.5) si se quiere conservar una copia.
 
 ---
 
@@ -267,3 +288,4 @@ En la parte superior del detalle hay un botón **"Descargar Excel"** que genera 
 - El **Objetivo** y **Alcance del SOP** siempre se exportan con el mismo texto institucional fijo, sin importar lo que se haya guardado antes — esto evita que un registro de prueba antiguo o un borrador quede con texto incorrecto en el Excel final.
 - El sistema **no usa una base de datos tradicional**: cada SOP enviado se guarda como un registro independiente; por eso el panel interno siempre refleja el último estado guardado.
 - Si el panel interno muestra un error de "Panel no configurado", significa que el despliegue no tiene configuradas las credenciales de acceso — debe contactarse al equipo técnico, no es un error del usuario.
+- El panel interno permite **editar** (sección 3.4) y **eliminar** (sección 3.6) los SOP recibidos, además de los 3 campos de "Acciones de Turinza" — el ciclo completo de creación, lectura, edición y eliminación queda cubierto desde el panel, sin necesidad de tocar el repositorio de datos directamente.
