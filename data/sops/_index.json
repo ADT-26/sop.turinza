@@ -4,7 +4,7 @@
     "cliente": "test_rs",
     "nit": "12345678",
     "tipoOperacion": "Importación",
-    "nivelCliente": "",
+    "nivelCliente": "Nivel 1",
     "estado": "Abierto",
     "createdAt": "2026-06-30T19:33:22.593Z"
   }
