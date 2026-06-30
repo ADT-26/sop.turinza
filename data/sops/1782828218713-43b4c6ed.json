@@ -5,10 +5,10 @@
   "data": {
     "datosGenerales": {
       "cliente": "test_empresa",
-      "nit": "12345678",
+      "nit": "123456789",
       "sectorIndustria": "tecnologico",
-      "tipoOperacion": "Ambos",
-      "tipoMercancia": "Multimodal",
+      "tipoOperacion": "Exportación",
+      "tipoMercancia": "Marítimo",
       "serviciosContratados": [
         "OTM / DTA",
         "Transporte internacional",
@@ -73,25 +73,29 @@
             "nombreCargo": "test",
             "telefono": "12345678",
             "correo": "test@test.test",
-            "area": "Operaciones / Logística"
+            "area": "Operaciones / Logística",
+            "backus": ""
           },
           {
             "nombreCargo": "test",
             "telefono": "12345678",
             "correo": "test@test.test",
-            "area": "Contabilidad / Facturación"
+            "area": "Contabilidad / Facturación",
+            "backus": ""
           },
           {
             "nombreCargo": "test",
             "telefono": "12345678",
             "correo": "test@test.test",
-            "area": "Tesorería / Pagos"
+            "area": "Tesorería / Pagos",
+            "backus": ""
           },
           {
             "nombreCargo": "test",
             "telefono": "12345678",
             "correo": "test@test.test",
-            "area": "Calidad / Servicio al cliente"
+            "area": "Calidad / Servicio al cliente",
+            "backus": ""
           }
         ],
         "escalonamiento": {
