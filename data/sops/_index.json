@@ -1,11 +1,1 @@
-[
-  {
-    "id": "1782828218713-43b4c6ed",
-    "cliente": "test_empresa",
-    "nit": "123456789",
-    "tipoOperacion": "Exportación",
-    "nivelCliente": "Nivel 1",
-    "estado": "Abierto",
-    "createdAt": "2026-06-30T14:03:38.713Z"
-  }
-]
+[]
