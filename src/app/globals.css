@@ -11,13 +11,6 @@
   --color-ink: #14313d;
   --color-ink-muted: #4a6570;
 
-  /* Violeta secundario de turinza.com, oscurecido para cumplir contraste de
-     texto/borde. Uso exclusivo: marcar bloques que debe diligenciar el
-     administrador en el panel interno (vs. azul = datos de solo lectura
-     enviados por el cliente). No se usa en el formulario público. */
-  --color-admin: #6356b3;
-  --color-admin-light: #f1eefb;
-
   --font-sans: var(--font-plex-sans);
   --font-mono: var(--font-plex-mono);
 }

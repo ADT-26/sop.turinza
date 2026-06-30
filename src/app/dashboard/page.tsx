@@ -4,17 +4,18 @@ import { listarSops, type SopResumen } from "@/lib/sopStore";
 
 export const dynamic = "force-dynamic";
 
-// Mismo lenguaje visual violeta del detalle: marca de un vistazo qué SOPs
-// todavía tienen pendiente el Nivel Cliente (la primera de las 3 acciones
-// que le corresponden a Turinza), antes de entrar al registro.
+// Mismo lenguaje visual del detalle (rojo institucional --color-accent):
+// marca de un vistazo qué SOPs todavía tienen pendiente el Nivel Cliente (la
+// primera de las 3 acciones que le corresponden a Turinza), antes de entrar
+// al registro.
 function PendienteDot({ sop }: { sop: SopResumen }) {
   if (sop.nivelCliente) return null;
   return (
     <span
-      className="inline-flex items-center gap-1 rounded-full border border-admin/30 bg-admin-light px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wide text-admin"
+      className="inline-flex items-center gap-1 rounded-full border border-accent/30 bg-accent/5 px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wide text-accent"
       title="Falta asignar el Nivel Cliente"
     >
-      <span className="h-1.5 w-1.5 rounded-full bg-admin" aria-hidden="true" />
+      <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
       Pendiente
     </span>
   );

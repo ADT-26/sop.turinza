@@ -7,7 +7,7 @@ import type { SopFormValues } from "@/lib/schemas";
 function Tarea({ numero, titulo, children }: { numero: number; titulo: string; children: ReactNode }) {
   return (
     <div className="flex gap-4 py-5 first:pt-0 last:pb-0">
-      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-admin font-mono text-xs font-semibold text-white">
+      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent font-mono text-xs font-semibold text-white">
         {numero}
       </div>
       <div className="flex-1 space-y-3">
@@ -19,14 +19,14 @@ function Tarea({ numero, titulo, children }: { numero: number; titulo: string; c
 }
 
 // Las 3 únicas cosas que el cliente NO diligencia y le tocan a Turinza al
-// revisar el SOP. Se agrupan en un solo panel violeta (vs. el resto de la
-// página, que es el contenido azul/neutro de solo lectura enviado por el
-// cliente) para que el administrador las identifique de un vistazo.
+// revisar el SOP. Se agrupan en un solo panel con el rojo institucional
+// (--color-accent, tomado del logo de Turinza) vs. el resto de la página,
+// que es el contenido azul/neutro de solo lectura enviado por el cliente.
 export function AccionesTurinza({ id, data }: { id: string; data: SopFormValues }) {
   return (
-    <section className="overflow-hidden rounded-md border border-admin/25 bg-admin-light shadow-sm">
-      <header className="border-b border-admin/20 px-5 py-4">
-        <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-admin">
+    <section className="overflow-hidden rounded-md border border-accent/25 bg-accent/5 shadow-sm">
+      <header className="border-b border-accent/20 px-5 py-4">
+        <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-accent">
           Acciones de Turinza
         </p>
         <h2 className="mt-1 text-lg font-bold tracking-tight text-ink">Pendientes por diligenciar</h2>
@@ -34,7 +34,7 @@ export function AccionesTurinza({ id, data }: { id: string; data: SopFormValues 
           Estos 3 campos no los llena el cliente — los completa Turinza al revisar el SOP recibido.
         </p>
       </header>
-      <div className="divide-y divide-admin/15 px-5">
+      <div className="divide-y divide-accent/15 px-5">
         <Tarea numero={1} titulo="Nivel Cliente">
           <NivelClienteEditor id={id} valorInicial={data.resumenEjecutivo.nivelCliente} />
         </Tarea>

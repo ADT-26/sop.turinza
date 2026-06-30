@@ -59,7 +59,7 @@ export function FirmaTurinzaEditor({
           type="button"
           onClick={guardar}
           disabled={guardando}
-          className="rounded-md bg-admin px-3 py-1.5 text-xs font-semibold text-white hover:bg-admin/90 disabled:opacity-50"
+          className="rounded-md bg-accent px-3 py-1.5 text-xs font-semibold text-white hover:bg-accent/90 disabled:opacity-50"
         >
           {guardando ? "Guardando..." : "Guardar"}
         </button>
