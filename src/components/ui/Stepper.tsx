@@ -6,43 +6,50 @@ interface StepperProps {
 
 export function Stepper({ steps, current, onStepClick }: StepperProps) {
   return (
-    <ol
-      aria-label="Progreso del formulario"
-      className="flex gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible"
-    >
-      {steps.map((label, index) => {
-        const isCurrent = index === current;
-        const isDone = index < current;
-        return (
-          <li key={label} className="shrink-0">
-            <button
-              type="button"
-              onClick={() => onStepClick?.(index)}
-              aria-current={isCurrent ? "step" : undefined}
-              className={`flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-dark focus-visible:ring-offset-2 ${
-                isCurrent
-                  ? "border-primary-dark bg-primary-dark text-white"
-                  : isDone
-                    ? "border-primary-dark/30 bg-primary/10 text-primary-dark"
-                    : "border-line bg-white text-ink-muted hover:border-primary/50"
-              }`}
-            >
-              <span
-                className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-semibold ${
-                  isCurrent
-                    ? "bg-white text-primary-dark"
-                    : isDone
-                      ? "bg-primary-dark text-white"
-                      : "bg-line text-ink-muted"
-                }`}
-              >
-                {index + 1}
-              </span>
-              <span className="hidden sm:inline">{label}</span>
-            </button>
-          </li>
-        );
-      })}
-    </ol>
+    <nav aria-label="Progreso del formulario">
+      <ol className="flex items-center overflow-x-auto pb-2 sm:overflow-visible">
+        {steps.map((label, index) => {
+          const isCurrent = index === current;
+          const isDone = index < current;
+          const isLast = index === steps.length - 1;
+          return (
+            <li key={label} className="flex shrink-0 items-center">
+              <div className="flex flex-col items-center">
+                <button
+                  type="button"
+                  onClick={() => onStepClick?.(index)}
+                  aria-current={isCurrent ? "step" : undefined}
+                  aria-label={`Paso ${index + 1}: ${label}`}
+                  className={`flex h-7 w-7 shrink-0 rotate-45 items-center justify-center rounded-[4px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-dark focus-visible:ring-offset-2 ${
+                    isCurrent
+                      ? "bg-accent"
+                      : isDone
+                        ? "bg-primary-dark"
+                        : "border border-line bg-white hover:border-primary/50"
+                  }`}
+                >
+                  <span
+                    className={`-rotate-45 font-mono text-[11px] font-semibold ${
+                      isCurrent || isDone ? "text-white" : "text-ink-muted"
+                    }`}
+                  >
+                    {index + 1}
+                  </span>
+                </button>
+                <span className="mt-1.5 hidden w-20 text-center text-[10.5px] leading-tight text-ink-muted sm:block">
+                  {label}
+                </span>
+              </div>
+              {!isLast && (
+                <span
+                  className={`mx-1 h-px w-6 shrink-0 sm:w-10 ${isDone ? "bg-primary-dark" : "bg-line"}`}
+                  aria-hidden="true"
+                />
+              )}
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
   );
 }

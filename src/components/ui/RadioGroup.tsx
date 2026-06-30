@@ -15,7 +15,7 @@ export function RadioGroup({ name, options, value, onChange }: RadioGroupProps) 
           <label
             key={opt}
             htmlFor={id}
-            className={`cursor-pointer rounded-full border px-4 py-1.5 text-sm transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary-dark has-[:focus-visible]:ring-offset-2 ${
+            className={`cursor-pointer rounded-[4px] border px-4 py-1.5 text-sm font-medium transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary-dark has-[:focus-visible]:ring-offset-2 ${
               checked
                 ? "border-primary-dark bg-primary-dark text-white"
                 : "border-line bg-white text-ink-muted hover:border-primary/50"

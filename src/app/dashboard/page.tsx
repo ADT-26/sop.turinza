@@ -17,8 +17,10 @@ export default async function DashboardPage() {
   return (
     <div className="mx-auto max-w-5xl space-y-6 px-6 py-10">
       <div>
-        <p className="text-xs font-medium uppercase tracking-wide text-primary-dark">Panel interno</p>
-        <h1 className="mt-1 text-xl font-semibold text-ink">SOPs recibidos</h1>
+        <p className="font-mono text-[11px] font-semibold uppercase tracking-widest text-primary-dark">
+          Panel interno
+        </p>
+        <h1 className="mt-1 font-serif text-2xl font-semibold text-ink">SOPs recibidos</h1>
         <p className="mt-1 text-sm text-ink-muted">{sops.length} registro(s)</p>
       </div>
 
@@ -33,7 +35,7 @@ export default async function DashboardPage() {
           {/* Tarjetas: pantallas angostas */}
           <ul className="space-y-3 md:hidden">
             {sops.map((sop) => (
-              <li key={sop.id} className="rounded-xl border border-line bg-white p-4">
+              <li key={sop.id} className="rounded-md border border-line bg-white p-4">
                 <div className="flex items-start justify-between gap-3">
                   <Link
                     href={`/dashboard/${sop.id}`}
@@ -46,7 +48,7 @@ export default async function DashboardPage() {
                 <dl className="mt-3 grid grid-cols-2 gap-2 text-xs text-ink-muted">
                   <div>
                     <dt className="text-[10px] uppercase">NIT</dt>
-                    <dd className="text-ink">{sop.nit}</dd>
+                    <dd className="font-mono text-ink">{sop.nit}</dd>
                   </div>
                   <div>
                     <dt className="text-[10px] uppercase">Tipo operación</dt>
@@ -58,7 +60,9 @@ export default async function DashboardPage() {
                   </div>
                   <div>
                     <dt className="text-[10px] uppercase">Fecha</dt>
-                    <dd className="text-ink">{new Date(sop.createdAt).toLocaleString("es-CO")}</dd>
+                    <dd className="font-mono text-ink">
+                      {new Date(sop.createdAt).toLocaleString("es-CO")}
+                    </dd>
                   </div>
                 </dl>
               </li>
@@ -66,7 +70,7 @@ export default async function DashboardPage() {
           </ul>
 
           {/* Tabla: pantallas medianas en adelante */}
-          <div className="hidden overflow-hidden rounded-xl border border-line bg-white md:block">
+          <div className="hidden overflow-hidden rounded-md border border-line bg-white md:block">
             <table className="w-full text-left text-sm">
               <thead className="bg-surface text-xs uppercase text-ink-muted">
                 <tr>
@@ -89,13 +93,13 @@ export default async function DashboardPage() {
                         {sop.cliente}
                       </Link>
                     </td>
-                    <td className="px-4 py-3 text-ink-muted">{sop.nit}</td>
+                    <td className="px-4 py-3 font-mono text-ink-muted">{sop.nit}</td>
                     <td className="px-4 py-3 text-ink-muted">{sop.tipoOperacion}</td>
                     <td className="px-4 py-3 text-ink-muted">{sop.nivelCliente}</td>
                     <td className="px-4 py-3">
                       <Badge>{sop.estado}</Badge>
                     </td>
-                    <td className="px-4 py-3 text-ink-muted">
+                    <td className="px-4 py-3 font-mono text-ink-muted">
                       {new Date(sop.createdAt).toLocaleString("es-CO")}
                     </td>
                   </tr>

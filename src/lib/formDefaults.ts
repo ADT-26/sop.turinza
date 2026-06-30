@@ -60,7 +60,7 @@ export function crearSopFormVacio(): SopFormValues {
     },
     matrizProcesos: PROCESOS_OPERATIVOS.map((proceso) => ({
       proceso,
-      aplica: "",
+      aplica: "No",
       actividadHito: "",
       personalizacionAcordada: "",
       responsable: "",
@@ -76,7 +76,7 @@ export function crearSopFormVacio(): SopFormValues {
     })),
     cumplimiento: REQUISITOS_CUMPLIMIENTO.map((requisito) => ({
       requisito,
-      aplica: "",
+      aplica: "No",
       detalleEvidenciaControl: "",
       responsable: "",
     })),

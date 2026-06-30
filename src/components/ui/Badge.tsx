@@ -12,7 +12,7 @@ export function Badge({ children }: { children: string }) {
   const style = BADGE_STYLES[children] ?? "bg-surface text-ink-muted border-line";
   return (
     <span
-      className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium ${style}`}
+      className={`inline-flex items-center rounded-[4px] border px-2.5 py-0.5 font-mono text-[11px] font-semibold uppercase tracking-wide ${style}`}
     >
       {children}
     </span>

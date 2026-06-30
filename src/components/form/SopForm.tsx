@@ -150,8 +150,8 @@ export function SopForm() {
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)} className="mx-auto max-w-5xl space-y-6 px-6 py-10">
         <div className="flex items-center justify-between text-xs text-ink-muted">
-          <span>
-            Paso {step + 1} de {SECTIONS.length}
+          <span className="font-mono uppercase tracking-wide">
+            Paso {step + 1} / {String(SECTIONS.length).padStart(2, "0")}
           </span>
           <div className="flex items-center gap-3">
             <span aria-live="polite">
@@ -167,9 +167,9 @@ export function SopForm() {
           </div>
         </div>
 
-        <div className="h-1.5 w-full overflow-hidden rounded-full bg-line">
+        <div className="h-1 w-full overflow-hidden bg-line">
           <div
-            className="h-full rounded-full bg-primary transition-all"
+            className="h-full bg-accent transition-all"
             style={{ width: `${((step + 1) / SECTIONS.length) * 100}%` }}
           />
         </div>
@@ -180,7 +180,14 @@ export function SopForm() {
           <SectionCard index={9} title="Formulario enviado">
             <div className="space-y-4">
               <p className="text-sm text-ink">
-                El SOP se guardó correctamente{sopId !== null && <> (ID {sopId})</>}.
+                El SOP se guardó correctamente
+                {sopId !== null && (
+                  <>
+                    {" "}
+                    (ID <span className="font-mono text-xs">{sopId}</span>)
+                  </>
+                )}
+                .
               </p>
               {descarga ? (
                 <div className="rounded-lg border border-line bg-surface p-4 text-sm">

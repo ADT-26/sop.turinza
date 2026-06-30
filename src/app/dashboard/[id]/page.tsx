@@ -56,9 +56,11 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
     <div className="mx-auto max-w-5xl space-y-6 px-6 py-10">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <p className="text-xs text-ink-muted">SOP #{sop.id}</p>
-          <h1 className="text-xl font-semibold text-ink">{data.datosGenerales.cliente}</h1>
-          <p className="text-sm text-ink-muted">
+          <p className="font-mono text-xs text-ink-muted">SOP #{sop.id}</p>
+          <h1 className="mt-1 font-serif text-2xl font-semibold text-ink">
+            {data.datosGenerales.cliente}
+          </h1>
+          <p className="mt-1 font-mono text-sm text-ink-muted">
             {new Date(sop.createdAt).toLocaleString("es-CO")}
           </p>
         </div>

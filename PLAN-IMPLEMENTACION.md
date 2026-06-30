@@ -116,6 +116,17 @@
 4. **Header ilegible** corregido en la ronda anterior — ver más abajo el resto de correcciones post-Fase 8.
 - Verificado con `npx tsc --noEmit`, `npm run build`, y de extremo a extremo contra el repo real: envío con Excel adjunto, descarga desde el panel, `PATCH` de Nivel Cliente (incluido el índice), y que `/api/forms` ahora exige autenticación. Datos de prueba eliminados al terminar.
 
+**Correcciones (tercera ronda):**
+- **Matriz de Procesos (Sección 5) y Cumplimiento (Sección 7):** "Aplica"/"¿Aplica?" ahora arranca en **"No"** por defecto (antes vacío) en `formDefaults.ts`. Además, los campos relacionados (Responsable, Actividad/Hito, Personalización, SLA, KPI, Control/Evidencia en Procesos; Responsable y Detalle en Cumplimiento) **se ocultan por completo** salvo que el usuario responda "Sí" — antes solo dejaban de ser obligatorios, pero seguían visibles y vacíos. Se implementó extrayendo cada fila a su propio componente (`FilaProceso`, `FilaRequisito`) que usa `useWatch` para reaccionar al valor de "Aplica" en tiempo real.
+- Verificado con `tsc`, `build`, y un script que confirma que los 5 procesos y los 6 requisitos arrancan en "No". No se pudo grabar la interacción de clic real (mostrar/ocultar al cambiar el radio) por no contar con `chromium-cli` en este entorno.
+
+**Rediseño visual (skill `frontend-design` de Anthropic):**
+- **Tipografía**: se reemplazó Geist (default de Next.js) por **IBM Plex** completa — Plex Serif para títulos (con moderación: H1 y encabezados de sección), Plex Sans para todo el formulario/UI, Plex Mono para IDs, NIT, fechas y códigos de referencia. Elección deliberada con un registro "documentación técnica/de ingeniería", coherente con un SOP operativo — no los genéricos de cualquier proyecto de Next.js.
+- **Elemento de firma**: el `Stepper` se rediseñó como una **ruta de waypoints** — marcadores en forma de rombo conectados por una línea, en vez de las píldoras redondeadas genéricas de SaaS. Conecta con el mundo de logística (una ruta de envío) sin volverse literal (sin íconos de barco/contenedor). Mantiene `aria-current="step"` y foco visible.
+- **Identidad de documento controlado**: el `Header` ahora incluye un sello discreto en monoespaciada ("Doc. controlado · OP-F00 · v.01"), reforzando que el formulario es un documento controlado real del SIG, no un formulario web genérico.
+- **Registro visual más "ficha/manifiesto"**: radios de 4px en vez de píldoras (`rounded-full`) en `RadioGroup`, el grupo de checkboxes de servicios, `Badge` y `SectionCard`; barra de progreso delgada sin bordes redondeados; `Badge` ahora en monoespaciada mayúscula (como un sello de estado). Colores de marca de Turinza sin cambios (ya estaban calibrados en contraste).
+- Verificado con `tsc`, `build`, y contra el HTML/CSS real servido: las 3 variantes de Plex están en el CSS, Geist ya no aparece, los rombos del Stepper y el sello del Header están en el HTML, y se confirmó que los estados de contraste corregidos en la Fase 8 (radios/checkboxes/badges) no sufrieron regresión.
+
 ## 0. Resumen de la decisión arquitectónica
 
 El proyecto actual es un scaffold de **Vite + TypeScript vanilla** (sin framework, sin backend). El documento `formulario-empresarial.md` describe una arquitectura **Next.js + Vercel Postgres + OneDrive (Graph API) + Resend**.

@@ -37,6 +37,11 @@ yarn-error.log*
 # vercel
 .vercel
 
+# herramientas locales de Claude Code (skills), no son parte del proyecto
+.agents/
+.claude/
+skills-lock.json
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

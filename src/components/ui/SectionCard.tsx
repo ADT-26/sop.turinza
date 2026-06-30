@@ -9,15 +9,13 @@ interface SectionCardProps {
 
 export function SectionCard({ index, title, description, children }: SectionCardProps) {
   return (
-    <section className="overflow-hidden rounded-xl border border-line bg-white shadow-sm">
-      <header className="flex items-start gap-3 border-b border-line bg-surface px-5 py-4">
-        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-dark text-xs font-semibold text-white">
-          {index}
-        </span>
-        <div>
-          <h2 className="text-base font-semibold text-ink">{title}</h2>
-          {description && <p className="mt-0.5 text-sm text-ink-muted">{description}</p>}
-        </div>
+    <section className="overflow-hidden rounded-md border border-line bg-white shadow-sm">
+      <header className="border-b border-line bg-surface px-5 py-4">
+        <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-primary-dark">
+          Sección {String(index).padStart(2, "0")}
+        </p>
+        <h2 className="mt-1 font-serif text-lg font-semibold leading-snug text-ink">{title}</h2>
+        {description && <p className="mt-1 text-sm text-ink-muted">{description}</p>}
       </header>
       <div className="space-y-5 px-5 py-5">{children}</div>
     </section>
