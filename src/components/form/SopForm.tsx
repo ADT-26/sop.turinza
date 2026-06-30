@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SectionCard, Stepper } from "@/components/ui";
 import { crearSopFormVacio } from "@/lib/formDefaults";
 import { sopFormSchema, type SopFormValues } from "@/lib/schemas";
+import { SECTIONS, SECTION_KEYS } from "@/lib/formSections";
 import { Section1DatosGenerales } from "@/components/sections/Section1DatosGenerales";
 import { Section2ResumenEjecutivo } from "@/components/sections/Section2ResumenEjecutivo";
 import { Section3Contactos } from "@/components/sections/Section3Contactos";
@@ -16,30 +17,6 @@ import { Section7Cumplimiento } from "@/components/sections/Section7Cumplimiento
 import { Section8Riesgos } from "@/components/sections/Section8Riesgos";
 import { Section9Aprobaciones } from "@/components/sections/Section9Aprobaciones";
 import { ResumenFinal } from "./ResumenFinal";
-
-const SECTIONS = [
-  "Datos generales del cliente y del SOP",
-  "Resumen ejecutivo del cliente",
-  "Matriz de contactos",
-  "Preferencias, protocolos y particularidades",
-  "Matriz de procesos y personalizaciones operativas",
-  "Interacción con otras áreas y condiciones comerciales",
-  "Cumplimiento normativo y requisitos especiales",
-  "Riesgos operativos y alertas",
-  "Observaciones, validación y aprobaciones",
-] as const;
-
-const SECTION_KEYS = [
-  "datosGenerales",
-  "resumenEjecutivo",
-  "contactos",
-  "preferencias",
-  "matrizProcesos",
-  "interaccionAreas",
-  "cumplimiento",
-  "riesgos",
-  "aprobaciones",
-] as const satisfies readonly (keyof SopFormValues)[];
 
 const BORRADOR_KEY = "sop-form-borrador";
 

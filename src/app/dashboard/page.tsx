@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Badge } from "@/components/ui";
 import { listarSops, type SopResumen } from "@/lib/sopStore";
+import { EliminarSopButton } from "@/components/dashboard/EliminarSopButton";
 
 export const dynamic = "force-dynamic";
 
@@ -85,6 +86,9 @@ export default async function DashboardPage() {
                     </dd>
                   </div>
                 </dl>
+                <div className="mt-3 border-t border-line pt-3">
+                  <EliminarSopButton id={sop.id} cliente={sop.cliente} />
+                </div>
               </li>
             ))}
           </ul>
@@ -100,6 +104,7 @@ export default async function DashboardPage() {
                   <th className="px-4 py-3">Nivel</th>
                   <th className="px-4 py-3">Estado</th>
                   <th className="px-4 py-3">Fecha</th>
+                  <th className="px-4 py-3">Acciones</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-line">
@@ -123,6 +128,9 @@ export default async function DashboardPage() {
                     </td>
                     <td className="px-4 py-3 font-mono text-ink-muted">
                       {new Date(sop.createdAt).toLocaleString("es-CO")}
+                    </td>
+                    <td className="px-4 py-3">
+                      <EliminarSopButton id={sop.id} cliente={sop.cliente} />
                     </td>
                   </tr>
                 ))}

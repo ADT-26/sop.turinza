@@ -56,6 +56,19 @@ export async function leerArchivo(path: string): Promise<ArchivoLeido | null> {
   return { content: Buffer.from(json.content, "base64").toString("utf-8"), sha: json.sha };
 }
 
+/** Elimina un archivo (commit) en la rama de datos. Requiere el `sha` actual del archivo. */
+export async function eliminarArchivo(path: string, sha: string, message: string): Promise<void> {
+  const { owner, repo, branch } = getConfig();
+  const res = await githubFetch(`/repos/${owner}/${repo}/contents/${path}`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message, branch, sha }),
+  });
+  if (!res.ok) {
+    throw new GithubApiError(`Error eliminando ${path}: ${await res.text()}`, res.status);
+  }
+}
+
 /** Crea o actualiza un archivo (commit) en la rama de datos. Pasar `sha` para actualizar uno existente. */
 export async function escribirArchivo(
   path: string,

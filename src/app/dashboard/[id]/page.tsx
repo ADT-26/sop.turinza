@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { Badge, DetailsSection } from "@/components/ui";
 import { obtenerSopPorId } from "@/lib/sopStore";
 import { ALCANCE_SOP_DEFAULT, OBJETIVO_SOP_DEFAULT } from "@/lib/formDefaults";
 import { AccionesTurinza } from "@/components/dashboard/AccionesTurinza";
+import { EliminarSopButton } from "@/components/dashboard/EliminarSopButton";
 
 export const dynamic = "force-dynamic";
 
@@ -65,12 +67,21 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
         </div>
         <div className="flex flex-col items-start gap-3 sm:items-end">
           <Badge>{sop.estado}</Badge>
-          <a
-            href={`/api/forms/${sop.id}/excel`}
-            className="rounded-md bg-primary-dark px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark/90"
-          >
-            Descargar Excel
-          </a>
+          <div className="flex flex-wrap items-center gap-2">
+            <Link
+              href={`/dashboard/${sop.id}/editar`}
+              className="rounded-md border border-primary-dark px-4 py-2 text-sm font-semibold text-primary-dark hover:bg-primary-dark/5"
+            >
+              Editar datos del cliente
+            </Link>
+            <a
+              href={`/api/forms/${sop.id}/excel`}
+              className="rounded-md bg-primary-dark px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark/90"
+            >
+              Descargar Excel
+            </a>
+          </div>
+          <EliminarSopButton id={sop.id} cliente={data.datosGenerales.cliente} redirectTo="/dashboard" />
         </div>
       </div>
 
