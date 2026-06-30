@@ -4,7 +4,7 @@
     "cliente": "test_empresa",
     "nit": "12345678",
     "tipoOperacion": "Ambos",
-    "nivelCliente": "",
+    "nivelCliente": "Nivel 1",
     "estado": "Abierto",
     "createdAt": "2026-06-30T14:03:38.713Z"
   }
