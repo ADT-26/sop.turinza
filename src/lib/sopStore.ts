@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { GithubApiError, escribirArchivo, leerArchivo } from "./githubStore";
-import type { SopFormValues } from "./schemas";
+import type { SopFormValues, TablaContactos } from "./schemas";
 
 const SOPS_DIR = "data/sops";
 const INDEX_PATH = `${SOPS_DIR}/_index.json`;
@@ -165,6 +165,33 @@ export async function actualizarFirmaTurinza(
     `${SOPS_DIR}/${id}.json`,
     JSON.stringify(registro, null, 2),
     `${campo} -> ${firma.nombre || "(vacío)"} (${id})`,
+    archivo.sha,
+  );
+
+  return registro;
+}
+
+// Los Contactos internos Turinza / Cuenta tampoco los diligencia el cliente —
+// el administrador los completa desde el panel interno. No tocan el índice
+// porque no aparecen en el listado de SOPs.
+export async function actualizarContactosInternos(
+  id: string,
+  internos: TablaContactos,
+): Promise<SopRegistro | null> {
+  if (!idValido(id)) return null;
+  const archivo = await leerArchivo(`${SOPS_DIR}/${id}.json`);
+  if (!archivo) return null;
+
+  const registro: SopRegistro = JSON.parse(archivo.content);
+  registro.data = {
+    ...registro.data,
+    contactos: { ...registro.data.contactos, internos },
+  };
+
+  await escribirArchivo(
+    `${SOPS_DIR}/${id}.json`,
+    JSON.stringify(registro, null, 2),
+    `Contactos internos actualizados (${id})`,
     archivo.sha,
   );
 

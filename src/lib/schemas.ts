@@ -79,6 +79,7 @@ const contactoSchema = z.object({
 
 const contactoDepartamentoSchema = contactoSchema.extend({
   area: z.string(),
+  backus: z.string(),
 });
 
 const tablaContactosSchema = z.object({
@@ -86,8 +87,26 @@ const tablaContactosSchema = z.object({
   escalonamiento: contactoSchema,
 });
 
+// Los Contactos internos Turinza / Cuenta no los diligencia el cliente: los
+// asigna el administrador desde el panel interno, por eso no son obligatorios.
+const contactoOpcionalSchema = z.object({
+  nombreCargo: z.string(),
+  telefono: z.string(),
+  correo: z.string(),
+});
+
+const contactoDepartamentoOpcionalSchema = contactoOpcionalSchema.extend({
+  area: z.string(),
+  backus: z.string(),
+});
+
+const tablaContactosOpcionalSchema = z.object({
+  departamentos: z.array(contactoDepartamentoOpcionalSchema).length(AREAS_CONTACTO.length),
+  escalonamiento: contactoOpcionalSchema,
+});
+
 export const matrizContactosSchema = z.object({
-  internos: tablaContactosSchema,
+  internos: tablaContactosOpcionalSchema,
   cliente: tablaContactosSchema,
 });
 

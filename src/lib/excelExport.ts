@@ -101,6 +101,7 @@ export async function generarExcelSop(data: SopFormValues): Promise<Buffer> {
       set(`D${row}`, dep.nombreCargo);
       set(`F${row}`, dep.telefono);
       set(`G${row}`, dep.correo);
+      set(`I${row}`, dep.backus);
       set(`K${row}`, datosTabla.escalonamiento.nombreCargo);
       set(`M${row}`, datosTabla.escalonamiento.telefono);
       set(`N${row}`, datosTabla.escalonamiento.correo);

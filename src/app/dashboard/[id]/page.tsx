@@ -4,6 +4,7 @@ import { obtenerSopPorId } from "@/lib/sopStore";
 import { ALCANCE_SOP_DEFAULT, OBJETIVO_SOP_DEFAULT } from "@/lib/formDefaults";
 import { NivelClienteEditor } from "@/components/dashboard/NivelClienteEditor";
 import { FirmaTurinzaEditor } from "@/components/dashboard/FirmaTurinzaEditor";
+import { ContactosInternosEditor } from "@/components/dashboard/ContactosInternosEditor";
 
 export const dynamic = "force-dynamic";
 
@@ -119,33 +120,34 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
 
       <SectionCard index={3} title="Matriz de contactos">
         <div className="space-y-6">
-          {(
-            [
-              ["Contactos internos Turinza / Cuenta", data.contactos.internos],
-              ["Contactos del cliente", data.contactos.cliente],
-            ] as const
-          ).map(([titulo, tabla]) => (
-            <div key={titulo} className="space-y-3">
-              <h3 className="text-sm font-semibold text-ink">{titulo}</h3>
-              <TablaResumen
-                rows={tabla.departamentos}
-                getTitulo={(r) => r.area}
-                fields={[
-                  { key: "nombreCargo", label: "Nombre / Cargo" },
-                  { key: "telefono", label: "Teléfono" },
-                  { key: "correo", label: "Correo" },
-                ]}
-              />
-              <div className="rounded-lg border border-dashed border-accent/40 bg-accent/5 p-4">
-                <p className="mb-2 text-sm font-medium text-accent">Contacto de escalonamiento</p>
-                <dl className="grid gap-3 sm:grid-cols-3">
-                  <Campo label="Nombre / Cargo" value={tabla.escalonamiento.nombreCargo} />
-                  <Campo label="Teléfono" value={tabla.escalonamiento.telefono} />
-                  <Campo label="Correo" value={tabla.escalonamiento.correo} />
-                </dl>
-              </div>
+          <div className="space-y-3">
+            <h3 className="text-sm font-semibold text-ink">
+              Contactos internos Turinza / Cuenta (lo diligencia el administrador)
+            </h3>
+            <ContactosInternosEditor id={sop.id} valorInicial={data.contactos.internos} />
+          </div>
+
+          <div className="space-y-3">
+            <h3 className="text-sm font-semibold text-ink">Contactos del cliente</h3>
+            <TablaResumen
+              rows={data.contactos.cliente.departamentos}
+              getTitulo={(r) => r.area}
+              fields={[
+                { key: "nombreCargo", label: "Nombre / Cargo" },
+                { key: "telefono", label: "Teléfono" },
+                { key: "correo", label: "Correo" },
+                { key: "backus", label: "Backus" },
+              ]}
+            />
+            <div className="rounded-lg border border-dashed border-accent/40 bg-accent/5 p-4">
+              <p className="mb-2 text-sm font-medium text-accent">Contacto de escalonamiento</p>
+              <dl className="grid gap-3 sm:grid-cols-3">
+                <Campo label="Nombre / Cargo" value={data.contactos.cliente.escalonamiento.nombreCargo} />
+                <Campo label="Teléfono" value={data.contactos.cliente.escalonamiento.telefono} />
+                <Campo label="Correo" value={data.contactos.cliente.escalonamiento.correo} />
+              </dl>
             </div>
-          ))}
+          </div>
         </div>
       </SectionCard>
 

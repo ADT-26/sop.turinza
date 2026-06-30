@@ -14,7 +14,7 @@ export const ALCANCE_SOP_DEFAULT =
 const crearContactoVacio = (): Contacto => ({ nombreCargo: "", telefono: "", correo: "" });
 
 const crearTablaContactosVacia = (): TablaContactos => ({
-  departamentos: AREAS_CONTACTO.map((area) => ({ area, ...crearContactoVacio() })),
+  departamentos: AREAS_CONTACTO.map((area) => ({ area, backus: "", ...crearContactoVacio() })),
   escalonamiento: crearContactoVacio(),
 });
 

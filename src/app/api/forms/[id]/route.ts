@@ -5,15 +5,25 @@ import {
   obtenerSopPorId,
   actualizarNivelCliente,
   actualizarFirmaTurinza,
+  actualizarContactosInternos,
 } from "@/lib/sopStore";
 import { OPCIONES_NIVEL_CLIENTE } from "@/lib/options";
+import { AREAS_CONTACTO } from "@/lib/schemas";
 
 const firmaSchema = z.object({ nombre: z.string(), cargo: z.string() });
+
+const contactoSchema = z.object({ nombreCargo: z.string(), telefono: z.string(), correo: z.string() });
+const contactoDepartamentoSchema = contactoSchema.extend({ area: z.string(), backus: z.string() });
+const tablaContactosSchema = z.object({
+  departamentos: z.array(contactoDepartamentoSchema).length(AREAS_CONTACTO.length),
+  escalonamiento: contactoSchema,
+});
 
 const patchSchema = z.object({
   nivelCliente: z.enum(["", ...OPCIONES_NIVEL_CLIENTE]).optional(),
   revisoTurinza: firmaSchema.optional(),
   aproboTurinza: firmaSchema.optional(),
+  contactosInternos: tablaContactosSchema.optional(),
 });
 
 export async function GET(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -58,8 +68,8 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     );
   }
 
-  const { nivelCliente, revisoTurinza, aproboTurinza } = parsed.data;
-  if (nivelCliente === undefined && !revisoTurinza && !aproboTurinza) {
+  const { nivelCliente, revisoTurinza, aproboTurinza, contactosInternos } = parsed.data;
+  if (nivelCliente === undefined && !revisoTurinza && !aproboTurinza && !contactosInternos) {
     return NextResponse.json({ success: false, error: "Nada para actualizar" }, { status: 400 });
   }
 
@@ -73,6 +83,9 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     }
     if (aproboTurinza) {
       actualizado = await actualizarFirmaTurinza(id, "aproboTurinza", aproboTurinza);
+    }
+    if (contactosInternos) {
+      actualizado = await actualizarContactosInternos(id, contactosInternos);
     }
     if (!actualizado) {
       return NextResponse.json({ success: false, error: "No encontrado" }, { status: 404 });

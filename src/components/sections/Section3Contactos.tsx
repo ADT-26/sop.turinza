@@ -26,12 +26,11 @@ function TablaContactos({ titulo, base }: { titulo: string; base: "internos" | "
               <Field label="Teléfono" error={e?.departamentos?.[index]?.telefono?.message}>
                 <TextInput {...register(`contactos.${base}.departamentos.${index}.telefono`)} />
               </Field>
-              <Field
-                label="Correo"
-                className="sm:col-span-2"
-                error={e?.departamentos?.[index]?.correo?.message}
-              >
+              <Field label="Correo" error={e?.departamentos?.[index]?.correo?.message}>
                 <TextInput type="email" {...register(`contactos.${base}.departamentos.${index}.correo`)} />
+              </Field>
+              <Field label="Backus" error={e?.departamentos?.[index]?.backus?.message}>
+                <TextInput {...register(`contactos.${base}.departamentos.${index}.backus`)} />
               </Field>
             </div>
           </div>
@@ -55,10 +54,11 @@ function TablaContactos({ titulo, base }: { titulo: string; base: "internos" | "
   );
 }
 
+// Los Contactos internos Turinza / Cuenta no los diligencia el cliente: los
+// asigna el administrador desde el panel interno una vez recibe el SOP.
 export function Section3Contactos() {
   return (
     <div className="space-y-6">
-      <TablaContactos titulo="Contactos internos Turinza / Cuenta" base="internos" />
       <TablaContactos titulo="Contactos del cliente" base="cliente" />
     </div>
   );
