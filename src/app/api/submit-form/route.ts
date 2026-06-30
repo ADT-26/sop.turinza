@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sopFormSchema } from "@/lib/schemas";
 import { guardarSop } from "@/lib/sopStore";
+import { generarExcelSop, nombreArchivoSop } from "@/lib/excelExport";
 
 export async function POST(request: NextRequest) {
   let body: unknown;
@@ -18,9 +19,9 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  let id: string;
   try {
-    const { id } = await guardarSop(parsed.data);
-    return NextResponse.json({ success: true, id }, { status: 201 });
+    ({ id } = await guardarSop(parsed.data));
   } catch (error) {
     console.error("Error guardando el SOP:", error);
     return NextResponse.json(
@@ -28,4 +29,19 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
+
+  // El Excel es "best effort": si falla, el SOP ya quedó guardado de todas
+  // formas — el cliente simplemente no recibe la descarga automática, pero
+  // el administrador igual puede generarla después desde el panel interno.
+  let excelBase64: string | null = null;
+  let nombreArchivo: string | null = null;
+  try {
+    const excel = await generarExcelSop(parsed.data);
+    excelBase64 = excel.toString("base64");
+    nombreArchivo = nombreArchivoSop(parsed.data);
+  } catch (error) {
+    console.error("Error generando el Excel del SOP (el SOP ya quedó guardado):", error);
+  }
+
+  return NextResponse.json({ success: true, id, excelBase64, nombreArchivo }, { status: 201 });
 }

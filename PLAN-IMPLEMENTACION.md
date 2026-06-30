@@ -98,6 +98,24 @@
 3. **Prompt de credenciales inesperado al hacer scroll:** causado por el `<Link href="/dashboard">` del Footer — Next.js precarga (*prefetch*) automáticamente los links en cuanto entran al viewport, y esa precarga disparaba el 401 de `/dashboard` (protegido con Basic Auth), lo que el navegador muestra como su diálogo nativo de login sin que el usuario haya hecho clic. Se corrigió con `prefetch={false}` en ese link.
 - Verificado con `npx tsc --noEmit` y `npm run build` tras los tres cambios.
 
+**Correcciones y nueva funcionalidad (segunda ronda, tras probar en navegador):**
+
+1. **"Nivel Cliente" ya no lo llena el cliente.** Se quitó de la Sección 2 del formulario público; `schemas.ts` lo volvió opcional (`opcionOpcional`). Ahora lo asigna el administrador desde `/dashboard/[id]` con un selector nuevo (`NivelClienteEditor.tsx`, guarda vía `PATCH /api/forms/[id]`).
+
+2. **Hueco de seguridad corregido:** `GET /api/forms` y `GET /api/forms/[id]` estaban accesibles sin autenticación (el middleware solo protegía las páginas `/dashboard/*`, no las API que exponen los datos). Se amplió el matcher de `src/proxy.ts` a `["/dashboard/:path*", "/api/forms/:path*"]`. `/api/submit-form` queda fuera a propósito — es el único endpoint que el formulario público debe poder llamar sin autenticar.
+
+3. **Descarga en Excel — réplica exacta del `formato_SOP.xlsx` real** (no una recreación desde cero):
+   - `src/lib/excelExport.ts` carga el archivo real de `formats/formato_SOP.xlsx` con `exceljs` y solo **escribe valores en las celdas exactas** del template (mapa de ~150 celdas extraído directamente del XML del archivo, no de memoria) — todas las combinaciones de celdas, estilos, colores y las hojas `Listas`/`Matriz KPI`/`Control de Cambios` quedan intactas porque nunca se reconstruyen, solo se rellenan.
+   - Limitaciones documentadas de la plantilla real (no del código): la Matriz de Procesos solo tiene espacio fijo para 1 línea de detalle por proceso (la plantilla preveía 4, se usa la primera); Riesgos solo trae 5 filas fijas (si hay más, se anexan como texto al final de la última fila); la fila de "Servicios contratados" es un solo campo de texto en el original, así que el arreglo se une con comas.
+   - **Verificado releyendo el archivo generado con `exceljs`:** los 16 campos de prueba cayeron en la celda correcta, **las 324 combinaciones de celdas del original se preservaron intactas**, y las 4 hojas siguen presentes.
+   - **Cómo se entrega:**
+     - Al enviar el formulario, `POST /api/submit-form` genera el Excel en la misma respuesta (`excelBase64`) — así el cliente nunca necesita golpear una ruta autenticada. Es "best effort": si la generación falla, el SOP ya quedó guardado de todas formas, simplemente no hay descarga automática.
+     - El navegador dispara la descarga automáticamente al recibir la respuesta; si el navegador la bloquea, queda un botón "Descargar copia en Excel" visible en la pantalla de confirmación (mismo archivo, sin volver a pedirlo al servidor).
+     - En el panel interno, `GET /api/forms/[id]/excel` (protegido) regenera el Excel bajo demanda con un botón "Descargar Excel" en `/dashboard/[id]`.
+   - `next.config.ts` declara `outputFileTracingIncludes` para que Vercel empaquete `formats/formato_SOP.xlsx` dentro de las funciones serverless que lo necesitan (si no, el archivo no estaría disponible en producción).
+4. **Header ilegible** corregido en la ronda anterior — ver más abajo el resto de correcciones post-Fase 8.
+- Verificado con `npx tsc --noEmit`, `npm run build`, y de extremo a extremo contra el repo real: envío con Excel adjunto, descarga desde el panel, `PATCH` de Nivel Cliente (incluido el índice), y que `/api/forms` ahora exige autenticación. Datos de prueba eliminados al terminar.
+
 ## 0. Resumen de la decisión arquitectónica
 
 El proyecto actual es un scaffold de **Vite + TypeScript vanilla** (sin framework, sin backend). El documento `formulario-empresarial.md` describe una arquitectura **Next.js + Vercel Postgres + OneDrive (Graph API) + Resend**.

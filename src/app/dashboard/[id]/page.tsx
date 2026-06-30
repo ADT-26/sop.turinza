@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { Badge, SectionCard } from "@/components/ui";
 import { obtenerSopPorId } from "@/lib/sopStore";
+import { NivelClienteEditor } from "@/components/dashboard/NivelClienteEditor";
 
 export const dynamic = "force-dynamic";
 
@@ -53,7 +54,7 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
 
   return (
     <div className="mx-auto max-w-5xl space-y-6 px-6 py-10">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <p className="text-xs text-ink-muted">SOP #{sop.id}</p>
           <h1 className="text-xl font-semibold text-ink">{data.datosGenerales.cliente}</h1>
@@ -61,8 +62,20 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
             {new Date(sop.createdAt).toLocaleString("es-CO")}
           </p>
         </div>
-        <Badge>{sop.estado}</Badge>
+        <div className="flex flex-col items-start gap-3 sm:items-end">
+          <Badge>{sop.estado}</Badge>
+          <a
+            href={`/api/forms/${sop.id}/excel`}
+            className="rounded-md bg-primary-dark px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark/90"
+          >
+            Descargar Excel
+          </a>
+        </div>
       </div>
+
+      <SectionCard index={0} title="Nivel Cliente (lo asigna Turinza)">
+        <NivelClienteEditor id={sop.id} valorInicial={data.resumenEjecutivo.nivelCliente} />
+      </SectionCard>
 
       <SectionCard index={1} title="Datos generales del cliente y del SOP">
         <dl className="grid gap-4 sm:grid-cols-2">

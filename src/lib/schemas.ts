@@ -110,7 +110,9 @@ export const resumenEjecutivoSchema = z.object({
   requiereAtencion247: opcionRequerida(OPCIONES_SI_NO_NA),
   requiereReunionesKPI: opcionRequerida(OPCIONES_SI_NO_NA),
   periodicidadRevisionSOP: opcionRequerida(OPCIONES_FRECUENCIA_LARGA),
-  nivelCliente: opcionRequerida(OPCIONES_NIVEL_CLIENTE),
+  // No lo llena el cliente: lo asigna el administrador desde el panel interno
+  // después de revisar el SOP (ver PATCH /api/forms/[id]).
+  nivelCliente: opcionOpcional(OPCIONES_NIVEL_CLIENTE),
 });
 
 const trazabilidadSchema = z.object({

@@ -85,3 +85,60 @@ export async function obtenerSopPorId(id: string): Promise<SopRegistro | null> {
   if (!archivo) return null;
   return JSON.parse(archivo.content);
 }
+
+async function actualizarIndiceNivelCliente(
+  id: string,
+  nivelCliente: string,
+  intento = 0,
+): Promise<void> {
+  const existente = await leerArchivo(INDEX_PATH);
+  if (!existente) return;
+  const lista: SopResumen[] = JSON.parse(existente.content);
+  const idx = lista.findIndex((s) => s.id === id);
+  if (idx === -1) return;
+  lista[idx] = { ...lista[idx], nivelCliente };
+
+  try {
+    await escribirArchivo(
+      INDEX_PATH,
+      JSON.stringify(lista, null, 2),
+      `Índice: Nivel Cliente -> ${nivelCliente || "(vacío)"} (${id})`,
+      existente.sha,
+    );
+  } catch (error) {
+    const esConflicto = error instanceof GithubApiError && error.status === 409;
+    if (esConflicto && intento < 3) {
+      await actualizarIndiceNivelCliente(id, nivelCliente, intento + 1);
+      return;
+    }
+    throw error;
+  }
+}
+
+// El cliente no asigna su propio Nivel Cliente — lo hace el administrador
+// desde el panel interno una vez revisa el SOP recibido.
+export async function actualizarNivelCliente(
+  id: string,
+  nivelCliente: string,
+): Promise<SopRegistro | null> {
+  if (!idValido(id)) return null;
+  const archivo = await leerArchivo(`${SOPS_DIR}/${id}.json`);
+  if (!archivo) return null;
+
+  const registro: SopRegistro = JSON.parse(archivo.content);
+  registro.data = {
+    ...registro.data,
+    resumenEjecutivo: { ...registro.data.resumenEjecutivo, nivelCliente },
+  };
+
+  await escribirArchivo(
+    `${SOPS_DIR}/${id}.json`,
+    JSON.stringify(registro, null, 2),
+    `Nivel Cliente -> ${nivelCliente || "(vacío)"} (${id})`,
+    archivo.sha,
+  );
+
+  await actualizarIndiceNivelCliente(id, nivelCliente);
+
+  return registro;
+}

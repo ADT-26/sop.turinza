@@ -30,6 +30,8 @@ export function proxy(request: NextRequest) {
   return NextResponse.next();
 }
 
+// /api/submit-form queda fuera a propósito: es el único endpoint que el
+// formulario público (sin autenticar) debe poder llamar.
 export const config = {
-  matcher: ["/dashboard/:path*"],
+  matcher: ["/dashboard/:path*", "/api/forms/:path*"],
 };

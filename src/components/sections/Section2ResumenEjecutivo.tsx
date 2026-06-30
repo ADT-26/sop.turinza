@@ -2,7 +2,7 @@
 
 import { Controller, useFormContext } from "react-hook-form";
 import { Field, TextArea, Select, RadioGroup } from "@/components/ui";
-import { OPCIONES_FRECUENCIA_LARGA, OPCIONES_NIVEL_CLIENTE, OPCIONES_SI_NO_NA } from "@/lib/options";
+import { OPCIONES_FRECUENCIA_LARGA, OPCIONES_SI_NO_NA } from "@/lib/options";
 import type { SopFormValues } from "@/lib/schemas";
 
 export function Section2ResumenEjecutivo() {
@@ -67,13 +67,6 @@ export function Section2ResumenEjecutivo() {
             id="periodicidad"
             options={OPCIONES_FRECUENCIA_LARGA}
             {...register("resumenEjecutivo.periodicidadRevisionSOP")}
-          />
-        </Field>
-        <Field label="Nivel Cliente" htmlFor="nivelCliente" required error={e?.nivelCliente?.message}>
-          <Select
-            id="nivelCliente"
-            options={OPCIONES_NIVEL_CLIENTE}
-            {...register("resumenEjecutivo.nivelCliente")}
           />
         </Field>
       </div>
