@@ -1,0 +1,274 @@
+{
+  "id": "1782793432899-c2d26518",
+  "estado": "Abierto",
+  "createdAt": "2026-06-30T04:23:52.899Z",
+  "data": {
+    "datosGenerales": {
+      "cliente": "test",
+      "nit": "1",
+      "sectorIndustria": "test",
+      "tipoOperacion": "Ambos",
+      "tipoMercancia": "Multimodal",
+      "serviciosContratados": [
+        "OTM / DTA",
+        "Transporte nacional",
+        "Transporte internacional",
+        "Aduanas",
+        "Almacenamiento / Bodega"
+      ],
+      "direccionPrincipal": "test",
+      "paisCiudad": "test",
+      "fechaImplementacion": "2026-06-29",
+      "objetivoSOP": "sa",
+      "alcanceSOP": "as"
+    },
+    "resumenEjecutivo": {
+      "resumenNegocioCliente": "as",
+      "riesgosCriticosAlertas": "as",
+      "requiereAtencion247": "N/A",
+      "requiereReunionesKPI": "N/A",
+      "periodicidadRevisionSOP": "Anual",
+      "nivelCliente": "Nivel 1"
+    },
+    "contactos": {
+      "internos": {
+        "departamentos": [
+          {
+            "nombreCargo": "aas",
+            "telefono": "12345678",
+            "correo": "test@test.test",
+            "area": "Operaciones / Logística"
+          },
+          {
+            "nombreCargo": "as",
+            "telefono": "12345678",
+            "correo": "test@test.test",
+            "area": "Contabilidad / Facturación"
+          },
+          {
+            "nombreCargo": "as",
+            "telefono": "12345678",
+            "correo": "test@test.test",
+            "area": "Tesorería / Pagos"
+          },
+          {
+            "nombreCargo": "as",
+            "telefono": "12345678",
+            "correo": "test@test.test",
+            "area": "Calidad / Servicio al cliente"
+          }
+        ],
+        "escalonamiento": {
+          "nombreCargo": "as",
+          "telefono": "12345678",
+          "correo": "test@test.test"
+        }
+      },
+      "cliente": {
+        "departamentos": [
+          {
+            "nombreCargo": "as",
+            "telefono": "12345678",
+            "correo": "test@test.test",
+            "area": "Operaciones / Logística"
+          },
+          {
+            "nombreCargo": "as",
+            "telefono": "12345678",
+            "correo": "test@test.test",
+            "area": "Contabilidad / Facturación"
+          },
+          {
+            "nombreCargo": "as",
+            "telefono": "12345678",
+            "correo": "test@test.test",
+            "area": "Tesorería / Pagos"
+          },
+          {
+            "nombreCargo": "as",
+            "telefono": "12345678",
+            "correo": "test@test.test",
+            "area": "Calidad / Servicio al cliente"
+          }
+        ],
+        "escalonamiento": {
+          "nombreCargo": "as",
+          "telefono": "12345678",
+          "correo": "test@test.test"
+        }
+      }
+    },
+    "preferencias": {
+      "trazabilidad": {
+        "frecuenciaReportes": "1 por semana",
+        "formatoCanal": "Sistema Odoo",
+        "contenidoMinimoRequerido": "asd",
+        "instructivoOdooCliente": "qasd"
+      },
+      "comunicacion": [
+        {
+          "tipo": "Informativa",
+          "canalesPreferidos": "WhatsApp - Odoo",
+          "frecuencia": "1 por semana",
+          "conCopiaContactosInternos": "Sí"
+        },
+        {
+          "tipo": "Preventiva",
+          "canalesPreferidos": "WhatsApp - Odoo",
+          "frecuencia": "1 por semana",
+          "conCopiaContactosInternos": "N/A"
+        },
+        {
+          "tipo": "Alertas",
+          "canalesPreferidos": "Correo - Odoo",
+          "frecuencia": "1 por semana",
+          "conCopiaContactosInternos": "N/A"
+        }
+      ]
+    },
+    "matrizProcesos": [
+      {
+        "proceso": "Transporte nacional",
+        "aplica": "No",
+        "actividadHito": "",
+        "personalizacionAcordada": "",
+        "responsable": "",
+        "slaTiempo": "",
+        "kpiAsociado": "",
+        "controlEvidencia": ""
+      },
+      {
+        "proceso": "Transporte internacional",
+        "aplica": "No",
+        "actividadHito": "",
+        "personalizacionAcordada": "",
+        "responsable": "",
+        "slaTiempo": "",
+        "kpiAsociado": "",
+        "controlEvidencia": ""
+      },
+      {
+        "proceso": "Agenciamiento aduanero",
+        "aplica": "No",
+        "actividadHito": "",
+        "personalizacionAcordada": "",
+        "responsable": "",
+        "slaTiempo": "",
+        "kpiAsociado": "",
+        "controlEvidencia": ""
+      },
+      {
+        "proceso": "Almacenamiento / Bodega",
+        "aplica": "No",
+        "actividadHito": "",
+        "personalizacionAcordada": "",
+        "responsable": "",
+        "slaTiempo": "",
+        "kpiAsociado": "",
+        "controlEvidencia": ""
+      },
+      {
+        "proceso": "OTM / DTA",
+        "aplica": "No",
+        "actividadHito": "",
+        "personalizacionAcordada": "",
+        "responsable": "",
+        "slaTiempo": "",
+        "kpiAsociado": "",
+        "controlEvidencia": ""
+      }
+    ],
+    "interaccionAreas": [
+      {
+        "area": "Comercial / Pricing",
+        "reglaCondicionAcordada": "as",
+        "impactoOperativo": "as",
+        "observaciones": "as"
+      },
+      {
+        "area": "Facturación & Cartera",
+        "reglaCondicionAcordada": "as",
+        "impactoOperativo": "as",
+        "observaciones": "as"
+      },
+      {
+        "area": "Crédito / Riesgo",
+        "reglaCondicionAcordada": "as",
+        "impactoOperativo": "as",
+        "observaciones": "as"
+      },
+      {
+        "area": "Gerencia / Dirección",
+        "reglaCondicionAcordada": "",
+        "impactoOperativo": "",
+        "observaciones": ""
+      }
+    ],
+    "cumplimiento": [
+      {
+        "requisito": "BASC",
+        "aplica": "N/A",
+        "detalleEvidenciaControl": "",
+        "responsable": ""
+      },
+      {
+        "requisito": "OEA",
+        "aplica": "N/A",
+        "detalleEvidenciaControl": "",
+        "responsable": ""
+      },
+      {
+        "requisito": "Seguro especial de mercancía",
+        "aplica": "N/A",
+        "detalleEvidenciaControl": "",
+        "responsable": ""
+      },
+      {
+        "requisito": "Auditorías especiales del cliente",
+        "aplica": "N/A",
+        "detalleEvidenciaControl": "",
+        "responsable": ""
+      },
+      {
+        "requisito": "Requisito documental adicional",
+        "aplica": "N/A",
+        "detalleEvidenciaControl": "",
+        "responsable": ""
+      },
+      {
+        "requisito": "Otro requisito especial",
+        "aplica": "N/A",
+        "detalleEvidenciaControl": "",
+        "responsable": ""
+      }
+    ],
+    "riesgos": [
+      {
+        "riesgoCambioIdentificado": "as",
+        "impacto": "Alta",
+        "accionCorrectiva": "as",
+        "responsable": "Comercial",
+        "eficacia": "as"
+      }
+    ],
+    "aprobaciones": {
+      "observaciones": "as",
+      "revisoCliente": {
+        "nombre": "as",
+        "cargo": "as"
+      },
+      "aproboCliente": {
+        "nombre": "as",
+        "cargo": "as"
+      },
+      "revisoTurinza": {
+        "nombre": "as",
+        "cargo": "as"
+      },
+      "aproboTurinza": {
+        "nombre": "as",
+        "cargo": "sa"
+      }
+    }
+  }
+}
