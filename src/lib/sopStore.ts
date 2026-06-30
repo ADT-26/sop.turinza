@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { GithubApiError, eliminarArchivo, escribirArchivo, leerArchivo } from "./githubStore";
 import { crearSopFormVacio } from "./formDefaults";
+import { conDefectos } from "./formNormalizer";
 import type { SopFormValues, TablaContactos } from "./schemas";
 
 const SOPS_DIR = "data/sops";
@@ -28,34 +29,6 @@ export function idValido(id: string): boolean {
   return ID_PATTERN.test(id);
 }
 
-// Registros guardados antes de que el schema ganara un campo nuevo (p. ej.
-// "backus") no lo traen en su JSON. Se completa con la forma vigente
-// (`crearSopFormVacio()`) en cada lectura para que el editor admin y el
-// Excel siempre reciban un objeto válido contra el schema actual, sin migrar
-// los archivos guardados. Para arreglos: los de 1 elemento (como `riesgos`,
-// de tamaño variable) usan ese elemento como plantilla para cada fila real;
-// el resto son de tamaño fijo (coinciden 1 a 1 con las filas de la sección).
-function conDefectos<T>(valor: unknown, defecto: T): T {
-  if (Array.isArray(defecto)) {
-    if (!Array.isArray(valor)) return defecto;
-    const plantilla = defecto.length === 1 ? defecto[0] : undefined;
-    return valor.map((item, i) =>
-      conDefectos(item, plantilla !== undefined ? plantilla : (defecto as unknown[])[i]),
-    ) as T;
-  }
-  if (defecto !== null && typeof defecto === "object") {
-    if (valor === null || typeof valor !== "object") return defecto;
-    const resultado = { ...(defecto as Record<string, unknown>) };
-    for (const key of Object.keys(defecto as Record<string, unknown>)) {
-      resultado[key] = conDefectos(
-        (valor as Record<string, unknown>)[key],
-        (defecto as Record<string, unknown>)[key],
-      );
-    }
-    return resultado as T;
-  }
-  return valor === undefined ? defecto : (valor as T);
-}
 
 async function agregarAlIndice(resumen: SopResumen, intento = 0): Promise<void> {
   const existente = await leerArchivo(INDEX_PATH);
