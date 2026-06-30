@@ -15,38 +15,44 @@ export function Section8Riesgos() {
   const { fields, append, remove } = useFieldArray({ control, name: "riesgos" });
 
   return (
-    <RepeatableTable
-      rows={fields}
-      getRowKey={(row) => row.id}
-      onAddRow={() => append(crearRiesgoVacio())}
-      onRemoveRow={fields.length > 1 ? (index) => remove(index) : undefined}
-      addLabel="Agregar riesgo"
-      renderRow={(_row, index) => {
-        const e = errors.riesgos?.[index];
-        return (
-          <>
-            <Field
-              label="Riesgo / cambio identificado"
-              className="sm:col-span-2"
-              error={e?.riesgoCambioIdentificado?.message}
-            >
-              <TextInput {...register(`riesgos.${index}.riesgoCambioIdentificado`)} />
-            </Field>
-            <Field label="Impacto" error={e?.impacto?.message}>
-              <Select options={OPCIONES_PRIORIDAD} {...register(`riesgos.${index}.impacto`)} />
-            </Field>
-            <Field label="Responsable" error={e?.responsable?.message}>
-              <Select options={OPCIONES_AREA_RESPONSABLE} {...register(`riesgos.${index}.responsable`)} />
-            </Field>
-            <Field label="Acción correctiva">
-              <TextInput {...register(`riesgos.${index}.accionCorrectiva`)} />
-            </Field>
-            <Field label="Eficacia">
-              <TextInput {...register(`riesgos.${index}.eficacia`)} />
-            </Field>
-          </>
-        );
-      }}
-    />
+    <div className="space-y-4">
+      <p className="rounded-md border border-line bg-surface px-3 py-2 text-xs text-ink-muted">
+        Nota: Los riesgos se revisan semestralmente y se actualizan cuando se identifican nuevos
+        riesgos dentro de la operación.
+      </p>
+      <RepeatableTable
+        rows={fields}
+        getRowKey={(row) => row.id}
+        onAddRow={() => append(crearRiesgoVacio())}
+        onRemoveRow={fields.length > 1 ? (index) => remove(index) : undefined}
+        addLabel="Agregar riesgo"
+        renderRow={(_row, index) => {
+          const e = errors.riesgos?.[index];
+          return (
+            <>
+              <Field
+                label="Riesgo / cambio identificado"
+                className="sm:col-span-2"
+                error={e?.riesgoCambioIdentificado?.message}
+              >
+                <TextInput {...register(`riesgos.${index}.riesgoCambioIdentificado`)} />
+              </Field>
+              <Field label="Impacto" error={e?.impacto?.message}>
+                <Select options={OPCIONES_PRIORIDAD} {...register(`riesgos.${index}.impacto`)} />
+              </Field>
+              <Field label="Responsable" error={e?.responsable?.message}>
+                <Select options={OPCIONES_AREA_RESPONSABLE} {...register(`riesgos.${index}.responsable`)} />
+              </Field>
+              <Field label="Acción correctiva">
+                <TextInput {...register(`riesgos.${index}.accionCorrectiva`)} />
+              </Field>
+              <Field label="Eficacia">
+                <TextInput {...register(`riesgos.${index}.eficacia`)} />
+              </Field>
+            </>
+          );
+        }}
+      />
+    </div>
   );
 }

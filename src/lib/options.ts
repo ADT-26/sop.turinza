@@ -58,11 +58,9 @@ export const OPCIONES_FRECUENCIA_COMUNICACION = ["1 por semana", "2 por semana",
 
 export const OPCIONES_TIPO_COMUNICACION = ["Informativa", "Preventiva", "Alertas"] as const;
 
-// Lista cerrada de países (ISO, en español) para evitar variantes de escritura
-// ("Colombia" / "colombia" / "COL") en el campo País. Colombia primero por ser
-// el país de operación de Turinza.
+// Lista cerrada de países (ISO, en español, orden alfabético) para evitar
+// variantes de escritura ("Colombia" / "colombia" / "COL") en el campo País.
 export const OPCIONES_PAIS = [
-  "Colombia",
   "Afganistán",
   "Albania",
   "Alemania",
@@ -104,6 +102,7 @@ export const OPCIONES_PAIS = [
   "China",
   "Chipre",
   "Ciudad del Vaticano",
+  "Colombia",
   "Comoras",
   "Corea del Norte",
   "Corea del Sur",
