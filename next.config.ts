@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
     "/api/submit-form": ["./formats/formato_SOP.xlsx", "./public/logo_turinza.png"],
     "/api/forms/[id]/excel": ["./formats/formato_SOP.xlsx", "./public/logo_turinza.png"],
   },
+  // pdfmake es server-only; excluirlo del bundle del cliente evita errores
+  // de resolución de módulos Node.js en el navegador.
+  serverExternalPackages: ["pdfmake"],
 };
 
 export default nextConfig;

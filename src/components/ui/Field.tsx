@@ -5,6 +5,7 @@ interface FieldProps {
   htmlFor?: string;
   required?: boolean;
   hint?: string;
+  nota?: string;
   error?: string;
   children: ReactNode;
   className?: string;
@@ -15,6 +16,7 @@ export function Field({
   htmlFor,
   required,
   hint,
+  nota,
   error,
   children,
   className,
@@ -50,6 +52,27 @@ export function Field({
           {hint}
         </p>
       ) : null}
+      {nota && (
+        <details className="mt-0.5">
+          <summary className="flex w-fit cursor-pointer list-none select-none items-center gap-1 text-xs text-ink-muted hover:text-ink">
+            <svg
+              aria-hidden="true"
+              className="h-3.5 w-3.5 shrink-0"
+              fill="none"
+              viewBox="0 0 16 16"
+              stroke="currentColor"
+              strokeWidth="1.5"
+            >
+              <circle cx="8" cy="8" r="7" />
+              <path d="M8 7v5M8 5.5v.5" strokeLinecap="round" />
+            </svg>
+            <span>Ver nota del formato</span>
+          </summary>
+          <p className="mt-1 border-l-2 border-primary/30 pl-2 text-xs text-ink-muted/80 whitespace-pre-line">
+            {nota}
+          </p>
+        </details>
+      )}
     </div>
   );
 }

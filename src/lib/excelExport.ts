@@ -10,12 +10,15 @@ const LOGO_PATH = path.join(process.cwd(), "public", "logo_turinza.png");
 // Filas fijas de cada bloque repetible en la hoja "SOP" del template real
 // (ver formats/formato_SOP.xlsx). Cada arreglo dinámico del formulario web
 // se vuelca sobre estas filas, en el mismo orden en que aparecen ahí.
-const FILAS_CONTACTO = { internos: [27, 28, 29, 30], cliente: [36, 37, 38, 39] } as const;
-const FILAS_COMUNICACION = [51, 54, 57] as const; // Informativa, Preventiva, Alertas
-const FILAS_PROCESO = [62, 66, 70, 74, 78] as const; // primera fila de cada bloque de 4
-const FILAS_INTERACCION = [85, 86, 87, 88] as const;
-const FILAS_CUMPLIMIENTO = [92, 93, 94, 95, 96, 97] as const;
-const FILAS_RIESGO = [102, 103, 104, 105, 106] as const; // la plantilla solo trae 5 filas
+// Nota: los 4 departamentos internos del esquema (Operaciones, Contabilidad,
+// Tesorería, Calidad) van a las filas 34-37; las filas 32-33 (Comercial,
+// Pricing/Inside Sale) quedan vacías para que el administrador las complete.
+const FILAS_CONTACTO = { internos: [34, 35, 36, 37], cliente: [41, 42, 43, 44] } as const;
+const FILAS_COMUNICACION = [56, 59, 62] as const; // Informativa, Preventiva, Alertas
+const FILAS_PROCESO = [67, 71, 75, 79, 83] as const; // primera fila de cada bloque de 4
+const FILAS_INTERACCION = [90, 91, 92, 93] as const;
+const FILAS_CUMPLIMIENTO = [97, 98, 99, 100, 101, 102] as const;
+const FILAS_RIESGO = [107, 108, 109, 110, 111, 112] as const; // la plantilla trae 6 filas
 
 export async function generarExcelSop(data: SopFormValues): Promise<Buffer> {
   const buffer = await fs.readFile(TEMPLATE_PATH);
@@ -85,12 +88,12 @@ export async function generarExcelSop(data: SopFormValues): Promise<Buffer> {
   set("I12", ALCANCE_SOP_DEFAULT);
 
   // 2. Resumen ejecutivo del cliente
-  set("B16", data.resumenEjecutivo.resumenNegocioCliente);
-  set("I16", data.resumenEjecutivo.riesgosCriticosAlertas);
-  set("B21", data.resumenEjecutivo.requiereAtencion247);
-  set("E21", data.resumenEjecutivo.requiereReunionesKPI);
-  set("H21", data.resumenEjecutivo.periodicidadRevisionSOP);
-  set("L21", data.resumenEjecutivo.nivelCliente);
+  set("B21", data.resumenEjecutivo.resumenNegocioCliente);
+  set("I21", data.resumenEjecutivo.riesgosCriticosAlertas);
+  set("B26", data.resumenEjecutivo.requiereAtencion247);
+  set("E26", data.resumenEjecutivo.requiereReunionesKPI);
+  set("L26", data.resumenEjecutivo.periodicidadRevisionSOP);
+  set("N26", data.resumenEjecutivo.nivelCliente);
 
   // 3. Matriz de contactos
   (Object.keys(FILAS_CONTACTO) as (keyof typeof FILAS_CONTACTO)[]).forEach((tabla) => {
@@ -109,10 +112,10 @@ export async function generarExcelSop(data: SopFormValues): Promise<Buffer> {
   });
 
   // 4. Preferencias, protocolos y particularidades
-  set("B46", data.preferencias.trazabilidad.frecuenciaReportes);
-  set("E46", data.preferencias.trazabilidad.formatoCanal);
-  set("H46", data.preferencias.trazabilidad.contenidoMinimoRequerido);
-  set("L46", data.preferencias.trazabilidad.instructivoOdooCliente);
+  set("B51", data.preferencias.trazabilidad.frecuenciaReportes);
+  set("E51", data.preferencias.trazabilidad.formatoCanal);
+  set("H51", data.preferencias.trazabilidad.contenidoMinimoRequerido);
+  set("L51", data.preferencias.trazabilidad.instructivoOdooCliente);
 
   data.preferencias.comunicacion.forEach((bloque, i) => {
     const row = FILAS_COMUNICACION[i];
@@ -171,12 +174,12 @@ export async function generarExcelSop(data: SopFormValues): Promise<Buffer> {
   }
 
   // 9. Observaciones, validación y aprobaciones
-  set("B110", data.aprobaciones.observaciones);
-  set("B117", `Nombre: ${data.aprobaciones.revisoCliente.nombre}\nCargo: ${data.aprobaciones.revisoCliente.cargo}`);
-  set("I117", `Nombre: ${data.aprobaciones.aproboCliente.nombre}\nCargo: ${data.aprobaciones.aproboCliente.cargo}`);
-  set("B119", `Nombre: ${data.aprobaciones.revisoTurinza.nombre}\nCargo: ${data.aprobaciones.revisoTurinza.cargo}`);
-  set("F119", `Nombre: ${data.aprobaciones.revisoTurinza.nombre}\nCargo: ${data.aprobaciones.revisoTurinza.cargo}`);
-  set("K119", `Nombre: ${data.aprobaciones.aproboTurinza.nombre}\nCargo: ${data.aprobaciones.aproboTurinza.cargo}`);
+  set("B115", data.aprobaciones.observaciones);
+  set("B122", `Nombre: ${data.aprobaciones.revisoCliente.nombre}\nCargo: ${data.aprobaciones.revisoCliente.cargo}`);
+  set("I122", `Nombre: ${data.aprobaciones.aproboCliente.nombre}\nCargo: ${data.aprobaciones.aproboCliente.cargo}`);
+  set("B124", `Nombre: ${data.aprobaciones.revisoTurinza.nombre}\nCargo: ${data.aprobaciones.revisoTurinza.cargo}`);
+  set("F124", `Nombre: ${data.aprobaciones.revisoTurinza.nombre}\nCargo: ${data.aprobaciones.revisoTurinza.cargo}`);
+  set("K124", `Nombre: ${data.aprobaciones.aproboTurinza.nombre}\nCargo: ${data.aprobaciones.aproboTurinza.cargo}`);
 
   const salida = await workbook.xlsx.writeBuffer();
   return Buffer.from(salida);

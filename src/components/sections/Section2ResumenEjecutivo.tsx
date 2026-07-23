@@ -3,6 +3,7 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { Field, TextArea, Select, RadioGroup } from "@/components/ui";
 import { OPCIONES_FRECUENCIA_LARGA, OPCIONES_SI_NO_NA } from "@/lib/options";
+import { NOTAS } from "@/lib/formNotes";
 import type { SopFormValues } from "@/lib/schemas";
 
 export function Section2ResumenEjecutivo() {
@@ -16,20 +17,26 @@ export function Section2ResumenEjecutivo() {
   return (
     <div className="space-y-5">
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Resumen del negocio del cliente" htmlFor="resumenNegocio" className="sm:col-span-2">
+        <Field
+          label="Resumen del negocio del cliente"
+          htmlFor="resumenNegocio"
+          className="sm:col-span-2"
+          nota={NOTAS["resumenEjecutivo.resumenNegocioCliente"]}
+        >
           <TextArea id="resumenNegocio" {...register("resumenEjecutivo.resumenNegocioCliente")} />
         </Field>
         <Field
           label="Riesgos críticos / alertas operativas"
           htmlFor="riesgosCriticos"
           className="sm:col-span-2"
+          nota={NOTAS["resumenEjecutivo.riesgosCriticosAlertas"]}
         >
           <TextArea id="riesgosCriticos" {...register("resumenEjecutivo.riesgosCriticosAlertas")} />
         </Field>
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Requiere atención 24/7" required error={e?.requiereAtencion247?.message}>
+        <Field label="Requiere atención 24/7" required error={e?.requiereAtencion247?.message} nota={NOTAS["resumenEjecutivo.requiereAtencion247"]}>
           <Controller
             control={control}
             name="resumenEjecutivo.requiereAtencion247"
@@ -43,7 +50,7 @@ export function Section2ResumenEjecutivo() {
             )}
           />
         </Field>
-        <Field label="Requiere reuniones KPI" required error={e?.requiereReunionesKPI?.message}>
+        <Field label="Requiere reuniones KPI" required error={e?.requiereReunionesKPI?.message} nota={NOTAS["resumenEjecutivo.requiereReunionesKPI"]}>
           <Controller
             control={control}
             name="resumenEjecutivo.requiereReunionesKPI"
@@ -62,6 +69,7 @@ export function Section2ResumenEjecutivo() {
           htmlFor="periodicidad"
           required
           error={e?.periodicidadRevisionSOP?.message}
+          nota={NOTAS["resumenEjecutivo.periodicidadRevisionSOP"]}
         >
           <Select
             id="periodicidad"

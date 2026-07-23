@@ -29,7 +29,7 @@ function base64AArchivo(base64: string, tipo: string): Blob {
   return new Blob([bytes], { type: tipo });
 }
 
-const MIME_XLSX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+const MIME_PDF = "application/pdf";
 
 export function SopForm() {
   const methods = useForm<SopFormValues>({
@@ -110,9 +110,9 @@ export function SopForm() {
       window.localStorage.removeItem(BORRADOR_KEY);
       setSopId(json.id);
 
-      if (json.excelBase64) {
-        const nombre = json.nombreArchivo || `SOP-${json.id}.xlsx`;
-        const blob = base64AArchivo(json.excelBase64, MIME_XLSX);
+      if (json.pdfBase64) {
+        const nombre = json.nombreArchivo || `SOP-${json.id}.pdf`;
+        const blob = base64AArchivo(json.pdfBase64, MIME_PDF);
         const url = URL.createObjectURL(blob);
         setDescarga({ url, nombre });
 
@@ -176,7 +176,7 @@ export function SopForm() {
               {descarga ? (
                 <div className="rounded-lg border border-line bg-surface p-4 text-sm">
                   <p className="text-ink-muted">
-                    Deberíamos haber descargado automáticamente una copia en Excel con tus datos.
+                    Deberíamos haber descargado automáticamente una copia en PDF con tus datos.
                     Si no pasó nada, descárgala manualmente:
                   </p>
                   <a
@@ -184,12 +184,12 @@ export function SopForm() {
                     download={descarga.nombre}
                     className="mt-2 inline-flex items-center gap-2 rounded-md bg-primary-dark px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark/90"
                   >
-                    Descargar copia en Excel
+                    Descargar copia en PDF
                   </a>
                 </div>
               ) : (
                 <p className="text-sm text-ink-muted">
-                  No se pudo generar la copia en Excel automáticamente, pero tus datos ya quedaron
+                  No se pudo generar la copia en PDF automáticamente, pero tus datos ya quedaron
                   guardados sin problema.
                 </p>
               )}

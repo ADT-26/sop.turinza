@@ -80,6 +80,12 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
             >
               Descargar Excel
             </a>
+            <a
+              href={`/api/forms/${sop.id}/pdf`}
+              className="rounded-md border border-primary-dark px-4 py-2 text-sm font-semibold text-primary-dark hover:bg-primary-dark/5"
+            >
+              Descargar PDF
+            </a>
           </div>
           <EliminarSopButton id={sop.id} cliente={data.datosGenerales.cliente} redirectTo="/dashboard" />
         </div>

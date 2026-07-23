@@ -2,6 +2,7 @@
 
 import { useFormContext } from "react-hook-form";
 import { Field, TextInput, TextArea } from "@/components/ui";
+import { NOTAS } from "@/lib/formNotes";
 import type { SopFormValues } from "@/lib/schemas";
 
 // Revisó/Aprobó Turinza no las diligencia el cliente: las asigna el
@@ -16,7 +17,7 @@ export function Section9Aprobaciones() {
 
   return (
     <div className="space-y-5">
-      <Field label="Observaciones" htmlFor="observacionesFinales">
+      <Field label="Observaciones" htmlFor="observacionesFinales" nota={NOTAS["aprobaciones.observaciones"]}>
         <TextArea id="observacionesFinales" {...register("aprobaciones.observaciones")} />
       </Field>
       <div className="grid gap-4 sm:grid-cols-2">
@@ -24,7 +25,7 @@ export function Section9Aprobaciones() {
           <div key={key} className="rounded-lg border border-line bg-surface p-4">
             <p className="mb-3 text-sm font-semibold text-ink">{titulo}</p>
             <div className="grid gap-4 sm:grid-cols-2">
-              <Field label="Nombre">
+              <Field label="Nombre" nota={key === "revisoCliente" ? NOTAS["aprobaciones.revisoCliente"] : NOTAS["aprobaciones.aproboCliente"]}>
                 <TextInput {...register(`aprobaciones.${key}.nombre`)} />
               </Field>
               <Field label="Cargo">

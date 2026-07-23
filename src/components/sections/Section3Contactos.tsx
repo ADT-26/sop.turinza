@@ -3,6 +3,7 @@
 import { useFormContext } from "react-hook-form";
 import { Field, TextInput } from "@/components/ui";
 import { AREAS_CONTACTO } from "@/lib/schemas";
+import { NOTAS } from "@/lib/formNotes";
 import type { SopFormValues } from "@/lib/schemas";
 
 function TablaContactos({ titulo, base }: { titulo: string; base: "internos" | "cliente" }) {
@@ -12,9 +13,24 @@ function TablaContactos({ titulo, base }: { titulo: string; base: "internos" | "
   } = useFormContext<SopFormValues>();
   const e = errors.contactos?.[base];
 
+  const nota = base === "internos" ? NOTAS["contactos.internos"] : NOTAS["contactos.cliente"];
+
   return (
     <div className="space-y-3">
-      <h3 className="text-sm font-semibold text-ink">{titulo}</h3>
+      <div>
+        <h3 className="text-sm font-semibold text-ink">{titulo}</h3>
+        {nota && (
+          <details className="mt-1">
+            <summary className="flex w-fit cursor-pointer list-none select-none items-center gap-1 text-xs text-ink-muted hover:text-ink">
+              <svg aria-hidden="true" className="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
+                <circle cx="8" cy="8" r="7" /><path d="M8 7v5M8 5.5v.5" strokeLinecap="round" />
+              </svg>
+              <span>Ver nota del formato</span>
+            </summary>
+            <p className="mt-1 border-l-2 border-primary/30 pl-2 text-xs text-ink-muted/80">{nota}</p>
+          </details>
+        )}
+      </div>
       <div className="space-y-3">
         {AREAS_CONTACTO.map((area, index) => (
           <div key={area} className="rounded-lg border border-line bg-surface p-4">

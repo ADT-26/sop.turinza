@@ -3,6 +3,7 @@
 import { useFormContext } from "react-hook-form";
 import { Field, TextInput, TextArea, RepeatableTable } from "@/components/ui";
 import { AREAS_INTERACCION } from "@/lib/schemas";
+import { NOTAS } from "@/lib/formNotes";
 import type { SopFormValues } from "@/lib/schemas";
 
 export function Section6Interaccion() {
@@ -15,10 +16,10 @@ export function Section6Interaccion() {
       renderRow={(area, index) => (
         <>
           <p className="text-sm font-semibold text-ink sm:col-span-2">{area}</p>
-          <Field label="Regla / condición acordada" className="sm:col-span-2">
+          <Field label="Regla / condición acordada" className="sm:col-span-2" nota={NOTAS["interaccionAreas.reglaCondicionAcordada"]}>
             <TextArea rows={2} {...register(`interaccionAreas.${index}.reglaCondicionAcordada`)} />
           </Field>
-          <Field label="Impacto operativo">
+          <Field label="Impacto operativo" nota={NOTAS["interaccionAreas.impactoOperativo"]}>
             <TextInput {...register(`interaccionAreas.${index}.impactoOperativo`)} />
           </Field>
           <Field label="Observaciones">

@@ -9,6 +9,7 @@ import {
   OPCIONES_SERVICIOS,
   OPCIONES_TIPO_OPERACION,
 } from "@/lib/options";
+import { NOTAS } from "@/lib/formNotes";
 import type { SopFormValues } from "@/lib/schemas";
 
 export function Section1DatosGenerales() {
@@ -22,23 +23,23 @@ export function Section1DatosGenerales() {
   return (
     <div className="space-y-5">
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Cliente / Razón social" htmlFor="cliente" required error={e?.cliente?.message}>
+        <Field label="Cliente / Razón social" htmlFor="cliente" required error={e?.cliente?.message} nota={NOTAS["datosGenerales.cliente"]}>
           <TextInput id="cliente" {...register("datosGenerales.cliente")} />
         </Field>
-        <Field label="NIT / ID" htmlFor="nit" required error={e?.nit?.message}>
+        <Field label="NIT / ID" htmlFor="nit" required error={e?.nit?.message} nota={NOTAS["datosGenerales.nit"]}>
           <TextInput id="nit" {...register("datosGenerales.nit")} />
         </Field>
-        <Field label="Sector o Industria" htmlFor="sector">
+        <Field label="Sector o Industria" htmlFor="sector" nota={NOTAS["datosGenerales.sectorIndustria"]}>
           <TextInput id="sector" {...register("datosGenerales.sectorIndustria")} />
         </Field>
-        <Field label="Tipo de operación" htmlFor="tipoOperacion" required error={e?.tipoOperacion?.message}>
+        <Field label="Tipo de operación" htmlFor="tipoOperacion" required error={e?.tipoOperacion?.message} nota={NOTAS["datosGenerales.tipoOperacion"]}>
           <Select
             id="tipoOperacion"
             options={OPCIONES_TIPO_OPERACION}
             {...register("datosGenerales.tipoOperacion")}
           />
         </Field>
-        <Field label="Tipo de mercancía" htmlFor="tipoMercancia" required error={e?.tipoMercancia?.message}>
+        <Field label="Tipo de mercancía" htmlFor="tipoMercancia" required error={e?.tipoMercancia?.message} nota={NOTAS["datosGenerales.tipoMercancia"]}>
           <Select
             id="tipoMercancia"
             options={OPCIONES_MODO_TRANSPORTE}
@@ -48,7 +49,7 @@ export function Section1DatosGenerales() {
         <Field label="País" htmlFor="pais" required error={e?.pais?.message}>
           <Select id="pais" options={OPCIONES_PAIS} {...register("datosGenerales.pais")} />
         </Field>
-        <Field label="Ciudad" htmlFor="ciudad" required error={e?.ciudad?.message}>
+        <Field label="Ciudad" htmlFor="ciudad" required error={e?.ciudad?.message} nota={NOTAS["datosGenerales.ciudad"]}>
           <TextInput
             id="ciudad"
             list="ciudades-sugeridas"
@@ -67,6 +68,7 @@ export function Section1DatosGenerales() {
           required
           error={e?.direccionPrincipal?.message}
           className="sm:col-span-2"
+          nota={NOTAS["datosGenerales.direccionPrincipal"]}
         >
           <TextInput id="direccion" {...register("datosGenerales.direccionPrincipal")} />
         </Field>
@@ -75,12 +77,13 @@ export function Section1DatosGenerales() {
           htmlFor="fechaImplementacion"
           required
           error={e?.fechaImplementacion?.message}
+          nota={NOTAS["datosGenerales.fechaImplementacion"]}
         >
           <TextInput id="fechaImplementacion" type="date" {...register("datosGenerales.fechaImplementacion")} />
         </Field>
       </div>
 
-      <Field label="Servicios contratados" required error={e?.serviciosContratados?.message}>
+      <Field label="Servicios contratados" required error={e?.serviciosContratados?.message} nota={NOTAS["datosGenerales.serviciosContratados"]}>
         <Controller
           control={control}
           name="datosGenerales.serviciosContratados"

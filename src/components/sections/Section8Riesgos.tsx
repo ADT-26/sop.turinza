@@ -4,6 +4,7 @@ import { useFieldArray, useFormContext } from "react-hook-form";
 import { Field, TextInput, Select, RepeatableTable } from "@/components/ui";
 import { OPCIONES_AREA_RESPONSABLE, OPCIONES_PRIORIDAD } from "@/lib/options";
 import { crearRiesgoVacio } from "@/lib/formDefaults";
+import { NOTAS } from "@/lib/formNotes";
 import type { SopFormValues } from "@/lib/schemas";
 
 export function Section8Riesgos() {
@@ -34,16 +35,17 @@ export function Section8Riesgos() {
                 label="Riesgo / cambio identificado"
                 className="sm:col-span-2"
                 error={e?.riesgoCambioIdentificado?.message}
+                nota={NOTAS["riesgos.riesgoCambioIdentificado"]}
               >
                 <TextInput {...register(`riesgos.${index}.riesgoCambioIdentificado`)} />
               </Field>
-              <Field label="Impacto" error={e?.impacto?.message}>
+              <Field label="Impacto" error={e?.impacto?.message} nota={NOTAS["riesgos.impacto"]}>
                 <Select options={OPCIONES_PRIORIDAD} {...register(`riesgos.${index}.impacto`)} />
               </Field>
-              <Field label="Responsable" error={e?.responsable?.message}>
+              <Field label="Responsable" error={e?.responsable?.message} nota={NOTAS["riesgos.responsable"]}>
                 <Select options={OPCIONES_AREA_RESPONSABLE} {...register(`riesgos.${index}.responsable`)} />
               </Field>
-              <Field label="Acción correctiva">
+              <Field label="Acción correctiva" nota={NOTAS["riesgos.accionCorrectiva"]}>
                 <TextInput {...register(`riesgos.${index}.accionCorrectiva`)} />
               </Field>
               <Field label="Eficacia">
