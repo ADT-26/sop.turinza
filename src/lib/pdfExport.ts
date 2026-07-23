@@ -426,7 +426,7 @@ function buildSec9(apr: SopFormValues["aprobaciones"]): any {
     // Sub-cabecera "OBSERVACIONES"
     subh("OBSERVACIONES"),
     ...obsRows,
-    // Bloque de firmas cliente (fila 121-122 del Excel)
+    // Fila cliente: [7, 7] = 14
     [...subh("Revisó Cliente", 7), ...subh("Aprobó Cliente", 7)],
     [
       { text: firma(apr.revisoCliente), colSpan: 7, fontSize: 7.5,
@@ -436,16 +436,21 @@ function buildSec9(apr: SopFormValues["aprobaciones"]): any {
         fillColor: C.DAT_BG, color: C.DAT_FG, margin: [2, 4, 2, 20] },
       PH, PH, PH, PH, PH, PH,
     ],
-    // Bloque de firmas Turinza (fila 123-124 del Excel)
-    [...subh("Revisó Turinza", 7), ...subh("Aprobó Turinza", 7)],
+    // Fila Turinza: 3 bloques [4, 5, 5] = 14 (igual que Excel B124/F124/K124)
+    [...subh("Revisó Turinza", 4), ...subh("Revisó Turinza", 5), ...subh("Aprobó Turinza", 5)],
     [
-      { text: firma(apr.revisoTurinza), colSpan: 7, fontSize: 7.5,
+      { text: firma(apr.revisoTurinza), colSpan: 4, fontSize: 7.5,
         fillColor: C.DAT_BG, color: C.DAT_FG, margin: [2, 4, 2, 20] },
-      PH, PH, PH, PH, PH, PH,
-      { text: firma(apr.aproboTurinza), colSpan: 7, fontSize: 7.5,
+      PH, PH, PH,
+      { text: firma(apr.revisoTurinza), colSpan: 5, fontSize: 7.5,
         fillColor: C.DAT_BG, color: C.DAT_FG, margin: [2, 4, 2, 20] },
-      PH, PH, PH, PH, PH, PH,
+      PH, PH, PH, PH,
+      { text: firma(apr.aproboTurinza), colSpan: 5, fontSize: 7.5,
+        fillColor: C.DAT_BG, color: C.DAT_FG, margin: [2, 4, 2, 20] },
+      PH, PH, PH, PH,
     ],
+    // Nota de pie (igual que en el Excel)
+    nc("Nota: Documento controlado del SIG. Toda modificación del contenido o de los acuerdos con el cliente debe registrarse en la hoja 'Control de Cambios'."),
   ], 0, "before");
 }
 
