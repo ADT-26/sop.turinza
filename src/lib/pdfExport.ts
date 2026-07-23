@@ -48,9 +48,9 @@ const C = {
 } as const;
 
 // ─── 14 columnas = Excel B:O  ─────────────────────────────────────────────────
-// A4 horizontal: 841.89 – 20 – 20 = 801.89 pt ≈ 802 pt disponibles
-// Cada columna ~57.3 pt; usamos 13 × 57 + 1 × 61 = 802.
-const W14 = [...Array(13).fill(57), 61];
+// Usamos '*' para que pdfmake calcule el ancho disponible exacto (página – márgenes – bordes)
+// y lo divida en partes iguales, evitando cualquier recorte en el borde derecho.
+const W14 = Array(14).fill("*") as string[];
 
 // ─── Layout de bordes ─────────────────────────────────────────────────────────
 const LAYOUT = {
