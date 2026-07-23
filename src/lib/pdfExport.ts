@@ -409,44 +409,37 @@ function buildSec8(ries: SopFormValues["riesgos"]): any {
 
 // ─── SECCIÓN 9 ── Observaciones, Validación y Firmas ─────────────────────────
 function buildSec9(apr: SopFormValues["aprobaciones"]): any {
-  // Zona de observaciones (1 fila alta)
-  const ROWS_OBS = 3;
+  // Zona de observaciones: 6 filas de altura para buen espacio de escritura
+  const ROWS_OBS = 6;
   const obsRows: any[][] = Array(ROWS_OBS).fill(null).map((_, i) =>
     i === 0
       ? [dc(apr.observaciones, 14, ROWS_OBS), ...Array(13).fill(PH)]
       : Array(14).fill(PH)
   );
 
-  // Formato de texto de firma
+  // Celda de firma: nombre, cargo y espacio amplio para la rúbrica
   const firma = (f: { nombre?: string; cargo?: string }) =>
-    `Nombre: ${f.nombre || "—"}\nCargo: ${f.cargo || "—"}`;
+    `Nombre: ${f.nombre || "—"}\nCargo:   ${f.cargo || "—"}\n\nFirma: ___________________________________\n\nFecha:  ___________________________________`;
 
+  // Celda con alto generoso (70 pt de padding inferior) para que quepan firmas físicas
+  const celdaFirma = (f: { nombre?: string; cargo?: string }, span = 7): any => ({
+    text: firma(f), colSpan: span, fontSize: 8,
+    fillColor: C.DAT_BG, color: C.DAT_FG,
+    margin: [6, 8, 6, 70],
+  });
+
+  // Forzar página nueva: esta sección ocupa su propia hoja
   return tbl([
     sh("9. Observaciones, Validación y Firmas"),
-    // Sub-cabecera "OBSERVACIONES"
     subh("OBSERVACIONES"),
     ...obsRows,
-    // Bloque de firmas cliente (fila 121-122 del Excel)
     [...subh("Revisó Cliente", 7), ...subh("Aprobó Cliente", 7)],
-    [
-      { text: firma(apr.revisoCliente), colSpan: 7, fontSize: 7.5,
-        fillColor: C.DAT_BG, color: C.DAT_FG, margin: [2, 4, 2, 20] },
-      PH, PH, PH, PH, PH, PH,
-      { text: firma(apr.aproboCliente), colSpan: 7, fontSize: 7.5,
-        fillColor: C.DAT_BG, color: C.DAT_FG, margin: [2, 4, 2, 20] },
-      PH, PH, PH, PH, PH, PH,
-    ],
-    // Bloque de firmas Turinza (fila 123-124 del Excel)
+    [celdaFirma(apr.revisoCliente), PH, PH, PH, PH, PH, PH,
+     celdaFirma(apr.aproboCliente), PH, PH, PH, PH, PH, PH],
     [...subh("Revisó Turinza", 7), ...subh("Aprobó Turinza", 7)],
-    [
-      { text: firma(apr.revisoTurinza), colSpan: 7, fontSize: 7.5,
-        fillColor: C.DAT_BG, color: C.DAT_FG, margin: [2, 4, 2, 20] },
-      PH, PH, PH, PH, PH, PH,
-      { text: firma(apr.aproboTurinza), colSpan: 7, fontSize: 7.5,
-        fillColor: C.DAT_BG, color: C.DAT_FG, margin: [2, 4, 2, 20] },
-      PH, PH, PH, PH, PH, PH,
-    ],
-  ], 0);
+    [celdaFirma(apr.revisoTurinza), PH, PH, PH, PH, PH, PH,
+     celdaFirma(apr.aproboTurinza), PH, PH, PH, PH, PH, PH],
+  ], 0, "before");
 }
 
 // ─── ENCABEZADO DEL DOCUMENTO ─────────────────────────────────────────────────
