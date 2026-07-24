@@ -1,5 +1,14 @@
 [
   {
+    "id": "1784929339686-3346f8a2",
+    "cliente": "dsss",
+    "nit": "123",
+    "tipoOperacion": "Importación",
+    "nivelCliente": "",
+    "estado": "Abierto",
+    "createdAt": "2026-07-24T21:42:19.686Z"
+  },
+  {
     "id": "1782848002593-e52c1e00",
     "cliente": "test_rs",
     "nit": "12345678",
