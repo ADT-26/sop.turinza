@@ -12,14 +12,15 @@
       "serviciosContratados": [
         "Transporte nacional",
         "Transporte internacional",
-        "Aduanas"
+        "Aduanas",
+        "Transporte terrestre"
       ],
       "direccionPrincipal": "CRA 123# 22-33",
       "pais": "Colombia",
       "ciudad": "Bogotá D.C.",
       "fechaImplementacion": "2026-06-30",
       "objetivoSOP": "Describir el Procedimiento Operativo Estándar (SOP) para la prestación de servicios logísticos integrales al Cliente, estableciendo lineamientos y métodos de trabajo que garantizan un servicio consistente, personalizado y eficiente.",
-      "alcanceSOP": "Este SOP aplica a los servicios contratados por el cliente, incluyendo los servicios relacionados en el apartado de servicios contratados. Cubre desde la recepción de solicitudes del cliente hasta la entrega final de la carga y facturación, integrando a todas las áreas involucradas en la operación."
+      "alcanceSOP": "Transporte internacional: Cubre desde la recepción de solicitudes del cliente hasta la entrega de documentos liberados a quien el cliente autorice.\nAduanas: Cubre desde la recepción de solicitud del cliente hasta el levante de la mercancía otorgado por la autoridad aduanera DIAN.\nTransporte terrestre: Cubre desde la recepción de solicitud del cliente hasta el descargue de la mercancía en el destino final acordado previamente."
     },
     "resumenEjecutivo": {
       "resumenNegocioCliente": "test resumen",
