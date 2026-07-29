@@ -198,19 +198,26 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
         </DetailsSection>
 
         <DetailsSection index={5} title="Matriz de procesos y personalizaciones operativas">
-          <TablaResumen
-            rows={data.matrizProcesos}
-            getTitulo={(r) => r.proceso}
-            fields={[
-              { key: "aplica", label: "Aplica" },
-              { key: "responsable", label: "Responsable" },
-              { key: "actividadHito", label: "Actividad / Hito" },
-              { key: "personalizacionAcordada", label: "Personalización acordada" },
-              { key: "slaTiempo", label: "SLA / Tiempo" },
-              { key: "kpiAsociado", label: "KPI asociado" },
-              { key: "controlEvidencia", label: "Control / Evidencia" },
-            ]}
-          />
+          <div className="space-y-3">
+            {data.matrizProcesos.map((grupo, gi) => (
+              <div key={gi} className="rounded-lg border border-line bg-surface p-4">
+                <div className="mb-2 flex items-center justify-between gap-4">
+                  <p className="text-sm font-semibold text-ink">{grupo.proceso}</p>
+                  <span className="shrink-0 text-xs text-ink-muted">Aplica: {grupo.aplica || "—"}</span>
+                </div>
+                {grupo.filas.map((fila, fi) => (
+                  <dl key={fi} className={`grid gap-3 sm:grid-cols-2${fi > 0 ? " mt-3 border-t border-line pt-3" : ""}`}>
+                    <Campo label="Responsable" value={fila.responsable} />
+                    <Campo label="SLA / Tiempo" value={fila.slaTiempo} />
+                    <Campo label="Actividad / Hito" value={fila.actividadHito} />
+                    <Campo label="Personalización acordada" value={fila.personalizacionAcordada} />
+                    <Campo label="KPI asociado" value={fila.kpiAsociado} />
+                    <Campo label="Control / Evidencia" value={fila.controlEvidencia} />
+                  </dl>
+                ))}
+              </div>
+            ))}
+          </div>
         </DetailsSection>
 
         <DetailsSection index={6} title="Interacción con otras áreas y condiciones comerciales">

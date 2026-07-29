@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { GithubApiError, eliminarArchivo, escribirArchivo, leerArchivo } from "./githubStore";
 import { crearSopFormVacio } from "./formDefaults";
-import { conDefectos } from "./formNormalizer";
+import { conDefectos, migrarProcesosLegacy } from "./formNormalizer";
 import type { SopFormValues, TablaContactos } from "./schemas";
 
 const SOPS_DIR = "data/sops";
@@ -87,7 +87,8 @@ export async function obtenerSopPorId(id: string): Promise<SopRegistro | null> {
   const archivo = await leerArchivo(`${SOPS_DIR}/${id}.json`);
   if (!archivo) return null;
   const registro: SopRegistro = JSON.parse(archivo.content);
-  return { ...registro, data: conDefectos(registro.data, crearSopFormVacio()) };
+  const dataMigrada = migrarProcesosLegacy(registro.data);
+  return { ...registro, data: conDefectos(dataMigrada, crearSopFormVacio()) };
 }
 
 async function eliminarDelIndice(id: string, intento = 0): Promise<void> {

@@ -144,26 +144,32 @@ export const preferenciasSchema = z.object({
   comunicacion: z.array(comunicacionBloqueSchema),
 });
 
-// "Responsable" solo es obligatorio cuando "Aplica" = Sí: si el proceso no aplica
-// (No / N/A), no tiene sentido exigir el resto de la fila.
-const procesoSchema = z
+export const procesoFilaSchema = z.object({
+  actividadHito: z.string(),
+  personalizacionAcordada: z.string(),
+  responsable: z.string(),
+  slaTiempo: opcionOpcional(OPCIONES_FRECUENCIA_CORTA),
+  kpiAsociado: z.string(),
+  controlEvidencia: z.string(),
+});
+
+const procesoGrupoSchema = z
   .object({
     proceso: z.string(),
     aplica: opcionRequerida(OPCIONES_SI_NO_NA),
-    actividadHito: z.string(),
-    personalizacionAcordada: z.string(),
-    responsable: z.string(),
-    slaTiempo: opcionOpcional(OPCIONES_FRECUENCIA_CORTA),
-    kpiAsociado: z.string(),
-    controlEvidencia: z.string(),
+    filas: z.array(procesoFilaSchema).max(4),
   })
   .superRefine((val, ctx) => {
-    if (val.aplica === "Sí" && !val.responsable) {
-      ctx.addIssue({ code: "custom", path: ["responsable"], message: REQUERIDO });
+    if (val.aplica === "Sí") {
+      val.filas.forEach((fila, i) => {
+        if (!fila.responsable) {
+          ctx.addIssue({ code: "custom", path: ["filas", i, "responsable"], message: REQUERIDO });
+        }
+      });
     }
   });
 
-export const matrizProcesosSchema = z.array(procesoSchema);
+export const matrizProcesosSchema = z.array(procesoGrupoSchema);
 
 const interaccionAreaSchema = z.object({
   area: z.string(),
@@ -244,7 +250,8 @@ export type MatrizContactos = z.infer<typeof matrizContactosSchema>;
 export type Trazabilidad = z.infer<typeof trazabilidadSchema>;
 export type ComunicacionBloque = z.infer<typeof comunicacionBloqueSchema>;
 export type Preferencias = z.infer<typeof preferenciasSchema>;
-export type ProcesoOperativo = z.infer<typeof procesoSchema>;
+export type ProcesoFila = z.infer<typeof procesoFilaSchema>;
+export type ProcesoGrupo = z.infer<typeof procesoGrupoSchema>;
 export type InteraccionArea = z.infer<typeof interaccionAreaSchema>;
 export type RequisitoCumplimiento = z.infer<typeof requisitoCumplimientoSchema>;
 export type Riesgo = z.infer<typeof riesgoSchema>;

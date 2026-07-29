@@ -150,16 +150,19 @@ export async function generarExcelSop(data: SopFormValues): Promise<Buffer> {
   });
 
   // 5. Matriz de procesos y personalizaciones operativas
-  data.matrizProcesos.forEach((proceso, i) => {
-    const row = FILAS_PROCESO[i];
-    if (!row) return;
-    set(`D${row}`, proceso.aplica);
-    set(`E${row}`, proceso.actividadHito);
-    set(`H${row}`, proceso.personalizacionAcordada);
-    set(`K${row}`, proceso.responsable);
-    set(`L${row}`, proceso.slaTiempo);
-    set(`M${row}`, proceso.kpiAsociado);
-    set(`N${row}`, proceso.controlEvidencia);
+  data.matrizProcesos.forEach((grupo, i) => {
+    const baseRow = FILAS_PROCESO[i];
+    if (!baseRow) return;
+    set(`D${baseRow}`, grupo.aplica);
+    grupo.filas.slice(0, 4).forEach((fila, j) => {
+      const row = baseRow + j;
+      set(`E${row}`, fila.actividadHito);
+      set(`H${row}`, fila.personalizacionAcordada);
+      set(`K${row}`, fila.responsable);
+      set(`L${row}`, fila.slaTiempo);
+      set(`M${row}`, fila.kpiAsociado);
+      set(`N${row}`, fila.controlEvidencia);
+    });
   });
 
   // 6. Interacción con otras áreas y condiciones comerciales

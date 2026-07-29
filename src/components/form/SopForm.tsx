@@ -8,7 +8,7 @@ import { crearSopFormVacio } from "@/lib/formDefaults";
 import { sopFormSchema, type SopFormValues } from "@/lib/schemas";
 import { SECTIONS, SECTION_KEYS } from "@/lib/formSections";
 import { useScrollTopOnChange } from "@/lib/useScrollTopOnChange";
-import { conDefectos } from "@/lib/formNormalizer";
+import { conDefectos, migrarProcesosLegacy } from "@/lib/formNormalizer";
 import { Section1DatosGenerales } from "@/components/sections/Section1DatosGenerales";
 import { Section2ResumenEjecutivo } from "@/components/sections/Section2ResumenEjecutivo";
 import { Section3Contactos } from "@/components/sections/Section3Contactos";
@@ -61,7 +61,7 @@ export function SopForm() {
         // schema ganó un campo nuevo después de que el usuario guardó el borrador
         // (p. ej. "backus"), ese campo faltante quedaría undefined y bloquearía
         // la validación del paso sin mostrar ningún error visible.
-        reset(conDefectos(JSON.parse(guardado), crearSopFormVacio()));
+        reset(conDefectos(migrarProcesosLegacy(JSON.parse(guardado)), crearSopFormVacio()));
       } catch {
         // Borrador corrupto: se ignora y se mantiene el formulario vacío.
       }

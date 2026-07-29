@@ -8,6 +8,24 @@
 //     CADA elemento de `valor` (p. ej. `riesgos`, de tamaño variable).
 //   - longitud > 1 → merge posicional elemento a elemento (arrays de tamaño
 //     fijo como matrizProcesos, departamentos de contactos, etc.).
+// Migra registros guardados con el esquema anterior de matrizProcesos (campos
+// planos en el objeto raíz de cada proceso) al nuevo esquema con `filas[]`.
+export function migrarProcesosLegacy(data: unknown): unknown {
+  if (typeof data !== "object" || !data) return data;
+  const d = data as Record<string, unknown>;
+  if (!Array.isArray(d.matrizProcesos)) return data;
+  const matrizMigrada = (d.matrizProcesos as unknown[]).map((item) => {
+    const p = item as Record<string, unknown>;
+    if (Array.isArray(p.filas)) return item;
+    const { actividadHito, personalizacionAcordada, responsable, slaTiempo, kpiAsociado, controlEvidencia, ...rest } = p;
+    return {
+      ...rest,
+      filas: [{ actividadHito: actividadHito ?? "", personalizacionAcordada: personalizacionAcordada ?? "", responsable: responsable ?? "", slaTiempo: slaTiempo ?? "", kpiAsociado: kpiAsociado ?? "", controlEvidencia: controlEvidencia ?? "" }],
+    };
+  });
+  return { ...d, matrizProcesos: matrizMigrada };
+}
+
 export function conDefectos<T>(valor: unknown, defecto: T): T {
   if (Array.isArray(defecto)) {
     if (!Array.isArray(valor)) return defecto;

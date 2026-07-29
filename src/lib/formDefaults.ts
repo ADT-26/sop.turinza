@@ -90,12 +90,7 @@ export function crearSopFormVacio(): SopFormValues {
     matrizProcesos: PROCESOS_OPERATIVOS.map((proceso) => ({
       proceso,
       aplica: "No",
-      actividadHito: "",
-      personalizacionAcordada: "",
-      responsable: "",
-      slaTiempo: "",
-      kpiAsociado: "",
-      controlEvidencia: "",
+      filas: [{ actividadHito: "", personalizacionAcordada: "", responsable: "", slaTiempo: "", kpiAsociado: "", controlEvidencia: "" }],
     })),
     interaccionAreas: AREAS_INTERACCION.map((area) => ({
       area,

@@ -325,16 +325,22 @@ function buildSec5(proc: SopFormValues["matrizProcesos"]): any {
     cl("Control / Evidencia", 2), PH,
   ];
 
-  const dataRows = proc.map((p) => [
-    dc(p.proceso, 2), PH,
-    dc(p.aplica),
-    dc(p.actividadHito, 3), PH, PH,
-    dc(p.personalizacionAcordada, 3), PH, PH,
-    dc(p.responsable),
-    dc(p.slaTiempo),
-    dc(p.kpiAsociado),
-    dc(p.controlEvidencia, 2), PH,
-  ]);
+  const dataRows: any[][] = [];
+  proc.forEach((grupo) => {
+    const filas = grupo.filas.length > 0 ? grupo.filas : [{ actividadHito: "", personalizacionAcordada: "", responsable: "", slaTiempo: "", kpiAsociado: "", controlEvidencia: "" }];
+    filas.forEach((fila, j) => {
+      dataRows.push([
+        j === 0 ? dc(grupo.proceso, 2) : dc("", 2), PH,
+        j === 0 ? dc(grupo.aplica) : dc(""),
+        dc(fila.actividadHito, 3), PH, PH,
+        dc(fila.personalizacionAcordada, 3), PH, PH,
+        dc(fila.responsable),
+        dc(fila.slaTiempo),
+        dc(fila.kpiAsociado),
+        dc(fila.controlEvidencia, 2), PH,
+      ]);
+    });
+  });
 
   return tbl([
     sh("5. Matriz de Procesos y Personalización del Servicio"),
