@@ -62,6 +62,8 @@ export function crearSopFormVacio(): SopFormValues {
       riesgosCriticosAlertas: "",
       requiereAtencion247: "",
       requiereReunionesKPI: "",
+      requiereReunionOperativaSemanal: "",
+      asistentesReunionOperativa: "",
       periodicidadRevisionSOP: "",
       nivelCliente: "",
     },

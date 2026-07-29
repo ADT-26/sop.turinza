@@ -1,7 +1,7 @@
 "use client";
 
 import { Controller, useFormContext } from "react-hook-form";
-import { Field, TextArea, Select, RadioGroup } from "@/components/ui";
+import { Field, TextArea, TextInput, Select, RadioGroup } from "@/components/ui";
 import { OPCIONES_FRECUENCIA_LARGA, OPCIONES_SI_NO_NA } from "@/lib/options";
 import { NOTAS } from "@/lib/formNotes";
 import type { SopFormValues } from "@/lib/schemas";
@@ -63,6 +63,23 @@ export function Section2ResumenEjecutivo() {
               />
             )}
           />
+        </Field>
+        <Field label="Requiere reunión operativa semanal" required error={e?.requiereReunionOperativaSemanal?.message}>
+          <Controller
+            control={control}
+            name="resumenEjecutivo.requiereReunionOperativaSemanal"
+            render={({ field }) => (
+              <RadioGroup
+                name={field.name}
+                options={OPCIONES_SI_NO_NA}
+                value={field.value}
+                onChange={field.onChange}
+              />
+            )}
+          />
+        </Field>
+        <Field label="Asistentes reunión operativa" htmlFor="asistentesReunion" className="sm:col-span-2">
+          <TextInput id="asistentesReunion" {...register("resumenEjecutivo.asistentesReunionOperativa")} />
         </Field>
         <Field
           label="Periodicidad revisión y actualización SOP"

@@ -201,8 +201,8 @@ function buildSec2(re: SopFormValues["resumenEjecutivo"]): any {
     // Datos flags
     [dc(re.requiereAtencion247, 3), PH, PH,
      dc(re.requiereReunionesKPI, 2), PH,
-     dc("—", 2), PH,
-     dc("—", 3), PH, PH,
+     dc(re.requiereReunionOperativaSemanal, 2), PH,
+     dc(re.asistentesReunionOperativa, 3), PH, PH,
      dc(re.periodicidadRevisionSOP, 2), PH,
      dc(re.nivelCliente, 2), PH],
   ], 2);

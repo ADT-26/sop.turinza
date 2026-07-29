@@ -111,6 +111,8 @@ export async function generarExcelSop(data: SopFormValues): Promise<Buffer> {
   set("I21", data.resumenEjecutivo.riesgosCriticosAlertas);
   set("B26", data.resumenEjecutivo.requiereAtencion247);
   set("E26", data.resumenEjecutivo.requiereReunionesKPI);
+  set("G26", data.resumenEjecutivo.requiereReunionOperativaSemanal);
+  set("I26", data.resumenEjecutivo.asistentesReunionOperativa);
   set("L26", data.resumenEjecutivo.periodicidadRevisionSOP);
   set("N26", data.resumenEjecutivo.nivelCliente);
 

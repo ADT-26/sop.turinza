@@ -115,6 +115,8 @@ export const resumenEjecutivoSchema = z.object({
   riesgosCriticosAlertas: z.string(),
   requiereAtencion247: opcionRequerida(OPCIONES_SI_NO_NA),
   requiereReunionesKPI: opcionRequerida(OPCIONES_SI_NO_NA),
+  requiereReunionOperativaSemanal: opcionRequerida(OPCIONES_SI_NO_NA),
+  asistentesReunionOperativa: z.string(),
   periodicidadRevisionSOP: opcionRequerida(OPCIONES_FRECUENCIA_LARGA),
   // No lo llena el cliente: lo asigna el administrador desde el panel interno
   // después de revisar el SOP (ver PATCH /api/forms/[id]).
