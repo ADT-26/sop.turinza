@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Badge, DetailsSection } from "@/components/ui";
 import { obtenerSopPorId } from "@/lib/sopStore";
-import { ALCANCE_SOP_DEFAULT, OBJETIVO_SOP_DEFAULT } from "@/lib/formDefaults";
+import { OBJETIVO_SOP_DEFAULT } from "@/lib/formDefaults";
 import { AccionesTurinza } from "@/components/dashboard/AccionesTurinza";
 import { EliminarSopButton } from "@/components/dashboard/EliminarSopButton";
 
@@ -118,7 +118,7 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
           </dl>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <Campo label="Objetivo del SOP" value={OBJETIVO_SOP_DEFAULT} />
-            <Campo label="Alcance del SOP" value={ALCANCE_SOP_DEFAULT} />
+            <Campo label="Alcance del SOP" value={data.datosGenerales.alcanceSOP} />
           </div>
         </DetailsSection>
 
