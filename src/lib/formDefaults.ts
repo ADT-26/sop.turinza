@@ -83,6 +83,8 @@ export function crearSopFormVacio(): SopFormValues {
         canalesPreferidos: "",
         frecuencia: "",
         conCopiaContactosInternos: "",
+        conCopiaContactoNombre: "",
+        conCopiaContactoInfo: "",
       })),
     },
     matrizProcesos: PROCESOS_OPERATIVOS.map((proceso) => ({

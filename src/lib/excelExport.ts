@@ -143,7 +143,10 @@ export async function generarExcelSop(data: SopFormValues): Promise<Buffer> {
     if (!row) return;
     set(`E${row}`, bloque.canalesPreferidos);
     set(`H${row}`, bloque.frecuencia);
-    set(`L${row}`, bloque.conCopiaContactosInternos);
+    const copiaValor = bloque.conCopiaContactosInternos === "Sí"
+      ? [bloque.conCopiaContactoNombre, bloque.conCopiaContactoInfo].filter(Boolean).join(" / ")
+      : bloque.conCopiaContactosInternos;
+    set(`L${row}`, copiaValor);
   });
 
   // 5. Matriz de procesos y personalizaciones operativas

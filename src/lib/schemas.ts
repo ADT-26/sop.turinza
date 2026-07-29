@@ -135,6 +135,8 @@ const comunicacionBloqueSchema = z.object({
   canalesPreferidos: opcionRequerida(OPCIONES_CANAL_ODOO),
   frecuencia: opcionRequerida(OPCIONES_FRECUENCIA_COMUNICACION),
   conCopiaContactosInternos: opcionRequerida(OPCIONES_SI_NO_NA),
+  conCopiaContactoNombre: z.string(),
+  conCopiaContactoInfo: z.string(),
 });
 
 export const preferenciasSchema = z.object({

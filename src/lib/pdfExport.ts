@@ -289,12 +289,15 @@ function buildSec4(pref: SopFormValues["preferencias"]): any {
 
   const comRows: any[][] = [];
   pref.comunicacion.forEach((blq) => {
+    const copiaTexto = blq.conCopiaContactosInternos === "Sí"
+      ? [blq.conCopiaContactoNombre, blq.conCopiaContactoInfo].filter(Boolean).join("\n")
+      : blq.conCopiaContactosInternos;
     comRows.push(mkColC());
     comRows.push([
       dc(blq.tipo, 3), PH, PH,
       dc(blq.canalesPreferidos, 3), PH, PH,
       dc(blq.frecuencia, 4), PH, PH, PH,
-      dc(blq.conCopiaContactosInternos, 4), PH, PH, PH,
+      dc(copiaTexto, 4), PH, PH, PH,
     ]);
   });
 
