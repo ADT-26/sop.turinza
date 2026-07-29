@@ -3,6 +3,7 @@ import { NivelClienteEditor } from "./NivelClienteEditor";
 import { FirmaTurinzaEditor } from "./FirmaTurinzaEditor";
 import { ContactosInternosEditor } from "./ContactosInternosEditor";
 import { AsistentesReunionEditor } from "./AsistentesReunionEditor";
+import { InstructivoOdooEditor } from "./InstructivoOdooEditor";
 import type { SopFormValues } from "@/lib/schemas";
 
 function Tarea({ numero, titulo, children }: { numero: number; titulo: string; children: ReactNode }) {
@@ -42,10 +43,13 @@ export function AccionesTurinza({ id, data }: { id: string; data: SopFormValues 
         <Tarea numero={2} titulo="Asistentes reunión operativa">
           <AsistentesReunionEditor id={id} valorInicial={data.resumenEjecutivo.asistentesReunionOperativa} />
         </Tarea>
-        <Tarea numero={3} titulo="Contactos internos Turinza / Cuenta">
+        <Tarea numero={3} titulo="Instructivo Odoo para el cliente">
+          <InstructivoOdooEditor id={id} valorInicial={data.preferencias.trazabilidad.instructivoOdooCliente} />
+        </Tarea>
+        <Tarea numero={4} titulo="Contactos internos Turinza / Cuenta">
           <ContactosInternosEditor id={id} valorInicial={data.contactos.internos} />
         </Tarea>
-        <Tarea numero={4} titulo="Revisó / Aprobó Turinza">
+        <Tarea numero={5} titulo="Revisó / Aprobó Turinza">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <FirmaTurinzaEditor
               id={id}

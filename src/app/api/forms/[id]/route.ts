@@ -7,6 +7,7 @@ import {
   actualizarFirmaTurinza,
   actualizarContactosInternos,
   actualizarAsistentesReunion,
+  actualizarInstructivoOdoo,
   actualizarSop,
   eliminarSop,
 } from "@/lib/sopStore";
@@ -29,6 +30,7 @@ const patchSchema = z.object({
   aproboTurinza: firmaSchema.optional(),
   contactosInternos: tablaContactosSchema.optional(),
   asistentesReunionOperativa: z.string().optional(),
+  instructivoOdooCliente: z.string().optional(),
 });
 
 export async function GET(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -133,8 +135,8 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     );
   }
 
-  const { nivelCliente, revisoTurinzaComercial, revisoTurinza, aproboTurinza, contactosInternos, asistentesReunionOperativa } = parsed.data;
-  if (nivelCliente === undefined && !revisoTurinzaComercial && !revisoTurinza && !aproboTurinza && !contactosInternos && asistentesReunionOperativa === undefined) {
+  const { nivelCliente, revisoTurinzaComercial, revisoTurinza, aproboTurinza, contactosInternos, asistentesReunionOperativa, instructivoOdooCliente } = parsed.data;
+  if (nivelCliente === undefined && !revisoTurinzaComercial && !revisoTurinza && !aproboTurinza && !contactosInternos && asistentesReunionOperativa === undefined && instructivoOdooCliente === undefined) {
     return NextResponse.json({ success: false, error: "Nada para actualizar" }, { status: 400 });
   }
 
@@ -157,6 +159,9 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     }
     if (asistentesReunionOperativa !== undefined) {
       actualizado = await actualizarAsistentesReunion(id, asistentesReunionOperativa);
+    }
+    if (instructivoOdooCliente !== undefined) {
+      actualizado = await actualizarInstructivoOdoo(id, instructivoOdooCliente);
     }
     if (!actualizado) {
       return NextResponse.json({ success: false, error: "No encontrado" }, { status: 404 });

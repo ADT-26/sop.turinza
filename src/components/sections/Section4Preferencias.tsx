@@ -61,9 +61,6 @@ export function Section4Preferencias() {
               {...register("preferencias.trazabilidad.contenidoMinimoRequerido")}
             />
           </Field>
-          <Field label="Instructivo Odoo para el cliente" htmlFor="instructivoOdoo" className="sm:col-span-2" nota={NOTAS["preferencias.trazabilidad.instructivoOdooCliente"]}>
-            <TextInput id="instructivoOdoo" {...register("preferencias.trazabilidad.instructivoOdooCliente")} />
-          </Field>
         </div>
       </div>
 
