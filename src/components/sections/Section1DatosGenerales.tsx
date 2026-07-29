@@ -29,11 +29,10 @@ export function Section1DatosGenerales() {
     const lineas = serviciosSeleccionados
       .map((s) => ALCANCE_POR_SERVICIO[s])
       .filter(Boolean);
-    setValue(
-      "datosGenerales.alcanceSOP",
-      lineas.length > 0 ? lineas.join("\n") : ALCANCE_SOP_DEFAULT,
-      { shouldValidate: false },
-    );
+    const texto = lineas.length > 0
+      ? `${ALCANCE_SOP_DEFAULT}\n${lineas.join("\n")}`
+      : ALCANCE_SOP_DEFAULT;
+    setValue("datosGenerales.alcanceSOP", texto, { shouldValidate: false });
   }, [serviciosSeleccionados, setValue]);
 
   return (

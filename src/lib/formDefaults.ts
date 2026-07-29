@@ -9,7 +9,7 @@ import type { Contacto, Riesgo, SopFormValues, TablaContactos } from "./schemas"
 export const OBJETIVO_SOP_DEFAULT =
   "Describir el Procedimiento Operativo Estándar (SOP) para la prestación de servicios logísticos integrales al Cliente, estableciendo lineamientos y métodos de trabajo que garantizan un servicio consistente, personalizado y eficiente.";
 export const ALCANCE_SOP_DEFAULT =
-  "Este SOP aplica a los servicios contratados por el cliente, incluyendo los servicios relacionados en el apartado de servicios contratados. Cubre desde la recepción de solicitudes del cliente hasta la entrega final de la carga y facturación, integrando a todas las áreas involucradas en la operación.";
+  "Este SOP aplica a todos los servicios contratados por el cliente.";
 
 // Texto de alcance por servicio (igual que en formato_SOP.xlsx).
 // Se concatena uno por línea según los servicios seleccionados.
