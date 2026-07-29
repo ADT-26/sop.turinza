@@ -168,7 +168,7 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
               <h3 className="mb-3 text-sm font-semibold text-ink">4.1 Trazabilidad de operaciones</h3>
               <dl className="grid gap-4 sm:grid-cols-2">
                 <Campo
-                  label="Frecuencia de reportes del consolidado"
+                  label="Frecuencia del status consolidado de embarques"
                   value={data.preferencias.trazabilidad.frecuenciaReportes}
                 />
                 <Campo label="Formato / canal" value={data.preferencias.trazabilidad.formatoCanal} />

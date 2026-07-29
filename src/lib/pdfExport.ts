@@ -273,7 +273,7 @@ function buildSec3(c: SopFormValues["contactos"]): any {
 function buildSec4(pref: SopFormValues["preferencias"]): any {
   const t = pref.trazabilidad;
   // Col labels trazabilidad: [B:D=3] [E:G=3] [H:K=4] [L:O=4]
-  const colT = [cl("Frecuencia del status consolidado", 3), PH, PH,
+  const colT = [cl("Frecuencia del status consolidado de embarques", 3), PH, PH,
                 cl("Formato / canal", 3), PH, PH,
                 cl("Contenido mínimo requerido", 4), PH, PH, PH,
                 cl("Instructivo Odoo para el cliente", 4), PH, PH, PH];

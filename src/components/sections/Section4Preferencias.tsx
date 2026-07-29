@@ -33,7 +33,7 @@ export function Section4Preferencias() {
         </h3>
         <div className="grid gap-5 sm:grid-cols-2">
           <Field
-            label="Frecuencia de reportes del consolidado"
+            label="Frecuencia del status consolidado de embarques"
             htmlFor="frecuenciaReportes"
             required
             error={e?.trazabilidad?.frecuenciaReportes?.message}
