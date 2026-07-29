@@ -16,7 +16,7 @@ export const ALCANCE_SOP_DEFAULT =
 export const ALCANCE_POR_SERVICIO: Record<string, string> = {
   "OTM / DTA":
     "DTA/OTM: Cubre desde la recepción de solicitud del cliente hasta el descargue de la mercancía y liberación de documentos del embarque en el deposito indicado en el documento de transporte.",
-  "Transporte nacional":
+  "Transporte terrestre":
     "Transporte terrestre: Cubre desde la recepción de solicitud del cliente hasta el descargue de la mercancía en el destino final acordado previamente.",
   "Transporte internacional":
     "Transporte internacional: Cubre desde la recepción de solicitudes del cliente hasta la entrega de documentos liberados a quien el cliente autorice.",

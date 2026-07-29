@@ -55,7 +55,7 @@ export const OPCIONES_AREA_RESPONSABLE = [
 
 export const OPCIONES_SERVICIOS = [
   "OTM / DTA",
-  "Transporte nacional",
+  "Transporte terrestre",
   "Transporte internacional",
   "Aduanas",
   "Almacenamiento / Bodega",

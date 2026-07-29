@@ -2,7 +2,7 @@ import path from "node:path";
 import fs from "node:fs/promises";
 import ExcelJS from "exceljs";
 import type { SopFormValues } from "./schemas";
-import { ALCANCE_SOP_DEFAULT, OBJETIVO_SOP_DEFAULT } from "./formDefaults";
+import { OBJETIVO_SOP_DEFAULT } from "./formDefaults";
 
 const TEMPLATE_PATH = path.join(process.cwd(), "formats", "formato_SOP.xlsx");
 const LOGO_PATH = path.join(process.cwd(), "public", "logo_turinza.png");
@@ -80,12 +80,24 @@ export async function generarExcelSop(data: SopFormValues): Promise<Buffer> {
   set("I6", data.datosGenerales.sectorIndustria);
   set("L6", data.datosGenerales.tipoOperacion);
   set("B8", data.datosGenerales.tipoMercancia);
-  set("F8", data.datosGenerales.serviciosContratados.join(", "));
+  // Cada servicio tiene su propia celda combinada en fila 8 del template.
+  // Se escribe el nombre si está seleccionado, se borra si no.
+  const CELDAS_SERVICIOS: Record<string, string> = {
+    "OTM / DTA":               "F8",
+    "Transporte terrestre":    "H8",
+    "Transporte internacional":"J8",
+    "Aduanas":                 "L8",
+    "Almacenamiento / Bodega": "N8",
+  };
+  const seleccionados = new Set(data.datosGenerales.serviciosContratados);
+  Object.entries(CELDAS_SERVICIOS).forEach(([servicio, celda]) => {
+    set(celda, seleccionados.has(servicio) ? servicio : "");
+  });
   set("B10", data.datosGenerales.direccionPrincipal);
   set("J10", `${data.datosGenerales.ciudad}, ${data.datosGenerales.pais}`);
   set("M10", data.datosGenerales.fechaImplementacion);
   set("B12", OBJETIVO_SOP_DEFAULT);
-  set("I12", ALCANCE_SOP_DEFAULT);
+  set("I12", data.datosGenerales.alcanceSOP);
 
   // 2. Resumen ejecutivo del cliente
   set("B21", data.resumenEjecutivo.resumenNegocioCliente);
