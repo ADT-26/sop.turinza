@@ -7,6 +7,7 @@
 import path from "node:path";
 import fs from "node:fs/promises";
 import type { SopFormValues } from "./schemas";
+import { ALCANCE_SOP_DEFAULT, ALCANCE_POR_SERVICIO } from "./formDefaults";
 
 const LOGO_PATH = path.join(process.cwd(), "public", "logo_turinza.png");
 
@@ -127,6 +128,13 @@ function buildSec1(dg: SopFormValues["datosGenerales"]): any {
     ? dg.serviciosContratados.join(", ")
     : String(dg.serviciosContratados || "");
 
+  const lineasAlcance = dg.serviciosContratados
+    .map((s) => ALCANCE_POR_SERVICIO[s])
+    .filter(Boolean);
+  const alcance = lineasAlcance.length > 0
+    ? `${ALCANCE_SOP_DEFAULT}\n${lineasAlcance.join("\n")}`
+    : ALCANCE_SOP_DEFAULT;
+
   return tbl([
     // Cabecera
     sh("1. Datos Generales del Cliente"),
@@ -160,7 +168,7 @@ function buildSec1(dg: SopFormValues["datosGenerales"]): any {
     // Datos fila 4 (contenido largo → alto natural)
     [{ text: dg.objetivoSOP || "—", fontSize: 7, fillColor: C.DAT_BG, color: C.DAT_FG,
        colSpan: 7, margin: [2, 3, 2, 3] }, PH, PH, PH, PH, PH, PH,
-     { text: dg.alcanceSOP || "—", fontSize: 7, fillColor: C.DAT_BG, color: C.DAT_FG,
+     { text: alcance, fontSize: 7, fillColor: C.DAT_BG, color: C.DAT_FG,
        colSpan: 7, margin: [2, 3, 2, 3] }, PH, PH, PH, PH, PH, PH],
   ], 2);
 }

@@ -2,7 +2,7 @@ import path from "node:path";
 import fs from "node:fs/promises";
 import ExcelJS from "exceljs";
 import type { SopFormValues } from "./schemas";
-import { OBJETIVO_SOP_DEFAULT } from "./formDefaults";
+import { OBJETIVO_SOP_DEFAULT, ALCANCE_SOP_DEFAULT, ALCANCE_POR_SERVICIO } from "./formDefaults";
 
 const TEMPLATE_PATH = path.join(process.cwd(), "formats", "formato_SOP.xlsx");
 const LOGO_PATH = path.join(process.cwd(), "public", "logo_turinza.png");
@@ -97,7 +97,14 @@ export async function generarExcelSop(data: SopFormValues): Promise<Buffer> {
   set("J10", `${data.datosGenerales.ciudad}, ${data.datosGenerales.pais}`);
   set("M10", data.datosGenerales.fechaImplementacion);
   set("B12", OBJETIVO_SOP_DEFAULT);
-  set("I12", data.datosGenerales.alcanceSOP);
+  // Reconstruir siempre desde servicios para que funcione incluso con
+  // registros guardados antes de que se implementara el texto automático.
+  const lineasAlcance = data.datosGenerales.serviciosContratados
+    .map((s) => ALCANCE_POR_SERVICIO[s])
+    .filter(Boolean);
+  set("I12", lineasAlcance.length > 0
+    ? `${ALCANCE_SOP_DEFAULT}\n${lineasAlcance.join("\n")}`
+    : ALCANCE_SOP_DEFAULT);
 
   // 2. Resumen ejecutivo del cliente
   set("B21", data.resumenEjecutivo.resumenNegocioCliente);
