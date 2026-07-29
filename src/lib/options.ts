@@ -32,6 +32,13 @@ export const OPCIONES_TIPO_OPERACION = ["Importación", "Exportación", "Ambos"]
 
 export const OPCIONES_MODO_TRANSPORTE = ["Marítimo", "Aéreo", "Terrestre", "Multimodal"] as const;
 
+export const OPCIONES_TIPO_MERCANCIA = [
+  "General",
+  "Refrigerada",
+  "Peligrosa / IMO",
+  "Extradimensionada",
+] as const;
+
 export const OPCIONES_ESTADO_DOCUMENTO = ["Abierto", "En revisión", "Obsoleto", "Aprobado"] as const;
 
 export const OPCIONES_PRIORIDAD = ["Alta", "Media", "Baja"] as const;
