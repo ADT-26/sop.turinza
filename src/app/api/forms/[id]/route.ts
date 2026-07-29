@@ -24,6 +24,7 @@ const tablaContactosSchema = z.object({
 
 const patchSchema = z.object({
   nivelCliente: z.enum(["", ...OPCIONES_NIVEL_CLIENTE]).optional(),
+  revisoTurinzaComercial: firmaSchema.optional(),
   revisoTurinza: firmaSchema.optional(),
   aproboTurinza: firmaSchema.optional(),
   contactosInternos: tablaContactosSchema.optional(),
@@ -132,8 +133,8 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     );
   }
 
-  const { nivelCliente, revisoTurinza, aproboTurinza, contactosInternos, asistentesReunionOperativa } = parsed.data;
-  if (nivelCliente === undefined && !revisoTurinza && !aproboTurinza && !contactosInternos && asistentesReunionOperativa === undefined) {
+  const { nivelCliente, revisoTurinzaComercial, revisoTurinza, aproboTurinza, contactosInternos, asistentesReunionOperativa } = parsed.data;
+  if (nivelCliente === undefined && !revisoTurinzaComercial && !revisoTurinza && !aproboTurinza && !contactosInternos && asistentesReunionOperativa === undefined) {
     return NextResponse.json({ success: false, error: "Nada para actualizar" }, { status: 400 });
   }
 
@@ -141,6 +142,9 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     let actualizado = null;
     if (nivelCliente !== undefined) {
       actualizado = await actualizarNivelCliente(id, nivelCliente);
+    }
+    if (revisoTurinzaComercial) {
+      actualizado = await actualizarFirmaTurinza(id, "revisoTurinzaComercial", revisoTurinzaComercial);
     }
     if (revisoTurinza) {
       actualizado = await actualizarFirmaTurinza(id, "revisoTurinza", revisoTurinza);

@@ -112,6 +112,7 @@ export function crearSopFormVacio(): SopFormValues {
       observaciones: "",
       revisoCliente: { nombre: "", cargo: "" },
       aproboCliente: { nombre: "", cargo: "" },
+      revisoTurinzaComercial: { nombre: "", cargo: "" },
       revisoTurinza: { nombre: "", cargo: "" },
       aproboTurinza: { nombre: "", cargo: "" },
     },

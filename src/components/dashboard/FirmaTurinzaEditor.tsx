@@ -10,7 +10,7 @@ export function FirmaTurinzaEditor({
   valorInicial,
 }: {
   id: string;
-  campo: "revisoTurinza" | "aproboTurinza";
+  campo: "revisoTurinzaComercial" | "revisoTurinza" | "aproboTurinza";
   titulo: string;
   valorInicial: { nombre: string; cargo: string };
 }) {

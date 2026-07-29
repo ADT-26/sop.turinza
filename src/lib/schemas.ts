@@ -215,6 +215,7 @@ export const aprobacionesSchema = z.object({
   observaciones: z.string(),
   revisoCliente: firmaSchema,
   aproboCliente: firmaSchema,
+  revisoTurinzaComercial: firmaOpcionalSchema,
   revisoTurinza: firmaOpcionalSchema,
   aproboTurinza: firmaOpcionalSchema,
 });

@@ -46,11 +46,17 @@ export function AccionesTurinza({ id, data }: { id: string; data: SopFormValues 
           <ContactosInternosEditor id={id} valorInicial={data.contactos.internos} />
         </Tarea>
         <Tarea numero={4} titulo="Revisó / Aprobó Turinza">
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <FirmaTurinzaEditor
+              id={id}
+              campo="revisoTurinzaComercial"
+              titulo="Revisó Turinza (Comercial)"
+              valorInicial={data.aprobaciones.revisoTurinzaComercial}
+            />
             <FirmaTurinzaEditor
               id={id}
               campo="revisoTurinza"
-              titulo="Revisó Turinza"
+              titulo="Revisó Turinza (Operación)"
               valorInicial={data.aprobaciones.revisoTurinza}
             />
             <FirmaTurinzaEditor

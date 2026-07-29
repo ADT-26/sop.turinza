@@ -266,7 +266,7 @@ export async function actualizarAsistentesReunion(
 // no aparecen en el listado de SOPs.
 export async function actualizarFirmaTurinza(
   id: string,
-  campo: "revisoTurinza" | "aproboTurinza",
+  campo: "revisoTurinzaComercial" | "revisoTurinza" | "aproboTurinza",
   firma: { nombre: string; cargo: string },
 ): Promise<SopRegistro | null> {
   if (!idValido(id)) return null;
