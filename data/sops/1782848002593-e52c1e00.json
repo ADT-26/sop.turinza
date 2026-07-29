@@ -146,52 +146,88 @@
       {
         "proceso": "Transporte nacional",
         "aplica": "N/A",
-        "actividadHito": "",
-        "personalizacionAcordada": "",
-        "responsable": "",
-        "slaTiempo": "",
-        "kpiAsociado": "",
-        "controlEvidencia": ""
+        "filas": [
+          {
+            "actividadHito": "",
+            "personalizacionAcordada": "",
+            "responsable": "",
+            "slaTiempo": "",
+            "kpiAsociado": "",
+            "controlEvidencia": ""
+          }
+        ]
       },
       {
         "proceso": "Transporte internacional",
         "aplica": "Sí",
-        "actividadHito": "Test",
-        "personalizacionAcordada": "testeo",
-        "responsable": "Comercial",
-        "slaTiempo": "Diario",
-        "kpiAsociado": "barras",
-        "controlEvidencia": "test"
+        "filas": [
+          {
+            "actividadHito": "Test",
+            "personalizacionAcordada": "testeo",
+            "responsable": "Comercial",
+            "slaTiempo": "Diario",
+            "kpiAsociado": "barras",
+            "controlEvidencia": "test"
+          },
+          {
+            "actividadHito": "TE",
+            "personalizacionAcordada": "eso",
+            "responsable": "Operaciones",
+            "slaTiempo": "Diario",
+            "kpiAsociado": "barras",
+            "controlEvidencia": "testeo"
+          }
+        ]
       },
       {
         "proceso": "Agenciamiento aduanero",
         "aplica": "No",
-        "actividadHito": "",
-        "personalizacionAcordada": "",
-        "responsable": "",
-        "slaTiempo": "",
-        "kpiAsociado": "",
-        "controlEvidencia": ""
+        "filas": [
+          {
+            "actividadHito": "",
+            "personalizacionAcordada": "",
+            "responsable": "",
+            "slaTiempo": "",
+            "kpiAsociado": "",
+            "controlEvidencia": ""
+          }
+        ]
       },
       {
         "proceso": "Almacenamiento / Bodega",
         "aplica": "No",
-        "actividadHito": "",
-        "personalizacionAcordada": "",
-        "responsable": "",
-        "slaTiempo": "",
-        "kpiAsociado": "",
-        "controlEvidencia": ""
+        "filas": [
+          {
+            "actividadHito": "",
+            "personalizacionAcordada": "",
+            "responsable": "",
+            "slaTiempo": "",
+            "kpiAsociado": "",
+            "controlEvidencia": ""
+          }
+        ]
       },
       {
         "proceso": "OTM / DTA",
-        "aplica": "No",
-        "actividadHito": "",
-        "personalizacionAcordada": "",
-        "responsable": "",
-        "slaTiempo": "",
-        "kpiAsociado": "",
-        "controlEvidencia": ""
+        "aplica": "Sí",
+        "filas": [
+          {
+            "actividadHito": "sadas",
+            "personalizacionAcordada": "asdasd",
+            "responsable": "Comercial",
+            "slaTiempo": "Semanal",
+            "kpiAsociado": "asd",
+            "controlEvidencia": "asd"
+          },
+          {
+            "actividadHito": "asd",
+            "personalizacionAcordada": "asd",
+            "responsable": "Gerencia",
+            "slaTiempo": "Tiempo real",
+            "kpiAsociado": "asd",
+            "controlEvidencia": "asd"
+          }
+        ]
       }
     ],
     "interaccionAreas": [
