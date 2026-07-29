@@ -1,7 +1,7 @@
 import path from "node:path";
 import fs from "node:fs/promises";
 import ExcelJS from "exceljs";
-import type { SopFormValues } from "./schemas";
+import type { SopFormValues, KpiCliente } from "./schemas";
 import { OBJETIVO_SOP_DEFAULT, ALCANCE_SOP_DEFAULT, ALCANCE_POR_SERVICIO } from "./formDefaults";
 
 const TEMPLATE_PATH = path.join(process.cwd(), "formats", "formato_SOP.xlsx");
@@ -20,7 +20,7 @@ const FILAS_INTERACCION = [90, 91, 92, 93] as const;
 const FILAS_CUMPLIMIENTO = [97, 98, 99, 100, 101, 102] as const;
 const FILAS_RIESGO = [107, 108, 109, 110, 111, 112] as const; // la plantilla trae 6 filas
 
-export async function generarExcelSop(data: SopFormValues): Promise<Buffer> {
+export async function generarExcelSop(data: SopFormValues, matrizKpi: KpiCliente[] = []): Promise<Buffer> {
   const buffer = await fs.readFile(TEMPLATE_PATH);
   const workbook = new ExcelJS.Workbook();
   // exceljs tipa `load` contra una versión más vieja de los tipos de Buffer de Node;
@@ -207,6 +207,24 @@ export async function generarExcelSop(data: SopFormValues): Promise<Buffer> {
   set("B124", `Nombre: ${data.aprobaciones.revisoTurinza.nombre}\nCargo: ${data.aprobaciones.revisoTurinza.cargo}`);
   set("F124", `Nombre: ${data.aprobaciones.revisoTurinza.nombre}\nCargo: ${data.aprobaciones.revisoTurinza.cargo}`);
   set("K124", `Nombre: ${data.aprobaciones.aproboTurinza.nombre}\nCargo: ${data.aprobaciones.aproboTurinza.cargo}`);
+
+  // Matriz KPI (hoja separada)
+  if (matrizKpi.length > 0) {
+    const kpiSheet = workbook.getWorksheet("Matriz KPI");
+    if (kpiSheet) {
+      matrizKpi.forEach((kpi, i) => {
+        const row = 3 + i; // datos empiezan en fila 3 (filas 1-2 son encabezados)
+        kpiSheet.getCell(`A${row}`).value = kpi.servicio;
+        kpiSheet.getCell(`B${row}`).value = kpi.indicador;
+        kpiSheet.getCell(`C${row}`).value = kpi.descripcion ?? "";
+        kpiSheet.getCell(`D${row}`).value = kpi.meta ?? "";
+        kpiSheet.getCell(`E${row}`).value = kpi.frecuencia;
+        kpiSheet.getCell(`F${row}`).value = kpi.fuente ?? "";
+        kpiSheet.getCell(`G${row}`).value = kpi.responsable;
+        kpiSheet.getCell(`H${row}`).value = kpi.observaciones ?? "";
+      });
+    }
+  }
 
   const salida = await workbook.xlsx.writeBuffer();
   return Buffer.from(salida);

@@ -14,7 +14,7 @@ export async function GET(_request: NextRequest, { params }: { params: Promise<{
       return NextResponse.json({ success: false, error: "No encontrado" }, { status: 404 });
     }
 
-    const excel = await generarExcelSop(sop.data);
+    const excel = await generarExcelSop(sop.data, sop.matrizKpi);
     return new NextResponse(new Uint8Array(excel), {
       headers: {
         "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",

@@ -8,6 +8,7 @@ import {
   actualizarContactosInternos,
   actualizarAsistentesReunion,
   actualizarInstructivoOdoo,
+  actualizarMatrizKpi,
   actualizarSop,
   eliminarSop,
 } from "@/lib/sopStore";
@@ -31,6 +32,16 @@ const patchSchema = z.object({
   contactosInternos: tablaContactosSchema.optional(),
   asistentesReunionOperativa: z.string().optional(),
   instructivoOdooCliente: z.string().optional(),
+  matrizKpi: z.array(z.object({
+    servicio: z.string().default(""),
+    indicador: z.string().default(""),
+    descripcion: z.string().default(""),
+    meta: z.string().default(""),
+    frecuencia: z.string().default(""),
+    fuente: z.string().default(""),
+    responsable: z.string().default(""),
+    observaciones: z.string().default(""),
+  })).optional(),
 });
 
 export async function GET(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -135,8 +146,8 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     );
   }
 
-  const { nivelCliente, revisoTurinzaComercial, revisoTurinza, aproboTurinza, contactosInternos, asistentesReunionOperativa, instructivoOdooCliente } = parsed.data;
-  if (nivelCliente === undefined && !revisoTurinzaComercial && !revisoTurinza && !aproboTurinza && !contactosInternos && asistentesReunionOperativa === undefined && instructivoOdooCliente === undefined) {
+  const { nivelCliente, revisoTurinzaComercial, revisoTurinza, aproboTurinza, contactosInternos, asistentesReunionOperativa, instructivoOdooCliente, matrizKpi } = parsed.data;
+  if (nivelCliente === undefined && !revisoTurinzaComercial && !revisoTurinza && !aproboTurinza && !contactosInternos && asistentesReunionOperativa === undefined && instructivoOdooCliente === undefined && matrizKpi === undefined) {
     return NextResponse.json({ success: false, error: "Nada para actualizar" }, { status: 400 });
   }
 
@@ -162,6 +173,9 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     }
     if (instructivoOdooCliente !== undefined) {
       actualizado = await actualizarInstructivoOdoo(id, instructivoOdooCliente);
+    }
+    if (matrizKpi !== undefined) {
+      actualizado = await actualizarMatrizKpi(id, matrizKpi as import("@/lib/schemas").KpiCliente[]);
     }
     if (!actualizado) {
       return NextResponse.json({ success: false, error: "No encontrado" }, { status: 404 });

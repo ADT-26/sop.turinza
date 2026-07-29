@@ -4,6 +4,7 @@ import { Badge, DetailsSection } from "@/components/ui";
 import { obtenerSopPorId } from "@/lib/sopStore";
 import { OBJETIVO_SOP_DEFAULT } from "@/lib/formDefaults";
 import { AccionesTurinza } from "@/components/dashboard/AccionesTurinza";
+import { MatrizKpiEditor } from "@/components/dashboard/MatrizKpiEditor";
 import { EliminarSopButton } from "@/components/dashboard/EliminarSopButton";
 
 export const dynamic = "force-dynamic";
@@ -92,6 +93,8 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
       </div>
 
       <AccionesTurinza id={sop.id} data={data} />
+
+      <MatrizKpiEditor id={sop.id} valorInicial={sop.matrizKpi} />
 
       <div className="space-y-1">
         <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-primary-dark">

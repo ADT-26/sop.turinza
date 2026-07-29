@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto";
 import { GithubApiError, eliminarArchivo, escribirArchivo, leerArchivo } from "./githubStore";
 import { crearSopFormVacio } from "./formDefaults";
 import { conDefectos, migrarProcesosLegacy } from "./formNormalizer";
-import type { SopFormValues, TablaContactos } from "./schemas";
+import type { SopFormValues, TablaContactos, KpiCliente } from "./schemas";
 
 const SOPS_DIR = "data/sops";
 const INDEX_PATH = `${SOPS_DIR}/_index.json`;
@@ -23,6 +23,7 @@ export interface SopRegistro {
   estado: string;
   createdAt: string;
   data: SopFormValues;
+  matrizKpi: KpiCliente[];
 }
 
 export function idValido(id: string): boolean {
@@ -55,7 +56,7 @@ async function agregarAlIndice(resumen: SopResumen, intento = 0): Promise<void> 
 export async function guardarSop(data: SopFormValues): Promise<{ id: string }> {
   const id = `${Date.now()}-${randomUUID().slice(0, 8)}`;
   const createdAt = new Date().toISOString();
-  const registro: SopRegistro = { id, estado: "Abierto", createdAt, data };
+  const registro: SopRegistro = { id, estado: "Abierto", createdAt, data, matrizKpi: [] };
 
   await escribirArchivo(
     `${SOPS_DIR}/${id}.json`,
@@ -88,7 +89,7 @@ export async function obtenerSopPorId(id: string): Promise<SopRegistro | null> {
   if (!archivo) return null;
   const registro: SopRegistro = JSON.parse(archivo.content);
   const dataMigrada = migrarProcesosLegacy(registro.data);
-  return { ...registro, data: conDefectos(dataMigrada, crearSopFormVacio()) };
+  return { ...registro, matrizKpi: registro.matrizKpi ?? [], data: conDefectos(dataMigrada, crearSopFormVacio()) };
 }
 
 async function eliminarDelIndice(id: string, intento = 0): Promise<void> {
@@ -287,6 +288,27 @@ export async function actualizarInstructivoOdoo(
   );
 
   return registro;
+}
+
+export async function actualizarMatrizKpi(
+  id: string,
+  matrizKpi: KpiCliente[],
+): Promise<SopRegistro | null> {
+  if (!idValido(id)) return null;
+  const archivo = await leerArchivo(`${SOPS_DIR}/${id}.json`);
+  if (!archivo) return null;
+
+  const registro: SopRegistro = JSON.parse(archivo.content);
+  const actualizado: SopRegistro = { ...registro, matrizKpi };
+
+  await escribirArchivo(
+    `${SOPS_DIR}/${id}.json`,
+    JSON.stringify(actualizado, null, 2),
+    `Matriz KPI actualizada (${id})`,
+    archivo.sha,
+  );
+
+  return actualizado;
 }
 
 // Revisó/Aprobó Turinza tampoco las diligencia el cliente — el administrador
