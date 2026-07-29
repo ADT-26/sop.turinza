@@ -120,19 +120,25 @@
           "tipo": "Informativa",
           "canalesPreferidos": "Correo - Odoo",
           "frecuencia": "1 por semana",
-          "conCopiaContactosInternos": "Sí"
+          "conCopiaContactosInternos": "Sí",
+          "conCopiaContactoNombre": "dan",
+          "conCopiaContactoInfo": "dan@dan.dan"
         },
         {
           "tipo": "Preventiva",
           "canalesPreferidos": "Correo - Odoo",
           "frecuencia": "1 por semana",
-          "conCopiaContactosInternos": "Sí"
+          "conCopiaContactosInternos": "Sí",
+          "conCopiaContactoNombre": "test",
+          "conCopiaContactoInfo": "3205632338"
         },
         {
           "tipo": "Alertas",
           "canalesPreferidos": "Correo - Odoo",
           "frecuencia": "Quincenal",
-          "conCopiaContactosInternos": "No"
+          "conCopiaContactosInternos": "No",
+          "conCopiaContactoNombre": "",
+          "conCopiaContactoInfo": ""
         }
       ]
     },
@@ -270,6 +276,10 @@
       "aproboCliente": {
         "nombre": "Test",
         "cargo": "analista"
+      },
+      "revisoTurinzaComercial": {
+        "nombre": "",
+        "cargo": ""
       },
       "revisoTurinza": {
         "nombre": "tester",
