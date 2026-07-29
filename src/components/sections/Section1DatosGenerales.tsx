@@ -4,7 +4,6 @@ import { Controller, useFormContext } from "react-hook-form";
 import { Field, TextInput, Select } from "@/components/ui";
 import {
   CIUDADES_SUGERIDAS_COLOMBIA,
-  OPCIONES_TIPO_MERCANCIA,
   OPCIONES_PAIS,
   OPCIONES_SERVICIOS,
   OPCIONES_TIPO_OPERACION,
@@ -40,9 +39,8 @@ export function Section1DatosGenerales() {
           />
         </Field>
         <Field label="Tipo de mercancía" htmlFor="tipoMercancia" required error={e?.tipoMercancia?.message} nota={NOTAS["datosGenerales.tipoMercancia"]}>
-          <Select
+          <TextInput
             id="tipoMercancia"
-            options={OPCIONES_TIPO_MERCANCIA}
             {...register("datosGenerales.tipoMercancia")}
           />
         </Field>

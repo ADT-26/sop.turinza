@@ -12,7 +12,7 @@ export const NOTAS = {
   "datosGenerales.tipoOperacion":
     "Seleccionar de la lista desplegable: Importación, Exportación o Importación - Exportación.",
   "datosGenerales.tipoMercancia":
-    "Seleccionar de la lista desplegable: General, Refrigerada, Peligrosa / IMO o Extradimensionada.",
+    "Completar: describir la mercancía (tipo de producto; naturaleza de la carga: general, refrigerada, peligrosa/IMO, extradimensionada; partida arancelaria si aplica).",
   "datosGenerales.serviciosContratados":
     "Seleccionar todos los servicios contratados. El 'Alcance del SOP' se actualiza automáticamente según los servicios seleccionados.",
   "datosGenerales.direccionPrincipal":
