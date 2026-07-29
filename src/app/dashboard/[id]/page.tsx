@@ -131,6 +131,8 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
             />
             <Campo label="Requiere atención 24/7" value={data.resumenEjecutivo.requiereAtencion247} />
             <Campo label="Requiere reuniones KPI" value={data.resumenEjecutivo.requiereReunionesKPI} />
+            <Campo label="Requiere reunión operativa semanal" value={data.resumenEjecutivo.requiereReunionOperativaSemanal} />
+            <Campo label="Asistentes reunión operativa" value={data.resumenEjecutivo.asistentesReunionOperativa} />
             <Campo
               label="Periodicidad revisión y actualización SOP"
               value={data.resumenEjecutivo.periodicidadRevisionSOP}

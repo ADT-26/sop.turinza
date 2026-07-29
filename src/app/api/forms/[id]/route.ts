@@ -6,6 +6,7 @@ import {
   actualizarNivelCliente,
   actualizarFirmaTurinza,
   actualizarContactosInternos,
+  actualizarAsistentesReunion,
   actualizarSop,
   eliminarSop,
 } from "@/lib/sopStore";
@@ -26,6 +27,7 @@ const patchSchema = z.object({
   revisoTurinza: firmaSchema.optional(),
   aproboTurinza: firmaSchema.optional(),
   contactosInternos: tablaContactosSchema.optional(),
+  asistentesReunionOperativa: z.string().optional(),
 });
 
 export async function GET(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -130,8 +132,8 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     );
   }
 
-  const { nivelCliente, revisoTurinza, aproboTurinza, contactosInternos } = parsed.data;
-  if (nivelCliente === undefined && !revisoTurinza && !aproboTurinza && !contactosInternos) {
+  const { nivelCliente, revisoTurinza, aproboTurinza, contactosInternos, asistentesReunionOperativa } = parsed.data;
+  if (nivelCliente === undefined && !revisoTurinza && !aproboTurinza && !contactosInternos && asistentesReunionOperativa === undefined) {
     return NextResponse.json({ success: false, error: "Nada para actualizar" }, { status: 400 });
   }
 
@@ -148,6 +150,9 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     }
     if (contactosInternos) {
       actualizado = await actualizarContactosInternos(id, contactosInternos);
+    }
+    if (asistentesReunionOperativa !== undefined) {
+      actualizado = await actualizarAsistentesReunion(id, asistentesReunionOperativa);
     }
     if (!actualizado) {
       return NextResponse.json({ success: false, error: "No encontrado" }, { status: 404 });

@@ -237,6 +237,30 @@ export async function actualizarNivelCliente(
   return registro;
 }
 
+export async function actualizarAsistentesReunion(
+  id: string,
+  asistentesReunionOperativa: string,
+): Promise<SopRegistro | null> {
+  if (!idValido(id)) return null;
+  const archivo = await leerArchivo(`${SOPS_DIR}/${id}.json`);
+  if (!archivo) return null;
+
+  const registro: SopRegistro = JSON.parse(archivo.content);
+  registro.data = {
+    ...registro.data,
+    resumenEjecutivo: { ...registro.data.resumenEjecutivo, asistentesReunionOperativa },
+  };
+
+  await escribirArchivo(
+    `${SOPS_DIR}/${id}.json`,
+    JSON.stringify(registro, null, 2),
+    `Asistentes reunión operativa (${id})`,
+    archivo.sha,
+  );
+
+  return registro;
+}
+
 // Revisó/Aprobó Turinza tampoco las diligencia el cliente — el administrador
 // las completa desde el panel interno. No requieren tocar el índice porque
 // no aparecen en el listado de SOPs.
