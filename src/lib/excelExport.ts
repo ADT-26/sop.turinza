@@ -134,7 +134,7 @@ export async function generarExcelSop(data: SopFormValues): Promise<Buffer> {
 
   // 4. Preferencias, protocolos y particularidades
   set("B51", data.preferencias.trazabilidad.frecuenciaReportes);
-  set("E51", data.preferencias.trazabilidad.formatoCanal);
+  set("E51", "Correo - llamada");
   set("H51", data.preferencias.trazabilidad.contenidoMinimoRequerido);
   set("L51", data.preferencias.trazabilidad.instructivoOdooCliente);
 

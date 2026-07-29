@@ -74,7 +74,7 @@ export function crearSopFormVacio(): SopFormValues {
     preferencias: {
       trazabilidad: {
         frecuenciaReportes: "",
-        formatoCanal: "Sistema Odoo",
+        formatoCanal: "Correo - llamada",
         contenidoMinimoRequerido: "",
         instructivoOdooCliente: "",
       },

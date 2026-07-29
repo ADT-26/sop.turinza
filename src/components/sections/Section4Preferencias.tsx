@@ -45,8 +45,10 @@ export function Section4Preferencias() {
               {...register("preferencias.trazabilidad.frecuenciaReportes")}
             />
           </Field>
-          <Field label="Formato / canal" htmlFor="formatoCanal" nota={NOTAS["preferencias.trazabilidad.formatoCanal"]}>
-            <TextInput id="formatoCanal" {...register("preferencias.trazabilidad.formatoCanal")} />
+          <Field label="Formato / canal">
+            <p className="rounded-md border border-line bg-surface px-3 py-2 text-sm text-ink-muted select-none">
+              Correo - llamada
+            </p>
           </Field>
           <Field
             label="Contenido mínimo requerido"

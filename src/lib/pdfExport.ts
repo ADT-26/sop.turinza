@@ -278,7 +278,7 @@ function buildSec4(pref: SopFormValues["preferencias"]): any {
                 cl("Contenido mínimo requerido", 4), PH, PH, PH,
                 cl("Instructivo Odoo para el cliente", 4), PH, PH, PH];
   const datT = [dc(t.frecuenciaReportes, 3), PH, PH,
-                dc(t.formatoCanal, 3), PH, PH,
+                dc("Correo - llamada", 3), PH, PH,
                 dc(t.contenidoMinimoRequerido, 4), PH, PH, PH,
                 dc(t.instructivoOdooCliente, 4), PH, PH, PH];
 
