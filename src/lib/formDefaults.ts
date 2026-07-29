@@ -11,6 +11,21 @@ export const OBJETIVO_SOP_DEFAULT =
 export const ALCANCE_SOP_DEFAULT =
   "Este SOP aplica a los servicios contratados por el cliente, incluyendo los servicios relacionados en el apartado de servicios contratados. Cubre desde la recepción de solicitudes del cliente hasta la entrega final de la carga y facturación, integrando a todas las áreas involucradas en la operación.";
 
+// Texto de alcance por servicio (igual que en formato_SOP.xlsx).
+// Se concatena uno por línea según los servicios seleccionados.
+export const ALCANCE_POR_SERVICIO: Record<string, string> = {
+  "OTM / DTA":
+    "DTA/OTM: Cubre desde la recepción de solicitud del cliente hasta el descargue de la mercancía y liberación de documentos del embarque en el deposito indicado en el documento de transporte.",
+  "Transporte nacional":
+    "Transporte terrestre: Cubre desde la recepción de solicitud del cliente hasta el descargue de la mercancía en el destino final acordado previamente.",
+  "Transporte internacional":
+    "Transporte internacional: Cubre desde la recepción de solicitudes del cliente hasta la entrega de documentos liberados a quien el cliente autorice.",
+  "Aduanas":
+    "Aduanas: Cubre desde la recepción de solicitud del cliente hasta el levante de la mercancía otorgado por la autoridad aduanera DIAN.",
+  "Almacenamiento / Bodega":
+    "Bodega: Cubre desde la recepción de solicitud del cliente hasta el cargue y salida de la mercancía.",
+};
+
 const crearContactoVacio = (): Contacto => ({ nombreCargo: "", telefono: "", correo: "" });
 
 const crearTablaContactosVacia = (): TablaContactos => ({

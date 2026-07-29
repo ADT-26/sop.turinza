@@ -15,6 +15,8 @@ export const NOTAS = {
     "Completar: describir la mercancía (tipo de producto; naturaleza de la carga: general, refrigerada, peligrosa/IMO, extradimensionada; partida arancelaria si aplica).",
   "datosGenerales.serviciosContratados":
     "Seleccionar todos los servicios contratados. El 'Alcance del SOP' se actualiza automáticamente según los servicios seleccionados.",
+  "datosGenerales.alcanceSOP":
+    "Se genera automáticamente según los servicios contratados seleccionados arriba.",
   "datosGenerales.direccionPrincipal":
     "Completar: dirección principal del cliente (sede administrativa o planta desde donde se coordina la operación).",
   "datosGenerales.ciudad":

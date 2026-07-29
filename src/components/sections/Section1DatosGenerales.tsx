@@ -1,13 +1,15 @@
 "use client";
 
-import { Controller, useFormContext } from "react-hook-form";
-import { Field, TextInput, Select } from "@/components/ui";
+import { useEffect } from "react";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
+import { Field, TextInput, Select, TextArea } from "@/components/ui";
 import {
   CIUDADES_SUGERIDAS_COLOMBIA,
   OPCIONES_PAIS,
   OPCIONES_SERVICIOS,
   OPCIONES_TIPO_OPERACION,
 } from "@/lib/options";
+import { ALCANCE_POR_SERVICIO, ALCANCE_SOP_DEFAULT } from "@/lib/formDefaults";
 import { NOTAS } from "@/lib/formNotes";
 import type { SopFormValues } from "@/lib/schemas";
 
@@ -15,9 +17,24 @@ export function Section1DatosGenerales() {
   const {
     register,
     control,
+    setValue,
     formState: { errors },
   } = useFormContext<SopFormValues>();
   const e = errors.datosGenerales;
+
+  const serviciosSeleccionados = useWatch({ control, name: "datosGenerales.serviciosContratados" });
+  const alcanceActual = useWatch({ control, name: "datosGenerales.alcanceSOP" });
+
+  useEffect(() => {
+    const lineas = serviciosSeleccionados
+      .map((s) => ALCANCE_POR_SERVICIO[s])
+      .filter(Boolean);
+    setValue(
+      "datosGenerales.alcanceSOP",
+      lineas.length > 0 ? lineas.join("\n") : ALCANCE_SOP_DEFAULT,
+      { shouldValidate: false },
+    );
+  }, [serviciosSeleccionados, setValue]);
 
   return (
     <div className="space-y-5">
@@ -116,6 +133,19 @@ export function Section1DatosGenerales() {
           )}
         />
       </Field>
+
+      <Field label="Alcance del SOP" nota={NOTAS["datosGenerales.alcanceSOP"]}>
+        <TextArea
+          value={alcanceActual}
+          readOnly
+          rows={lineasAlcance(alcanceActual)}
+          className="cursor-default bg-surface text-ink-muted"
+        />
+      </Field>
     </div>
   );
+}
+
+function lineasAlcance(texto: string): number {
+  return Math.max(3, (texto.match(/\n/g) ?? []).length + 1);
 }
