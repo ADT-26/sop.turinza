@@ -25,7 +25,7 @@
       "requiereAtencion247": "No",
       "requiereReunionesKPI": "Sí",
       "requiereReunionOperativaSemanal": "No",
-      "asistentesReunionOperativa": "",
+      "asistentesReunionOperativa": "KAS, director de Operaciones",
       "periodicidadRevisionSOP": "Trimestral",
       "nivelCliente": "Nivel 1"
     },
