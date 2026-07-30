@@ -1,5 +1,14 @@
 [
   {
+    "id": "1785443651220-9660d526",
+    "cliente": "SOLDADURAS WEST ARCO",
+    "nit": "900.216.225-3",
+    "tipoOperacion": "Ambos",
+    "nivelCliente": "",
+    "estado": "Abierto",
+    "createdAt": "2026-07-30T20:34:11.220Z"
+  },
+  {
     "id": "1784929339686-3346f8a2",
     "cliente": "dsss",
     "nit": "123",
