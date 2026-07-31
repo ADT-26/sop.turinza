@@ -33,12 +33,13 @@ export default async function DashboardPage() {
   }
 
   return (
+    <div className="min-h-screen bg-[#F5F7FA]">
     <div className="mx-auto max-w-5xl space-y-6 px-6 py-10">
       <div>
-        <p className="font-mono text-[11px] font-semibold uppercase tracking-widest text-primary-dark">
-          Panel interno
+        <p className="font-mono text-[11px] font-semibold uppercase tracking-widest text-navy/40">
+          Panel interno · Turinza
         </p>
-        <h1 className="mt-1 text-2xl font-bold tracking-tight text-ink">SOPs recibidos</h1>
+        <h1 className="mt-1 text-2xl font-bold tracking-tight text-navy">SOPs recibidos</h1>
         <p className="mt-1 text-sm text-ink-muted">{sops.length} registro(s)</p>
       </div>
 
@@ -57,7 +58,7 @@ export default async function DashboardPage() {
                 <div className="flex items-start justify-between gap-3">
                   <Link
                     href={`/dashboard/${sop.id}`}
-                    className="font-medium text-primary-dark hover:underline"
+                    className="font-semibold text-navy hover:underline"
                   >
                     {sop.cliente}
                   </Link>
@@ -96,15 +97,15 @@ export default async function DashboardPage() {
           {/* Tabla: pantallas medianas en adelante */}
           <div className="hidden overflow-hidden rounded-md border border-line bg-white md:block">
             <table className="w-full text-left text-sm">
-              <thead className="bg-surface text-xs uppercase text-ink-muted">
+              <thead className="bg-navy font-mono text-[11px] uppercase tracking-wide text-white/70">
                 <tr>
-                  <th className="px-4 py-3">Cliente</th>
-                  <th className="px-4 py-3">NIT</th>
-                  <th className="px-4 py-3">Tipo operación</th>
-                  <th className="px-4 py-3">Nivel</th>
-                  <th className="px-4 py-3">Estado</th>
-                  <th className="px-4 py-3">Fecha</th>
-                  <th className="px-4 py-3">Acciones</th>
+                  <th className="px-4 py-3 font-semibold">Cliente</th>
+                  <th className="px-4 py-3 font-semibold">NIT</th>
+                  <th className="px-4 py-3 font-semibold">Tipo operación</th>
+                  <th className="px-4 py-3 font-semibold">Nivel</th>
+                  <th className="px-4 py-3 font-semibold">Estado</th>
+                  <th className="px-4 py-3 font-semibold">Fecha</th>
+                  <th className="px-4 py-3 font-semibold">Acciones</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-line">
@@ -113,7 +114,7 @@ export default async function DashboardPage() {
                     <td className="px-4 py-3">
                       <Link
                         href={`/dashboard/${sop.id}`}
-                        className="font-medium text-primary-dark hover:underline"
+                        className="font-semibold text-navy hover:underline"
                       >
                         {sop.cliente}
                       </Link>
@@ -139,6 +140,7 @@ export default async function DashboardPage() {
           </div>
         </>
       )}
+    </div>
     </div>
   );
 }

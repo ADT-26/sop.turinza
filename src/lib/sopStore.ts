@@ -1,8 +1,8 @@
 import { randomUUID } from "node:crypto";
 import { GithubApiError, eliminarArchivo, escribirArchivo, leerArchivo } from "./githubStore";
 import { crearSopFormVacio } from "./formDefaults";
-import { conDefectos, migrarProcesosLegacy } from "./formNormalizer";
-import type { SopFormValues, TablaContactos, KpiCliente } from "./schemas";
+import { conDefectos, migrarContactosInternosLegacy, migrarProcesosLegacy } from "./formNormalizer";
+import type { SopFormValues, TablaContactosInternos, KpiCliente } from "./schemas";
 
 const SOPS_DIR = "data/sops";
 const INDEX_PATH = `${SOPS_DIR}/_index.json`;
@@ -88,7 +88,7 @@ export async function obtenerSopPorId(id: string): Promise<SopRegistro | null> {
   const archivo = await leerArchivo(`${SOPS_DIR}/${id}.json`);
   if (!archivo) return null;
   const registro: SopRegistro = JSON.parse(archivo.content);
-  const dataMigrada = migrarProcesosLegacy(registro.data);
+  const dataMigrada = migrarContactosInternosLegacy(migrarProcesosLegacy(registro.data));
   return { ...registro, matrizKpi: registro.matrizKpi ?? [], data: conDefectos(dataMigrada, crearSopFormVacio()) };
 }
 
@@ -344,7 +344,7 @@ export async function actualizarFirmaTurinza(
 // porque no aparecen en el listado de SOPs.
 export async function actualizarContactosInternos(
   id: string,
-  internos: TablaContactos,
+  internos: TablaContactosInternos,
 ): Promise<SopRegistro | null> {
   if (!idValido(id)) return null;
   const archivo = await leerArchivo(`${SOPS_DIR}/${id}.json`);

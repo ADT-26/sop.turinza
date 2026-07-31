@@ -13,14 +13,14 @@ import {
   eliminarSop,
 } from "@/lib/sopStore";
 import { OPCIONES_NIVEL_CLIENTE } from "@/lib/options";
-import { AREAS_CONTACTO, sopFormSchema } from "@/lib/schemas";
+import { AREAS_CONTACTO_INTERNOS, sopFormSchema } from "@/lib/schemas";
 
 const firmaSchema = z.object({ nombre: z.string(), cargo: z.string() });
 
 const contactoSchema = z.object({ nombreCargo: z.string(), telefono: z.string(), correo: z.string() });
 const contactoDepartamentoSchema = contactoSchema.extend({ area: z.string(), backus: z.string() });
 const tablaContactosSchema = z.object({
-  departamentos: z.array(contactoDepartamentoSchema).length(AREAS_CONTACTO.length),
+  departamentos: z.array(contactoDepartamentoSchema).length(AREAS_CONTACTO_INTERNOS.length),
   escalonamiento: contactoSchema,
 });
 

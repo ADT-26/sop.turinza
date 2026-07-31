@@ -185,13 +185,13 @@ export function MatrizKpiEditor({
   };
 
   return (
-    <section className="overflow-hidden rounded-md border border-primary/20 bg-primary/3 shadow-sm">
-      <header className="border-b border-primary/15 px-5 py-4">
-        <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-primary-dark">
-          Gestión interna
+    <section className="overflow-hidden rounded-md border border-line bg-white shadow-sm">
+      <header className="bg-navy px-5 py-4">
+        <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-white/50">
+          Turinza · Indicadores
         </p>
-        <h2 className="mt-1 text-lg font-bold tracking-tight text-ink">Matriz KPI del cliente</h2>
-        <p className="mt-1 text-sm text-ink-muted">
+        <h2 className="mt-1 text-lg font-bold tracking-tight text-white">Matriz KPI del cliente</h2>
+        <p className="mt-1 text-sm text-white/65">
           Indicadores de desempeño acordados con el cliente. Se exportan a la hoja "Matriz KPI" del Excel.
         </p>
       </header>
@@ -215,7 +215,7 @@ export function MatrizKpiEditor({
           <button
             type="button"
             onClick={agregar}
-            className="flex items-center gap-1.5 rounded-md border border-dashed border-primary/40 px-3 py-2 text-xs font-medium text-primary hover:border-primary hover:bg-primary/5"
+            className="flex items-center gap-1.5 rounded-md border border-dashed border-navy/25 px-3 py-2 text-xs font-medium text-navy/60 hover:border-navy/40 hover:bg-navy/5"
           >
             <span aria-hidden="true">+</span> Agregar KPI
           </button>
@@ -223,7 +223,7 @@ export function MatrizKpiEditor({
             type="button"
             onClick={guardar}
             disabled={guardando}
-            className="rounded-md bg-primary-dark px-4 py-2 text-xs font-semibold text-white hover:bg-primary-dark/90 disabled:opacity-50"
+            className="rounded-md bg-accent px-4 py-2 text-xs font-semibold text-white hover:bg-accent/90 disabled:opacity-50"
           >
             {guardando ? "Guardando..." : "Guardar matriz"}
           </button>

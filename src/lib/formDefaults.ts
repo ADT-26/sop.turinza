@@ -1,6 +1,6 @@
-import { AREAS_CONTACTO, AREAS_INTERACCION, PROCESOS_OPERATIVOS, REQUISITOS_CUMPLIMIENTO } from "./schemas";
+import { AREAS_CONTACTO, AREAS_CONTACTO_INTERNOS, AREAS_INTERACCION, PROCESOS_OPERATIVOS, REQUISITOS_CUMPLIMIENTO } from "./schemas";
 import { OPCIONES_TIPO_COMUNICACION } from "./options";
-import type { Contacto, Riesgo, SopFormValues, TablaContactos } from "./schemas";
+import type { Contacto, Riesgo, SopFormValues, TablaContactos, TablaContactosInternos } from "./schemas";
 
 // Objetivo y Alcance del SOP son texto fijo del formato — el cliente no los
 // diligencia. Se exportan también desde aquí para que el Excel y el panel
@@ -30,6 +30,11 @@ const crearContactoVacio = (): Contacto => ({ nombreCargo: "", telefono: "", cor
 
 const crearTablaContactosVacia = (): TablaContactos => ({
   departamentos: AREAS_CONTACTO.map((area) => ({ area, backus: "", ...crearContactoVacio() })),
+  escalonamiento: crearContactoVacio(),
+});
+
+const crearTablaContactosInternosVacia = (): TablaContactosInternos => ({
+  departamentos: AREAS_CONTACTO_INTERNOS.map((area) => ({ area, backus: "", ...crearContactoVacio() })),
   escalonamiento: crearContactoVacio(),
 });
 
@@ -68,7 +73,7 @@ export function crearSopFormVacio(): SopFormValues {
       nivelCliente: "",
     },
     contactos: {
-      internos: crearTablaContactosVacia(),
+      internos: crearTablaContactosInternosVacia(),
       cliente: crearTablaContactosVacia(),
     },
     preferencias: {

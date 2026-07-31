@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import { TextInput } from "@/components/ui";
-import { AREAS_CONTACTO, type TablaContactos } from "@/lib/schemas";
+import { AREAS_CONTACTO_INTERNOS, type TablaContactosInternos } from "@/lib/schemas";
 
 export function ContactosInternosEditor({
   id,
   valorInicial,
 }: {
   id: string;
-  valorInicial: TablaContactos;
+  valorInicial: TablaContactosInternos;
 }) {
   const [valor, setValor] = useState(valorInicial);
   const [guardando, setGuardando] = useState(false);
@@ -38,7 +38,7 @@ export function ContactosInternosEditor({
 
   return (
     <div className="space-y-3">
-      {AREAS_CONTACTO.map((area, index) => {
+      {AREAS_CONTACTO_INTERNOS.map((area, index) => {
         const dep = valor.departamentos[index];
         const actualizarDep = (campo: keyof typeof dep, valorCampo: string) => {
           setValor((v) => {

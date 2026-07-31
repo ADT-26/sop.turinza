@@ -9,7 +9,7 @@ import type { SopFormValues } from "@/lib/schemas";
 function Tarea({ numero, titulo, children }: { numero: number; titulo: string; children: ReactNode }) {
   return (
     <div className="flex gap-4 py-5 first:pt-0 last:pb-0">
-      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent font-mono text-xs font-semibold text-white">
+      <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm bg-accent font-mono text-[11px] font-bold text-white">
         {numero}
       </div>
       <div className="flex-1 space-y-3">
@@ -26,17 +26,17 @@ function Tarea({ numero, titulo, children }: { numero: number; titulo: string; c
 // que es el contenido azul/neutro de solo lectura enviado por el cliente.
 export function AccionesTurinza({ id, data }: { id: string; data: SopFormValues }) {
   return (
-    <section className="overflow-hidden rounded-md border border-accent/25 bg-accent/5 shadow-sm">
-      <header className="border-b border-accent/20 px-5 py-4">
-        <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-accent">
-          Acciones de Turinza
+    <section className="overflow-hidden rounded-md border border-line bg-white shadow-sm">
+      <header className="bg-navy px-5 py-4">
+        <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-white/50">
+          Turinza · Pendientes
         </p>
-        <h2 className="mt-1 text-lg font-bold tracking-tight text-ink">Pendientes por diligenciar</h2>
-        <p className="mt-1 text-sm text-ink-muted">
+        <h2 className="mt-1 text-lg font-bold tracking-tight text-white">Pendientes por diligenciar</h2>
+        <p className="mt-1 text-sm text-white/65">
           Estos campos no los llena el cliente — los completa Turinza al revisar el SOP recibido.
         </p>
       </header>
-      <div className="divide-y divide-accent/15 px-5">
+      <div className="divide-y divide-line px-5">
         <Tarea numero={1} titulo="Nivel Cliente">
           <NivelClienteEditor id={id} valorInicial={data.resumenEjecutivo.nivelCliente} />
         </Tarea>

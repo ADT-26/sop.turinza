@@ -13,7 +13,9 @@ const LOGO_PATH = path.join(process.cwd(), "public", "logo_turinza.png");
 // Nota: los 4 departamentos internos del esquema (Operaciones, Contabilidad,
 // Tesorería, Calidad) van a las filas 34-37; las filas 32-33 (Comercial,
 // Pricing/Inside Sale) quedan vacías para que el administrador las complete.
-const FILAS_CONTACTO = { internos: [34, 35, 36, 37], cliente: [41, 42, 43, 44] } as const;
+// internos: filas 32 (Comercial), 33 (Pricing/Inside Sale), 34-37 (los 4 operativos)
+// cliente:  filas 41-44
+const FILAS_CONTACTO = { internos: [32, 33, 34, 35, 36, 37], cliente: [41, 42, 43, 44] } as const;
 const FILAS_COMUNICACION = [56, 59, 62] as const; // Informativa, Preventiva, Alertas
 const FILAS_PROCESO = [67, 71, 75, 79, 83] as const; // primera fila de cada bloque de 4
 const FILAS_INTERACCION = [90, 91, 92, 93] as const;

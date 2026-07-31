@@ -16,25 +16,26 @@ export function DetailsSection({ index, title, defaultOpen, children }: DetailsS
       className="group overflow-hidden rounded-md border border-line bg-white shadow-sm"
       open={defaultOpen}
     >
-      <summary className="flex cursor-pointer list-none items-center justify-between gap-3 border-b border-line bg-surface px-5 py-4 marker:content-none">
-        <div>
-          <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-primary-dark">
-            Sección {String(index).padStart(2, "0")}
-          </p>
-          <h2 className="mt-1 text-lg font-bold tracking-tight text-ink">{title}</h2>
-        </div>
+      <summary className="flex cursor-pointer list-none items-center gap-4 px-5 py-4 hover:bg-surface marker:content-none">
+        <span
+          className="select-none font-mono text-3xl font-black leading-none text-navy/10 shrink-0 w-10 text-right tabular-nums"
+          aria-hidden="true"
+        >
+          {String(index).padStart(2, "0")}
+        </span>
+        <h2 className="flex-1 text-sm font-semibold tracking-tight text-navy">{title}</h2>
         <svg
           viewBox="0 0 20 20"
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
-          className="h-4 w-4 shrink-0 text-ink-muted transition-transform group-open:rotate-180"
+          className="h-4 w-4 shrink-0 text-navy/25 transition-transform group-open:rotate-180"
           aria-hidden="true"
         >
           <path d="M5 7.5L10 12.5L15 7.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </summary>
-      <div className="space-y-5 px-5 py-5">{children}</div>
+      <div className="border-t border-line space-y-5 px-5 py-5">{children}</div>
     </details>
   );
 }

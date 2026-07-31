@@ -55,14 +55,15 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
   ];
 
   return (
+    <div className="min-h-screen bg-[#F5F7FA]">
     <div className="mx-auto max-w-5xl space-y-6 px-6 py-10">
-      <div className="flex flex-col gap-4 rounded-md border border-line bg-white p-5 sm:flex-row sm:items-start sm:justify-between">
+      <div className="flex flex-col gap-4 rounded-md bg-navy p-5 shadow-sm sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <p className="font-mono text-xs text-ink-muted">SOP #{sop.id}</p>
-          <h1 className="mt-1 text-2xl font-bold tracking-tight text-ink">
+          <p className="font-mono text-xs text-white/50">SOP #{sop.id}</p>
+          <h1 className="mt-1 text-2xl font-bold tracking-tight text-white">
             {data.datosGenerales.cliente}
           </h1>
-          <p className="mt-1 font-mono text-sm text-ink-muted">
+          <p className="mt-1 font-mono text-sm text-white/55">
             {new Date(sop.createdAt).toLocaleString("es-CO")}
           </p>
         </div>
@@ -71,19 +72,19 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
           <div className="flex flex-wrap items-center gap-2">
             <Link
               href={`/dashboard/${sop.id}/editar`}
-              className="rounded-md border border-primary-dark px-4 py-2 text-sm font-semibold text-primary-dark hover:bg-primary-dark/5"
+              className="rounded-md border border-white/30 px-4 py-2 text-sm font-semibold text-white hover:bg-white/10"
             >
               Editar datos del cliente
             </Link>
             <a
               href={`/api/forms/${sop.id}/excel`}
-              className="rounded-md bg-primary-dark px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark/90"
+              className="rounded-md bg-white/15 px-4 py-2 text-sm font-semibold text-white hover:bg-white/25"
             >
               Descargar Excel
             </a>
             <a
               href={`/api/forms/${sop.id}/pdf`}
-              className="rounded-md border border-primary-dark px-4 py-2 text-sm font-semibold text-primary-dark hover:bg-primary-dark/5"
+              className="rounded-md border border-white/30 px-4 py-2 text-sm font-semibold text-white hover:bg-white/10"
             >
               Descargar PDF
             </a>
@@ -96,11 +97,12 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
 
       <MatrizKpiEditor id={sop.id} valorInicial={sop.matrizKpi} />
 
-      <div className="space-y-1">
-        <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-primary-dark">
+      <div className="flex items-center gap-4 py-2">
+        <div className="h-px flex-1 bg-line" />
+        <span className="font-mono text-[10px] font-semibold uppercase tracking-widest text-ink-muted/60">
           Datos enviados por el cliente
-        </p>
-        <p className="text-sm text-ink-muted">Solo lectura — esto lo diligenció el cliente en el formulario.</p>
+        </span>
+        <div className="h-px flex-1 bg-line" />
       </div>
 
       <div className="space-y-3">
@@ -277,6 +279,7 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
           </div>
         </DetailsSection>
       </div>
+    </div>
     </div>
   );
 }

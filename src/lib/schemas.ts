@@ -36,8 +36,21 @@ const opcionOpcional = (valores: readonly string[]) =>
       message: "Selecciona una opción válida",
     });
 
-// Filas fijas de las tablas de la Matriz de Contactos (Sección 3).
+// Filas fijas de la tabla de contactos del cliente (Sección 3 — lado cliente).
+// Filas 41-44 del template Excel.
 export const AREAS_CONTACTO = [
+  "Operaciones / Logística",
+  "Contabilidad / Facturación",
+  "Tesorería / Pagos",
+  "Calidad / Servicio al cliente",
+] as const;
+
+// Filas fijas de la tabla de contactos internos Turinza / Cuenta (Sección 3).
+// Filas 32-37 del template Excel: Comercial y Pricing/Inside Sale van primero
+// (filas 32-33) seguidas de los 4 departamentos operativos (filas 34-37).
+export const AREAS_CONTACTO_INTERNOS = [
+  "Comercial",
+  "Pricing / Inside Sale",
   "Operaciones / Logística",
   "Contabilidad / Facturación",
   "Tesorería / Pagos",
@@ -90,8 +103,13 @@ const tablaContactosSchema = z.object({
   escalonamiento: contactoSchema,
 });
 
+const tablaContactosInternosSchema = z.object({
+  departamentos: z.array(contactoDepartamentoSchema).length(AREAS_CONTACTO_INTERNOS.length),
+  escalonamiento: contactoSchema,
+});
+
 export const matrizContactosSchema = z.object({
-  internos: tablaContactosSchema,
+  internos: tablaContactosInternosSchema,
   cliente: tablaContactosSchema,
 });
 
@@ -246,6 +264,7 @@ export type ResumenEjecutivo = z.infer<typeof resumenEjecutivoSchema>;
 export type Contacto = z.infer<typeof contactoSchema>;
 export type ContactoDepartamento = z.infer<typeof contactoDepartamentoSchema>;
 export type TablaContactos = z.infer<typeof tablaContactosSchema>;
+export type TablaContactosInternos = z.infer<typeof tablaContactosInternosSchema>;
 export type MatrizContactos = z.infer<typeof matrizContactosSchema>;
 export type Trazabilidad = z.infer<typeof trazabilidadSchema>;
 export type ComunicacionBloque = z.infer<typeof comunicacionBloqueSchema>;
