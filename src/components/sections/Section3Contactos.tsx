@@ -6,14 +6,14 @@ import { AREAS_CONTACTO } from "@/lib/schemas";
 import { NOTAS } from "@/lib/formNotes";
 import type { SopFormValues } from "@/lib/schemas";
 
-function TablaContactos({ titulo, base }: { titulo: string; base: "internos" | "cliente" }) {
+function TablaContactos({ titulo, base }: { titulo: string; base: "cliente" }) {
   const {
     register,
     formState: { errors },
   } = useFormContext<SopFormValues>();
   const e = errors.contactos?.[base];
 
-  const nota = base === "internos" ? NOTAS["contactos.internos"] : NOTAS["contactos.cliente"];
+  const nota = NOTAS["contactos.cliente"];
 
   return (
     <div className="space-y-3">

@@ -40,17 +40,27 @@ export function ContactosInternosEditor({
     <div className="space-y-3">
       {AREAS_CONTACTO_INTERNOS.map((area, index) => {
         const dep = valor.departamentos[index];
-        const actualizarDep = (campo: keyof typeof dep, valorCampo: string) => {
+        const actualizarDep = (campo: keyof Omit<typeof dep, "escalonamiento" | "area">, val: string) => {
           setValor((v) => {
             const departamentos = [...v.departamentos];
-            departamentos[index] = { ...departamentos[index], [campo]: valorCampo };
+            departamentos[index] = { ...departamentos[index], [campo]: val };
+            return { ...v, departamentos };
+          });
+        };
+        const actualizarEsc = (campo: keyof typeof dep.escalonamiento, val: string) => {
+          setValor((v) => {
+            const departamentos = [...v.departamentos];
+            departamentos[index] = {
+              ...departamentos[index],
+              escalonamiento: { ...departamentos[index].escalonamiento, [campo]: val },
+            };
             return { ...v, departamentos };
           });
         };
         return (
-          <div key={area} className="rounded-lg border border-line bg-white p-4">
-            <div className="grid gap-4 sm:grid-cols-2">
-              <p className="text-sm font-medium text-ink-muted sm:col-span-2">{area}</p>
+          <div key={area} className="rounded-lg border border-line bg-white overflow-hidden">
+            <p className="px-4 pt-3 pb-2 text-sm font-semibold text-navy">{area}</p>
+            <div className="px-4 pb-3 grid gap-3 sm:grid-cols-2">
               <TextInput
                 placeholder="Nombre / Cargo"
                 value={dep.nombreCargo}
@@ -72,48 +82,33 @@ export function ContactosInternosEditor({
                 onChange={(e) => actualizarDep("backus", e.target.value)}
               />
             </div>
+            <div className="border-t border-line/60 bg-surface px-4 py-3">
+              <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-ink-muted/60">
+                Escalonamiento
+              </p>
+              <div className="grid gap-3 sm:grid-cols-3">
+                <TextInput
+                  placeholder="Nombre / Cargo"
+                  value={dep.escalonamiento.nombreCargo}
+                  onChange={(e) => actualizarEsc("nombreCargo", e.target.value)}
+                />
+                <TextInput
+                  placeholder="Teléfono"
+                  value={dep.escalonamiento.telefono}
+                  onChange={(e) => actualizarEsc("telefono", e.target.value)}
+                />
+                <TextInput
+                  placeholder="Correo"
+                  value={dep.escalonamiento.correo}
+                  onChange={(e) => actualizarEsc("correo", e.target.value)}
+                />
+              </div>
+            </div>
           </div>
         );
       })}
 
-      <div className="rounded-lg border border-dashed border-accent/40 bg-accent/5 p-4">
-        <p className="mb-2 text-sm font-medium text-accent">Contacto de escalonamiento</p>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <TextInput
-            placeholder="Nombre / Cargo"
-            value={valor.escalonamiento.nombreCargo}
-            onChange={(e) =>
-              setValor((v) => ({
-                ...v,
-                escalonamiento: { ...v.escalonamiento, nombreCargo: e.target.value },
-              }))
-            }
-          />
-          <TextInput
-            placeholder="Teléfono"
-            value={valor.escalonamiento.telefono}
-            onChange={(e) =>
-              setValor((v) => ({
-                ...v,
-                escalonamiento: { ...v.escalonamiento, telefono: e.target.value },
-              }))
-            }
-          />
-          <TextInput
-            placeholder="Correo"
-            className="sm:col-span-2"
-            value={valor.escalonamiento.correo}
-            onChange={(e) =>
-              setValor((v) => ({
-                ...v,
-                escalonamiento: { ...v.escalonamiento, correo: e.target.value },
-              }))
-            }
-          />
-        </div>
-      </div>
-
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 pt-1">
         <button
           type="button"
           onClick={guardar}

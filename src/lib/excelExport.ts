@@ -119,19 +119,29 @@ export async function generarExcelSop(data: SopFormValues, matrizKpi: KpiCliente
   set("N26", data.resumenEjecutivo.nivelCliente);
 
   // 3. Matriz de contactos
-  (Object.keys(FILAS_CONTACTO) as (keyof typeof FILAS_CONTACTO)[]).forEach((tabla) => {
-    const datosTabla = data.contactos[tabla];
-    FILAS_CONTACTO[tabla].forEach((row, i) => {
-      const dep = datosTabla.departamentos[i];
-      if (!dep) return;
-      set(`D${row}`, dep.nombreCargo);
-      set(`F${row}`, dep.telefono);
-      set(`G${row}`, dep.correo);
-      set(`I${row}`, dep.backus);
-      set(`K${row}`, datosTabla.escalonamiento.nombreCargo);
-      set(`M${row}`, datosTabla.escalonamiento.telefono);
-      set(`N${row}`, datosTabla.escalonamiento.correo);
-    });
+  // Internos: cada departamento lleva su propio escalonamiento (columnas K/M/N).
+  FILAS_CONTACTO.internos.forEach((row, i) => {
+    const dep = data.contactos.internos.departamentos[i];
+    if (!dep) return;
+    set(`D${row}`, dep.nombreCargo);
+    set(`F${row}`, dep.telefono);
+    set(`G${row}`, dep.correo);
+    set(`I${row}`, dep.backus);
+    set(`K${row}`, dep.escalonamiento.nombreCargo);
+    set(`M${row}`, dep.escalonamiento.telefono);
+    set(`N${row}`, dep.escalonamiento.correo);
+  });
+  // Cliente: escalonamiento compartido para toda la tabla.
+  FILAS_CONTACTO.cliente.forEach((row, i) => {
+    const dep = data.contactos.cliente.departamentos[i];
+    if (!dep) return;
+    set(`D${row}`, dep.nombreCargo);
+    set(`F${row}`, dep.telefono);
+    set(`G${row}`, dep.correo);
+    set(`I${row}`, dep.backus);
+    set(`K${row}`, data.contactos.cliente.escalonamiento.nombreCargo);
+    set(`M${row}`, data.contactos.cliente.escalonamiento.telefono);
+    set(`N${row}`, data.contactos.cliente.escalonamiento.correo);
   });
 
   // 4. Preferencias, protocolos y particularidades

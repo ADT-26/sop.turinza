@@ -209,21 +209,30 @@ function buildSec2(re: SopFormValues["resumenEjecutivo"]): any {
 }
 
 // ─── SECCIÓN 3 ── Matriz de Contactos ────────────────────────────────────────
-const AREAS_ESTATICAS_INTERNOS = [
-  { area: "Comercial", nombreCargo: "", telefono: "", correo: "", backus: "" },
-  { area: "Pricing / Inside Sale", nombreCargo: "", telefono: "", correo: "", backus: "" },
-];
 
-function filasContactos(deps: SopFormValues["contactos"]["internos"]["departamentos"],
-                         esc: SopFormValues["contactos"]["internos"]["escalonamiento"],
-                         prefix: { area: string; nombreCargo: string; telefono: string; correo: string; backus: string }[]): any[][] {
-  const all = [...prefix, ...deps];
-  const n = all.length;
-  const escText = `${esc.nombreCargo || "—"}`;
-  const escTel  = esc.telefono || "—";
-  const escCor  = esc.correo   || "—";
+// Internos: cada departamento lleva su propio escalonamiento → una fila por dep.
+function filasContactosInternos(
+  deps: SopFormValues["contactos"]["internos"]["departamentos"],
+): any[][] {
+  return deps.map((dep) => [
+    dc(dep.area, 2), PH,
+    dc(dep.nombreCargo, 2), PH,
+    dc(dep.telefono),
+    dc(dep.correo, 2), PH,
+    dc(dep.backus, 2), PH,
+    dc(dep.escalonamiento.nombreCargo || "—", 2), PH,
+    dc(dep.escalonamiento.telefono || "—"),
+    dc(dep.escalonamiento.correo || "—", 2), PH,
+  ]);
+}
 
-  return all.map((dep, i) => {
+// Cliente: escalonamiento compartido para toda la tabla → rowSpan en primera fila.
+function filasContactosCliente(
+  deps: SopFormValues["contactos"]["cliente"]["departamentos"],
+  esc: SopFormValues["contactos"]["cliente"]["escalonamiento"],
+): any[][] {
+  const n = deps.length;
+  return deps.map((dep, i) => {
     const base = [
       dc(dep.area, 2), PH,
       dc(dep.nombreCargo, 2), PH,
@@ -232,10 +241,8 @@ function filasContactos(deps: SopFormValues["contactos"]["internos"]["departamen
       dc(dep.backus, 2), PH,
     ];
     if (i === 0) {
-      // Primera fila: escalonamiento con rowSpan = n
-      base.push(dc(escText, 2, n), PH, dc(escTel, 1, n), dc(escCor, 2, n), PH);
+      base.push(dc(esc.nombreCargo || "—", 2, n), PH, dc(esc.telefono || "—", 1, n), dc(esc.correo || "—", 2, n), PH);
     } else {
-      // Filas siguientes: placeholders para las celdas ya ocupadas
       base.push(PH, PH, PH, PH, PH);
     }
     return base;
@@ -260,12 +267,12 @@ function buildSec3(c: SopFormValues["contactos"]): any {
     subh("CONTACTOS INTERNOS TURINZA / CUENTAS"),
     [...subh("Operativos", 9), ...subh("Escalonamiento", 5)],
     colLabels,
-    ...filasContactos(c.internos.departamentos, c.internos.escalonamiento, AREAS_ESTATICAS_INTERNOS),
+    ...filasContactosInternos(c.internos.departamentos),
     // Cliente
     subh("CONTACTOS DEL CLIENTE"),
     [...subh("Operativos", 9), ...subh("Escalonamiento", 5)],
     colLabels,
-    ...filasContactos(c.cliente.departamentos, c.cliente.escalonamiento, []),
+    ...filasContactosCliente(c.cliente.departamentos, c.cliente.escalonamiento),
   ], 2);
 }
 

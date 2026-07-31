@@ -34,8 +34,12 @@ const crearTablaContactosVacia = (): TablaContactos => ({
 });
 
 const crearTablaContactosInternosVacia = (): TablaContactosInternos => ({
-  departamentos: AREAS_CONTACTO_INTERNOS.map((area) => ({ area, backus: "", ...crearContactoVacio() })),
-  escalonamiento: crearContactoVacio(),
+  departamentos: AREAS_CONTACTO_INTERNOS.map((area) => ({
+    area,
+    backus: "",
+    ...crearContactoVacio(),
+    escalonamiento: crearContactoVacio(),
+  })),
 });
 
 export const crearRiesgoVacio = (): Riesgo => ({

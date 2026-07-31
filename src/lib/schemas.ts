@@ -98,14 +98,18 @@ const contactoDepartamentoSchema = contactoSchema.extend({
   backus: z.string(),
 });
 
+// Contactos internos Turinza: cada departamento lleva su propio escalonamiento.
+const contactoDepartamentoInternoSchema = contactoDepartamentoSchema.extend({
+  escalonamiento: contactoSchema,
+});
+
 const tablaContactosSchema = z.object({
   departamentos: z.array(contactoDepartamentoSchema).length(AREAS_CONTACTO.length),
   escalonamiento: contactoSchema,
 });
 
 const tablaContactosInternosSchema = z.object({
-  departamentos: z.array(contactoDepartamentoSchema).length(AREAS_CONTACTO_INTERNOS.length),
-  escalonamiento: contactoSchema,
+  departamentos: z.array(contactoDepartamentoInternoSchema).length(AREAS_CONTACTO_INTERNOS.length),
 });
 
 export const matrizContactosSchema = z.object({
@@ -263,6 +267,7 @@ export type DatosGenerales = z.infer<typeof datosGeneralesSchema>;
 export type ResumenEjecutivo = z.infer<typeof resumenEjecutivoSchema>;
 export type Contacto = z.infer<typeof contactoSchema>;
 export type ContactoDepartamento = z.infer<typeof contactoDepartamentoSchema>;
+export type ContactoDepartamentoInterno = z.infer<typeof contactoDepartamentoInternoSchema>;
 export type TablaContactos = z.infer<typeof tablaContactosSchema>;
 export type TablaContactosInternos = z.infer<typeof tablaContactosInternosSchema>;
 export type MatrizContactos = z.infer<typeof matrizContactosSchema>;

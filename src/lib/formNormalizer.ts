@@ -1,7 +1,10 @@
-// Migra registros guardados con el esquema anterior de contactos internos (4
-// departamentos: Operaciones, Contabilidad, Tesorería, Calidad) al nuevo esquema
-// con 6 departamentos (agrega Comercial y Pricing / Inside Sale como filas 0-1,
-// respetando el orden del template Excel — filas 32-37).
+// Migra registros guardados con el esquema anterior de contactos internos al
+// esquema actual:
+//   - Pasada 1: si los departamentos eran 4 (sin Comercial/Pricing), los
+//     prepende respetando el orden del template Excel (filas 32-37).
+//   - Pasada 2: si algún departamento no tiene `escalonamiento` propio (schema
+//     anterior usaba un único escalonamiento compartido a nivel de tabla), lo
+//     inicializa vacío para que cada departamento lleve el suyo.
 export function migrarContactosInternosLegacy(data: unknown): unknown {
   if (typeof data !== "object" || !data) return data;
   const d = data as Record<string, unknown>;
@@ -11,22 +14,36 @@ export function migrarContactosInternosLegacy(data: unknown): unknown {
   const internos = contactos.internos as Record<string, unknown>;
   if (!Array.isArray(internos.departamentos)) return data;
 
-  const deps = internos.departamentos as Record<string, unknown>[];
-  // Ya migrado: primer área es "Comercial"
-  if (deps.length >= 6 || (deps.length > 0 && deps[0].area === "Comercial")) return data;
+  let deps = internos.departamentos as Record<string, unknown>[];
+  let changed = false;
 
-  const vacio = { nombreCargo: "", telefono: "", correo: "", backus: "" };
+  // Pasada 1: prepende Comercial + Pricing si aún no están
+  if (deps.length < 6 && (deps.length === 0 || deps[0].area !== "Comercial")) {
+    const vacio = { nombreCargo: "", telefono: "", correo: "", backus: "" };
+    deps = [
+      { area: "Comercial", ...vacio },
+      { area: "Pricing / Inside Sale", ...vacio },
+      ...deps,
+    ];
+    changed = true;
+  }
+
+  // Pasada 2: agrega escalonamiento por departamento si falta
+  const depsMigradas = deps.map((dep) => {
+    if (typeof dep.escalonamiento === "object" && dep.escalonamiento !== null) return dep;
+    changed = true;
+    return { ...dep, escalonamiento: { nombreCargo: "", telefono: "", correo: "" } };
+  });
+
+  if (!changed) return data;
+
   return {
     ...d,
     contactos: {
       ...contactos,
       internos: {
         ...internos,
-        departamentos: [
-          { area: "Comercial", ...vacio },
-          { area: "Pricing / Inside Sale", ...vacio },
-          ...deps,
-        ],
+        departamentos: depsMigradas,
       },
     },
   };
