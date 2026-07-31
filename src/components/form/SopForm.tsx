@@ -22,15 +22,6 @@ import { ResumenFinal } from "./ResumenFinal";
 
 const BORRADOR_KEY = "sop-form-borrador";
 
-function base64AArchivo(base64: string, tipo: string): Blob {
-  const binario = atob(base64);
-  const bytes = new Uint8Array(binario.length);
-  for (let i = 0; i < binario.length; i++) bytes[i] = binario.charCodeAt(i);
-  return new Blob([bytes], { type: tipo });
-}
-
-const MIME_PDF = "application/pdf";
-
 export function SopForm() {
   const methods = useForm<SopFormValues>({
     resolver: zodResolver(sopFormSchema),
@@ -44,14 +35,7 @@ export function SopForm() {
   const [sopId, setSopId] = useState<string | null>(null);
   const [errorEnvio, setErrorEnvio] = useState<string | null>(null);
   const [guardadoEn, setGuardadoEn] = useState<Date | null>(null);
-  const [descarga, setDescarga] = useState<{ url: string; nombre: string } | null>(null);
   const saveTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-
-  useEffect(() => {
-    return () => {
-      if (descarga) URL.revokeObjectURL(descarga.url);
-    };
-  }, [descarga]);
 
   useEffect(() => {
     const guardado = window.localStorage.getItem(BORRADOR_KEY);
@@ -109,21 +93,6 @@ export function SopForm() {
       }
       window.localStorage.removeItem(BORRADOR_KEY);
       setSopId(json.id);
-
-      if (json.pdfBase64) {
-        const nombre = json.nombreArchivo || `SOP-${json.id}.pdf`;
-        const blob = base64AArchivo(json.pdfBase64, MIME_PDF);
-        const url = URL.createObjectURL(blob);
-        setDescarga({ url, nombre });
-
-        const enlace = document.createElement("a");
-        enlace.href = url;
-        enlace.download = nombre;
-        document.body.appendChild(enlace);
-        enlace.click();
-        document.body.removeChild(enlace);
-      }
-
       setEnviado(true);
     } catch (error) {
       setErrorEnvio(error instanceof Error ? error.message : "Error al enviar el formulario");
@@ -164,35 +133,15 @@ export function SopForm() {
           <SectionCard index={9} title="Formulario enviado">
             <div className="space-y-4">
               <p className="text-sm text-ink">
-                El SOP se guardó correctamente
+                Tu SOP fue recibido correctamente
                 {sopId !== null && (
                   <>
                     {" "}
                     (ID <span className="font-mono text-xs">{sopId}</span>)
                   </>
                 )}
-                .
+                . El equipo de Turinza lo revisará y te contactará próximamente.
               </p>
-              {descarga ? (
-                <div className="rounded-lg border border-line bg-surface p-4 text-sm">
-                  <p className="text-ink-muted">
-                    Deberíamos haber descargado automáticamente una copia en PDF con tus datos.
-                    Si no pasó nada, descárgala manualmente:
-                  </p>
-                  <a
-                    href={descarga.url}
-                    download={descarga.nombre}
-                    className="mt-2 inline-flex items-center gap-2 rounded-md bg-primary-dark px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark/90"
-                  >
-                    Descargar copia en PDF
-                  </a>
-                </div>
-              ) : (
-                <p className="text-sm text-ink-muted">
-                  No se pudo generar la copia en PDF automáticamente, pero tus datos ya quedaron
-                  guardados sin problema.
-                </p>
-              )}
             </div>
           </SectionCard>
         ) : (
