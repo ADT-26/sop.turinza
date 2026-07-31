@@ -221,7 +221,7 @@ export const cumplimientoSchema = z.array(requisitoCumplimientoSchema);
 
 const riesgoSchema = z.object({
   riesgoCambioIdentificado: z.string().min(1, REQUERIDO),
-  impacto: opcionRequerida(OPCIONES_PRIORIDAD),
+  impacto: z.string().min(1, REQUERIDO),
   accionCorrectiva: z.string(),
   responsable: opcionRequerida(OPCIONES_AREA_RESPONSABLE),
   eficacia: z.string(),

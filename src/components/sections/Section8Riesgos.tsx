@@ -2,7 +2,7 @@
 
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { Field, TextInput, Select, RepeatableTable } from "@/components/ui";
-import { OPCIONES_AREA_RESPONSABLE, OPCIONES_PRIORIDAD } from "@/lib/options";
+import { OPCIONES_AREA_RESPONSABLE } from "@/lib/options";
 import { crearRiesgoVacio } from "@/lib/formDefaults";
 import { NOTAS } from "@/lib/formNotes";
 import type { SopFormValues } from "@/lib/schemas";
@@ -40,7 +40,10 @@ export function Section8Riesgos() {
                 <TextInput {...register(`riesgos.${index}.riesgoCambioIdentificado`)} />
               </Field>
               <Field label="Impacto" error={e?.impacto?.message} nota={NOTAS["riesgos.impacto"]}>
-                <Select options={OPCIONES_PRIORIDAD} {...register(`riesgos.${index}.impacto`)} />
+                <TextInput
+                  placeholder="p. ej. sobrecostos, demoras, sanciones, daño de la carga"
+                  {...register(`riesgos.${index}.impacto`)}
+                />
               </Field>
               <Field label="Responsable" error={e?.responsable?.message} nota={NOTAS["riesgos.responsable"]}>
                 <Select options={OPCIONES_AREA_RESPONSABLE} {...register(`riesgos.${index}.responsable`)} />
