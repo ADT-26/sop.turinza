@@ -2,7 +2,7 @@
 
 import { Controller, useFormContext, useWatch, useFieldArray } from "react-hook-form";
 import { Field, TextInput, Select, RadioGroup } from "@/components/ui";
-import { OPCIONES_AREA_RESPONSABLE, OPCIONES_FRECUENCIA_CORTA, OPCIONES_SI_NO_NA } from "@/lib/options";
+import { OPCIONES_AREA_RESPONSABLE, OPCIONES_SI_NO_NA } from "@/lib/options";
 import { PROCESOS_OPERATIVOS } from "@/lib/schemas";
 import { NOTAS } from "@/lib/formNotes";
 import type { SopFormValues } from "@/lib/schemas";
@@ -50,8 +50,8 @@ function FilasGrupo({ grupoIndex }: { grupoIndex: number }) {
                 />
               </Field>
               <Field label="SLA / Tiempo" nota={NOTAS["matrizProcesos.slaTiempo"]}>
-                <Select
-                  options={OPCIONES_FRECUENCIA_CORTA}
+                <TextInput
+                  placeholder='p. ej. 24 h, mismo día, 2 días hábiles'
                   {...register(`matrizProcesos.${grupoIndex}.filas.${j}.slaTiempo`)}
                 />
               </Field>

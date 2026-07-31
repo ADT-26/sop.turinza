@@ -170,7 +170,7 @@ export const procesoFilaSchema = z.object({
   actividadHito: z.string(),
   personalizacionAcordada: z.string(),
   responsable: z.string(),
-  slaTiempo: opcionOpcional(OPCIONES_FRECUENCIA_CORTA),
+  slaTiempo: z.string(),
   kpiAsociado: z.string(),
   controlEvidencia: z.string(),
 });
