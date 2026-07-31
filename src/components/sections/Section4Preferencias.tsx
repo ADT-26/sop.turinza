@@ -46,8 +46,8 @@ function ComunicacionBloqueItem({ index, tipo, notaTipo }: { index: number; tipo
           />
         </Field>
         <Field label="Frecuencia" error={be?.frecuencia?.message} nota={NOTAS["comunicacion.frecuencia"]}>
-          <Select
-            options={OPCIONES_FRECUENCIA_COMUNICACION}
+          <TextInput
+            placeholder="p. ej. en cada hito, diaria, inmediata al evento"
             {...register(`preferencias.comunicacion.${index}.frecuencia`)}
           />
         </Field>

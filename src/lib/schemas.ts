@@ -155,7 +155,7 @@ const trazabilidadSchema = z.object({
 const comunicacionBloqueSchema = z.object({
   tipo: z.string(),
   canalesPreferidos: opcionRequerida(OPCIONES_CANAL_ODOO),
-  frecuencia: opcionRequerida(OPCIONES_FRECUENCIA_COMUNICACION),
+  frecuencia: z.string().min(1, REQUERIDO),
   conCopiaContactosInternos: opcionRequerida(OPCIONES_SI_NO_NA),
   conCopiaContactoNombre: z.string(),
   conCopiaContactoInfo: z.string(),
