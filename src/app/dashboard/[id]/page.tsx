@@ -97,7 +97,7 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
 
       <MatrizKpiEditor id={sop.id} valorInicial={sop.matrizKpi} />
 
-      <div className="flex items-center gap-4 py-2">
+      <div className="flex items-center gap-4 py-6">
         <div className="h-px flex-1 bg-line" />
         <span className="font-mono text-[10px] font-semibold uppercase tracking-widest text-ink-muted/60">
           Datos enviados por el cliente
