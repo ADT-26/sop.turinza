@@ -519,9 +519,11 @@ export async function generarPdfSop(data: SopFormValues): Promise<Buffer> {
   });
 
   const docDef = {
-    pageSize: "A4",
-    pageOrientation: "landscape",
-    pageMargins: [20, 20, 20, 28] as [number, number, number, number],
+    // Página de anchura A4-landscape (841.89 pt) y altura suficiente para que
+    // todo el contenido del SOP quepa en una sola hoja continua, sin saltos de
+    // página. Los visores PDF lo tratan como una única página en modo scroll.
+    pageSize: { width: 841.89, height: 5000 } as any,
+    pageMargins: [20, 20, 20, 20] as [number, number, number, number],
     defaultStyle: { font: "Helvetica", fontSize: 7.5 },
     content: [
       buildEncabezado(data.datosGenerales.cliente, fechaHoy, logo),
