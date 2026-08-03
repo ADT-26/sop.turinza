@@ -501,6 +501,46 @@ function buildEncabezado(cliente: string, fecha: string, logo?: string): any {
   ], 4);
 }
 
+// ─── Helpers para página única ────────────────────────────────────────────────
+
+// Elimina pageBreak: "before" de los elementos de nivel raíz del contenido.
+// pdfmake muta los nodos durante el layout, así que cada pasada recibe
+// objetos recién construidos (buildContent se llama dos veces).
+function stripPageBreaks(items: any[]): any[] {
+  return items.map((item) => {
+    if (item && typeof item === "object" && "pageBreak" in item) {
+      const { pageBreak: _pb, ...rest } = item;
+      return rest;
+    }
+    return item;
+  });
+}
+
+// Extrae el número de páginas del buffer PDF buscando objetos /Type /Page.
+function countPdfPages(buffer: Buffer): number {
+  const matches = buffer.toString("binary").match(/\/Type\s*\/Page[^s]/g);
+  return Math.max(1, matches ? matches.length : 1);
+}
+
+function buildContent(
+  data: SopFormValues,
+  logo: string | undefined,
+  fechaHoy: string,
+): any[] {
+  return [
+    buildEncabezado(data.datosGenerales.cliente, fechaHoy, logo),
+    buildSec1(data.datosGenerales),
+    buildSec2(data.resumenEjecutivo),
+    buildSec3(data.contactos),
+    buildSec4(data.preferencias),
+    buildSec5(data.matrizProcesos),
+    buildSec6(data.interaccionAreas),
+    buildSec7(data.cumplimiento),
+    buildSec8(data.riesgos),
+    buildSec9(data.aprobaciones),
+  ];
+}
+
 // ─── API PÚBLICA ──────────────────────────────────────────────────────────────
 
 export async function generarPdfSop(data: SopFormValues): Promise<Buffer> {
@@ -518,34 +558,36 @@ export async function generarPdfSop(data: SopFormValues): Promise<Buffer> {
     day: "2-digit", month: "2-digit", year: "numeric",
   });
 
-  const docDef = {
-    // height: "auto" hace que pdfmake ajuste la altura de la única página
-    // exactamente al contenido, sin espacio en blanco sobrante.
-    pageSize: { width: 841.89, height: "auto" } as any,
+  const footer = (page: number, pages: number) => ({
+    text: `SOP · ${data.datosGenerales.cliente} · Página ${page} de ${pages} · Documento confidencial Turinza S.A.S.`,
+    fontSize: 6,
+    color: "#888888",
+    alignment: "center",
+    margin: [20, 8, 20, 0],
+  });
+
+  // Pasada 1: A4 landscape sin saltos forzados → mide las páginas naturales.
+  // Se construye content nuevo porque pdfmake muta los nodos durante el layout.
+  const pass1: Buffer = await pm.createPdf({
+    pageSize: "A4",
+    pageOrientation: "landscape",
+    pageMargins: [20, 20, 20, 28] as any,
+    defaultStyle: { font: "Helvetica", fontSize: 7.5 },
+    content: stripPageBreaks(buildContent(data, logo, fechaHoy)),
+    footer,
+  }).getBuffer();
+
+  const pageCount = countPdfPages(pass1);
+
+  // Pasada 2: página única de altura exacta (páginas × alto A4-landscape).
+  // Content construido de nuevo para evitar mutaciones de la pasada 1.
+  return pm.createPdf({
+    pageSize: { width: 841.89, height: Math.ceil(pageCount * 595.28) } as any,
     pageMargins: [20, 20, 20, 20] as [number, number, number, number],
     defaultStyle: { font: "Helvetica", fontSize: 7.5 },
-    content: [
-      buildEncabezado(data.datosGenerales.cliente, fechaHoy, logo),
-      buildSec1(data.datosGenerales),
-      buildSec2(data.resumenEjecutivo),
-      buildSec3(data.contactos),
-      buildSec4(data.preferencias),
-      buildSec5(data.matrizProcesos),
-      buildSec6(data.interaccionAreas),
-      buildSec7(data.cumplimiento),
-      buildSec8(data.riesgos),
-      buildSec9(data.aprobaciones),
-    ],
-    footer: (page: number, pages: number) => ({
-      text: `SOP · ${data.datosGenerales.cliente} · Página ${page} de ${pages} · Documento confidencial Turinza S.A.S.`,
-      fontSize: 6,
-      color: "#888888",
-      alignment: "center",
-      margin: [20, 8, 20, 0],
-    }),
-  };
-
-  return pm.createPdf(docDef).getBuffer();
+    content: stripPageBreaks(buildContent(data, logo, fechaHoy)),
+    footer,
+  }).getBuffer();
 }
 
 export function nombreArchivoPdf(data: SopFormValues): string {
