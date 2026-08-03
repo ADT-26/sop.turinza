@@ -501,26 +501,6 @@ function buildEncabezado(cliente: string, fecha: string, logo?: string): any {
   ], 4);
 }
 
-// ─── Helpers para renderizado de página única ─────────────────────────────────
-
-// Elimina los pageBreak: "before" de los elementos de contenido de primer nivel.
-function stripPageBreaks(items: any[]): any[] {
-  return items.map((item) => {
-    if (item && typeof item === "object" && "pageBreak" in item) {
-      const { pageBreak: _pb, ...rest } = item;
-      return rest;
-    }
-    return item;
-  });
-}
-
-// Cuenta las páginas de un buffer PDF buscando los objetos /Type /Page.
-function countPdfPages(buffer: Buffer): number {
-  const str = buffer.toString("binary");
-  const matches = str.match(/\/Type\s*\/Page[^s]/g);
-  return Math.max(1, matches ? matches.length : 1);
-}
-
 // ─── API PÚBLICA ──────────────────────────────────────────────────────────────
 
 export async function generarPdfSop(data: SopFormValues): Promise<Buffer> {
@@ -538,49 +518,34 @@ export async function generarPdfSop(data: SopFormValues): Promise<Buffer> {
     day: "2-digit", month: "2-digit", year: "numeric",
   });
 
-  const footer = (page: number, pages: number) => ({
-    text: `SOP · ${data.datosGenerales.cliente} · Página ${page} de ${pages} · Documento confidencial Turinza S.A.S.`,
-    fontSize: 6,
-    color: "#888888",
-    alignment: "center",
-    margin: [20, 8, 20, 0],
-  });
-
-  // Contenido sin saltos de página forzados (sec 5 y sec 9 los tienen)
-  const content = stripPageBreaks([
-    buildEncabezado(data.datosGenerales.cliente, fechaHoy, logo),
-    buildSec1(data.datosGenerales),
-    buildSec2(data.resumenEjecutivo),
-    buildSec3(data.contactos),
-    buildSec4(data.preferencias),
-    buildSec5(data.matrizProcesos),
-    buildSec6(data.interaccionAreas),
-    buildSec7(data.cumplimiento),
-    buildSec8(data.riesgos),
-    buildSec9(data.aprobaciones),
-  ]);
-
-  // Pasada 1: A4 landscape normal para medir cuántas páginas ocupa el contenido.
-  const pass1: Buffer = await pm.createPdf({
-    pageSize: "A4",
-    pageOrientation: "landscape",
-    pageMargins: [20, 20, 20, 28] as any,
+  const docDef = {
+    // height: "auto" hace que pdfmake ajuste la altura de la única página
+    // exactamente al contenido, sin espacio en blanco sobrante.
+    pageSize: { width: 841.89, height: "auto" } as any,
+    pageMargins: [20, 20, 20, 20] as [number, number, number, number],
     defaultStyle: { font: "Helvetica", fontSize: 7.5 },
-    content,
-    footer,
-  }).getBuffer();
+    content: [
+      buildEncabezado(data.datosGenerales.cliente, fechaHoy, logo),
+      buildSec1(data.datosGenerales),
+      buildSec2(data.resumenEjecutivo),
+      buildSec3(data.contactos),
+      buildSec4(data.preferencias),
+      buildSec5(data.matrizProcesos),
+      buildSec6(data.interaccionAreas),
+      buildSec7(data.cumplimiento),
+      buildSec8(data.riesgos),
+      buildSec9(data.aprobaciones),
+    ],
+    footer: (page: number, pages: number) => ({
+      text: `SOP · ${data.datosGenerales.cliente} · Página ${page} de ${pages} · Documento confidencial Turinza S.A.S.`,
+      fontSize: 6,
+      color: "#888888",
+      alignment: "center",
+      margin: [20, 8, 20, 0],
+    }),
+  };
 
-  const pageCount = countPdfPages(pass1);
-
-  // Pasada 2: página única con la altura justa (páginas × 595.28 pt = alto A4-landscape).
-  const exactHeight = Math.ceil(pageCount * 595.28);
-  return pm.createPdf({
-    pageSize: { width: 841.89, height: exactHeight } as any,
-    pageMargins: [20, 20, 20, 20] as any,
-    defaultStyle: { font: "Helvetica", fontSize: 7.5 },
-    content,
-    footer,
-  }).getBuffer();
+  return pm.createPdf(docDef).getBuffer();
 }
 
 export function nombreArchivoPdf(data: SopFormValues): string {
