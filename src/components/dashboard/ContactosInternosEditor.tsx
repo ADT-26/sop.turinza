@@ -77,9 +77,9 @@ export function ContactosInternosEditor({
                 onChange={(e) => actualizarDep("correo", e.target.value)}
               />
               <TextInput
-                placeholder="Backus"
-                value={dep.backus}
-                onChange={(e) => actualizarDep("backus", e.target.value)}
+                placeholder="Backup"
+                value={dep.backup}
+                onChange={(e) => actualizarDep("backup", e.target.value)}
               />
             </div>
             <div className="border-t border-line/60 bg-surface px-4 py-3">

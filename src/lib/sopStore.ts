@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { GithubApiError, eliminarArchivo, escribirArchivo, leerArchivo } from "./githubStore";
 import { crearSopFormVacio } from "./formDefaults";
-import { conDefectos, migrarContactosInternosLegacy, migrarProcesosLegacy } from "./formNormalizer";
+import { conDefectos, migrarBackusLegacy, migrarContactosInternosLegacy, migrarProcesosLegacy } from "./formNormalizer";
 import type { SopFormValues, TablaContactosInternos, KpiCliente } from "./schemas";
 
 const SOPS_DIR = "data/sops";
@@ -88,7 +88,7 @@ export async function obtenerSopPorId(id: string): Promise<SopRegistro | null> {
   const archivo = await leerArchivo(`${SOPS_DIR}/${id}.json`);
   if (!archivo) return null;
   const registro: SopRegistro = JSON.parse(archivo.content);
-  const dataMigrada = migrarContactosInternosLegacy(migrarProcesosLegacy(registro.data));
+  const dataMigrada = migrarBackusLegacy(migrarContactosInternosLegacy(migrarProcesosLegacy(registro.data)));
   return { ...registro, matrizKpi: registro.matrizKpi ?? [], data: conDefectos(dataMigrada, crearSopFormVacio()) };
 }
 

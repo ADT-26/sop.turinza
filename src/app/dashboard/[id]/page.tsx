@@ -154,7 +154,7 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
               { key: "nombreCargo", label: "Nombre / Cargo" },
               { key: "telefono", label: "Teléfono" },
               { key: "correo", label: "Correo" },
-              { key: "backus", label: "Backus" },
+              { key: "backup", label: "Backup" },
             ]}
           />
           <div className="rounded-lg border border-dashed border-accent/40 bg-accent/5 p-4">

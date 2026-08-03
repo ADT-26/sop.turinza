@@ -4,7 +4,7 @@ import { useState } from "react";
 import {
   OPCIONES_SERVICIOS,
   OPCIONES_FRECUENCIA_LARGA,
-  OPCIONES_AREA_RESPONSABLE,
+  OPCIONES_CARGOS_RESPONSABLE,
 } from "@/lib/options";
 import type { KpiCliente } from "@/lib/schemas";
 
@@ -89,7 +89,7 @@ function FilaKpi({
             className="rounded-md border border-line bg-surface px-2 py-1.5 text-sm text-ink focus:outline-none focus:ring-1 focus:ring-primary"
           >
             <option value="">— Selecciona —</option>
-            {OPCIONES_AREA_RESPONSABLE.map((o) => <option key={o} value={o}>{o}</option>)}
+            {OPCIONES_CARGOS_RESPONSABLE.map((o) => <option key={o} value={o}>{o}</option>)}
           </select>
         </div>
         <div className="flex flex-col gap-1">

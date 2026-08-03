@@ -1,6 +1,6 @@
 import { z } from "zod";
 import {
-  OPCIONES_AREA_RESPONSABLE,
+  OPCIONES_CARGOS_RESPONSABLE,
   OPCIONES_CANAL_ODOO,
   OPCIONES_ESTADO_DOCUMENTO,
   OPCIONES_FRECUENCIA_COMUNICACION,
@@ -95,7 +95,7 @@ const contactoSchema = z.object({
 
 const contactoDepartamentoSchema = contactoSchema.extend({
   area: z.string(),
-  backus: z.string(),
+  backup: z.string(),
 });
 
 // Contactos internos Turinza: cada departamento lleva su propio escalonamiento.
@@ -223,7 +223,7 @@ const riesgoSchema = z.object({
   riesgoCambioIdentificado: z.string().min(1, REQUERIDO),
   impacto: z.string().min(1, REQUERIDO),
   accionCorrectiva: z.string(),
-  responsable: opcionRequerida(OPCIONES_AREA_RESPONSABLE),
+  responsable: opcionRequerida(OPCIONES_CARGOS_RESPONSABLE),
   eficacia: z.string(),
 });
 
@@ -292,7 +292,7 @@ const kpiClienteSchema = z.object({
   meta: z.string().optional(),
   frecuencia: opcionRequerida(OPCIONES_FRECUENCIA_LARGA),
   fuente: z.string().optional(),
-  responsable: opcionRequerida(OPCIONES_AREA_RESPONSABLE),
+  responsable: opcionRequerida(OPCIONES_CARGOS_RESPONSABLE),
   observaciones: z.string().optional(),
 });
 
@@ -306,7 +306,7 @@ const cambioControlSchema = z.object({
   descripcionCambio: z.string().min(1, REQUERIDO),
   motivo: z.string().optional(),
   solicitadoPor: z.string().optional(),
-  responsable: opcionRequerida(OPCIONES_AREA_RESPONSABLE),
+  responsable: opcionRequerida(OPCIONES_CARGOS_RESPONSABLE),
   aprobadoPor: z.string().optional(),
   estado: opcionRequerida(OPCIONES_ESTADO_DOCUMENTO),
 });

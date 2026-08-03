@@ -45,8 +45,8 @@ function TablaContactos({ titulo, base }: { titulo: string; base: "cliente" }) {
               <Field label="Correo" error={e?.departamentos?.[index]?.correo?.message}>
                 <TextInput type="email" {...register(`contactos.${base}.departamentos.${index}.correo`)} />
               </Field>
-              <Field label="Backus" error={e?.departamentos?.[index]?.backus?.message}>
-                <TextInput {...register(`contactos.${base}.departamentos.${index}.backus`)} />
+              <Field label="Backup" error={e?.departamentos?.[index]?.backup?.message}>
+                <TextInput {...register(`contactos.${base}.departamentos.${index}.backup`)} />
               </Field>
             </div>
           </div>

@@ -2,7 +2,7 @@
 
 import { Controller, useFormContext, useWatch, useFieldArray } from "react-hook-form";
 import { Field, TextInput, Select, RadioGroup } from "@/components/ui";
-import { OPCIONES_AREA_RESPONSABLE, OPCIONES_SI_NO_NA } from "@/lib/options";
+import { OPCIONES_CARGOS_RESPONSABLE, OPCIONES_SI_NO_NA } from "@/lib/options";
 import { PROCESOS_OPERATIVOS } from "@/lib/schemas";
 import { NOTAS } from "@/lib/formNotes";
 import type { SopFormValues } from "@/lib/schemas";
@@ -45,7 +45,7 @@ function FilasGrupo({ grupoIndex }: { grupoIndex: number }) {
             <div className="grid gap-3 sm:grid-cols-2">
               <Field label="Responsable" required error={err?.responsable?.message} nota={NOTAS["matrizProcesos.responsable"]}>
                 <Select
-                  options={OPCIONES_AREA_RESPONSABLE}
+                  options={OPCIONES_CARGOS_RESPONSABLE}
                   {...register(`matrizProcesos.${grupoIndex}.filas.${j}.responsable`)}
                 />
               </Field>

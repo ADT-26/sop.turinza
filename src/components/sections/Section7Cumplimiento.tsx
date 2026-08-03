@@ -2,7 +2,7 @@
 
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { Field, TextInput, Select, RadioGroup, RepeatableTable } from "@/components/ui";
-import { OPCIONES_AREA_RESPONSABLE, OPCIONES_SI_NO_NA } from "@/lib/options";
+import { OPCIONES_CARGOS_RESPONSABLE, OPCIONES_SI_NO_NA } from "@/lib/options";
 import { REQUISITOS_CUMPLIMIENTO } from "@/lib/schemas";
 import { NOTAS } from "@/lib/formNotes";
 import type { SopFormValues } from "@/lib/schemas";
@@ -38,7 +38,7 @@ function FilaRequisito({ requisito, index }: { requisito: string; index: number 
         <>
           <Field label="Responsable" error={e?.responsable?.message} nota={NOTAS["cumplimiento.responsable"]}>
             <Select
-              options={OPCIONES_AREA_RESPONSABLE}
+              options={OPCIONES_CARGOS_RESPONSABLE}
               {...register(`cumplimiento.${index}.responsable`)}
             />
           </Field>

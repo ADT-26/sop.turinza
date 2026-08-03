@@ -43,14 +43,32 @@ export const OPCIONES_ESTADO_DOCUMENTO = ["Abierto", "En revisión", "Obsoleto",
 
 export const OPCIONES_PRIORIDAD = ["Alta", "Media", "Baja"] as const;
 
-export const OPCIONES_AREA_RESPONSABLE = [
-  "Comercial",
-  "Operaciones",
-  "Customer Service / KAS",
-  "Facturación",
-  "Almacenamiento / Bodega",
-  "Calidad",
-  "Gerencia",
+export const OPCIONES_CARGOS_RESPONSABLE = [
+  "Director Comercial",
+  "Lider De Tesoreria",
+  "Analista De Control Senior",
+  "Controlador Operativo",
+  "Inside Sale",
+  "Analista Del SIG",
+  "Analista De Inventario",
+  "Director Operativo",
+  "Analista De RR.HH Y Bienestar",
+  "Analista Administrativo",
+  "Lider De Bodega",
+  "COO",
+  "Mensajero Y Auxiliar De Infraestructura",
+  "Líder De Precios",
+  "Líder Del SIG",
+  "Líder De Innovacion Y Desarrollo",
+  "CEO",
+  "Analista De Facturación",
+  "Director Logistico",
+  "Asistente Comercial",
+  "Asistente Administrativo",
+  "Data Analyst",
+  "Líder Contable",
+  "Director Financiero Y Contable",
+  "Asistente De Operaciones",
 ] as const;
 
 export const OPCIONES_SERVICIOS = [

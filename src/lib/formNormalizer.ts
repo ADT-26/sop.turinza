@@ -19,7 +19,7 @@ export function migrarContactosInternosLegacy(data: unknown): unknown {
 
   // Pasada 1: prepende Comercial + Pricing si aún no están
   if (deps.length < 6 && (deps.length === 0 || deps[0].area !== "Comercial")) {
-    const vacio = { nombreCargo: "", telefono: "", correo: "", backus: "" };
+    const vacio = { nombreCargo: "", telefono: "", correo: "", backup: "" };
     deps = [
       { area: "Comercial", ...vacio },
       { area: "Pricing / Inside Sale", ...vacio },
@@ -47,6 +47,47 @@ export function migrarContactosInternosLegacy(data: unknown): unknown {
       },
     },
   };
+}
+
+// Migra registros guardados donde el campo se llamaba `backus` → `backup`.
+// Afecta los departamentos de ambas tablas (internos y cliente).
+export function migrarBackusLegacy(data: unknown): unknown {
+  if (typeof data !== "object" || !data) return data;
+  const d = data as Record<string, unknown>;
+  if (typeof d.contactos !== "object" || !d.contactos) return data;
+  const contactos = d.contactos as Record<string, unknown>;
+
+  const renombrar = (deps: Record<string, unknown>[]): { result: Record<string, unknown>[]; changed: boolean } => {
+    let changed = false;
+    const result = deps.map((dep) => {
+      if ("backup" in dep || !("backus" in dep)) return dep;
+      changed = true;
+      const { backus, ...rest } = dep;
+      return { ...rest, backup: backus };
+    });
+    return { result, changed };
+  };
+
+  let globalChanged = false;
+  const newContactos = { ...contactos };
+
+  if (typeof contactos.internos === "object" && contactos.internos) {
+    const internos = contactos.internos as Record<string, unknown>;
+    if (Array.isArray(internos.departamentos)) {
+      const { result, changed } = renombrar(internos.departamentos as Record<string, unknown>[]);
+      if (changed) { newContactos.internos = { ...internos, departamentos: result }; globalChanged = true; }
+    }
+  }
+  if (typeof contactos.cliente === "object" && contactos.cliente) {
+    const cliente = contactos.cliente as Record<string, unknown>;
+    if (Array.isArray(cliente.departamentos)) {
+      const { result, changed } = renombrar(cliente.departamentos as Record<string, unknown>[]);
+      if (changed) { newContactos.cliente = { ...cliente, departamentos: result }; globalChanged = true; }
+    }
+  }
+
+  if (!globalChanged) return data;
+  return { ...d, contactos: newContactos };
 }
 
 // Rellena campos faltantes en `valor` con los valores de `defecto`, de forma

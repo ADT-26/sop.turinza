@@ -219,7 +219,7 @@ function filasContactosInternos(
     dc(dep.nombreCargo, 2), PH,
     dc(dep.telefono),
     dc(dep.correo, 2), PH,
-    dc(dep.backus, 2), PH,
+    dc(dep.backup, 2), PH,
     dc(dep.escalonamiento.nombreCargo || "—", 2), PH,
     dc(dep.escalonamiento.telefono || "—"),
     dc(dep.escalonamiento.correo || "—", 2), PH,
@@ -238,7 +238,7 @@ function filasContactosCliente(
       dc(dep.nombreCargo, 2), PH,
       dc(dep.telefono),
       dc(dep.correo, 2), PH,
-      dc(dep.backus, 2), PH,
+      dc(dep.backup, 2), PH,
     ];
     if (i === 0) {
       base.push(dc(esc.nombreCargo || "—", 2, n), PH, dc(esc.telefono || "—", 1, n), dc(esc.correo || "—", 2, n), PH);
