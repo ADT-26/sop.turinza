@@ -33,9 +33,9 @@ function TablaContactos({ titulo, base }: { titulo: string; base: "cliente" }) {
       </div>
       <div className="space-y-3">
         {AREAS_CONTACTO.map((area, index) => (
-          <div key={area} className="rounded-lg border border-line bg-surface p-4">
-            <div className="grid gap-4 sm:grid-cols-2">
-              <p className="text-sm font-medium text-ink-muted sm:col-span-2">{area}</p>
+          <div key={area} className="rounded-lg border border-line bg-surface overflow-hidden">
+            <p className="px-4 pt-3 pb-2 text-sm font-medium text-ink-muted">{area}</p>
+            <div className="px-4 pb-3 grid gap-4 sm:grid-cols-2">
               <Field label="Nombre / Cargo" error={e?.departamentos?.[index]?.nombreCargo?.message}>
                 <TextInput {...register(`contactos.${base}.departamentos.${index}.nombreCargo`)} />
               </Field>
@@ -49,22 +49,18 @@ function TablaContactos({ titulo, base }: { titulo: string; base: "cliente" }) {
                 <TextInput {...register(`contactos.${base}.departamentos.${index}.backup`)} />
               </Field>
             </div>
+            <div className="border-t border-line/60 bg-surface px-4 py-3">
+              <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-ink-muted/60">
+                Escalonamiento
+              </p>
+              <div className="grid gap-4 sm:grid-cols-3">
+                <TextInput placeholder="Nombre / Cargo" {...register(`contactos.${base}.departamentos.${index}.escalonamiento.nombreCargo`)} />
+                <TextInput placeholder="Teléfono" {...register(`contactos.${base}.departamentos.${index}.escalonamiento.telefono`)} />
+                <TextInput type="email" placeholder="Correo" {...register(`contactos.${base}.departamentos.${index}.escalonamiento.correo`)} />
+              </div>
+            </div>
           </div>
         ))}
-      </div>
-      <div className="rounded-lg border border-dashed border-accent/40 bg-accent/5 p-4">
-        <p className="mb-2 text-sm font-medium text-accent">Contacto de escalonamiento</p>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Field label="Nombre / Cargo" error={e?.escalonamiento?.nombreCargo?.message}>
-            <TextInput {...register(`contactos.${base}.escalonamiento.nombreCargo`)} />
-          </Field>
-          <Field label="Teléfono" error={e?.escalonamiento?.telefono?.message}>
-            <TextInput {...register(`contactos.${base}.escalonamiento.telefono`)} />
-          </Field>
-          <Field label="Correo" className="sm:col-span-2" error={e?.escalonamiento?.correo?.message}>
-            <TextInput type="email" {...register(`contactos.${base}.escalonamiento.correo`)} />
-          </Field>
-        </div>
       </div>
     </div>
   );

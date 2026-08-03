@@ -18,10 +18,9 @@ import { AREAS_CONTACTO_INTERNOS, sopFormSchema } from "@/lib/schemas";
 const firmaSchema = z.object({ nombre: z.string(), cargo: z.string() });
 
 const contactoSchema = z.object({ nombreCargo: z.string(), telefono: z.string(), correo: z.string() });
-const contactoDepartamentoSchema = contactoSchema.extend({ area: z.string(), backup: z.string() });
-const contactoDepartamentoInternoSchema = contactoDepartamentoSchema.extend({ escalonamiento: contactoSchema });
+const contactoDepartamentoSchema = contactoSchema.extend({ area: z.string(), backup: z.string(), escalonamiento: contactoSchema });
 const tablaContactosSchema = z.object({
-  departamentos: z.array(contactoDepartamentoInternoSchema).length(AREAS_CONTACTO_INTERNOS.length),
+  departamentos: z.array(contactoDepartamentoSchema).length(AREAS_CONTACTO_INTERNOS.length),
 });
 
 const patchSchema = z.object({

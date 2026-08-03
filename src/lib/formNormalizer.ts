@@ -1,52 +1,63 @@
-// Migra registros guardados con el esquema anterior de contactos internos al
-// esquema actual:
-//   - Pasada 1: si los departamentos eran 4 (sin Comercial/Pricing), los
-//     prepende respetando el orden del template Excel (filas 32-37).
-//   - Pasada 2: si algún departamento no tiene `escalonamiento` propio (schema
-//     anterior usaba un único escalonamiento compartido a nivel de tabla), lo
-//     inicializa vacío para que cada departamento lleve el suyo.
+// Agrega escalonamiento vacío a cada departamento que no lo tenga.
+// Aplica tanto a internos como a cliente.
+function agregarEscalamientoADeps(deps: Record<string, unknown>[]): { result: Record<string, unknown>[]; changed: boolean } {
+  let changed = false;
+  const result = deps.map((dep) => {
+    if (typeof dep.escalonamiento === "object" && dep.escalonamiento !== null) return dep;
+    changed = true;
+    return { ...dep, escalonamiento: { nombreCargo: "", telefono: "", correo: "" } };
+  });
+  return { result, changed };
+}
+
+// Migra registros guardados con el esquema anterior de contactos:
+//   - Pasada 1 (internos): prepende Comercial + Pricing si faltan (filas 32-33 del Excel).
+//   - Pasada 2 (internos + cliente): agrega escalonamiento por departamento si falta.
 export function migrarContactosInternosLegacy(data: unknown): unknown {
   if (typeof data !== "object" || !data) return data;
   const d = data as Record<string, unknown>;
   if (typeof d.contactos !== "object" || !d.contactos) return data;
   const contactos = d.contactos as Record<string, unknown>;
-  if (typeof contactos.internos !== "object" || !contactos.internos) return data;
-  const internos = contactos.internos as Record<string, unknown>;
-  if (!Array.isArray(internos.departamentos)) return data;
 
-  let deps = internos.departamentos as Record<string, unknown>[];
   let changed = false;
+  const newContactos = { ...contactos };
 
-  // Pasada 1: prepende Comercial + Pricing si aún no están
-  if (deps.length < 6 && (deps.length === 0 || deps[0].area !== "Comercial")) {
-    const vacio = { nombreCargo: "", telefono: "", correo: "", backup: "" };
-    deps = [
-      { area: "Comercial", ...vacio },
-      { area: "Pricing / Inside Sale", ...vacio },
-      ...deps,
-    ];
-    changed = true;
+  // ── Internos ──────────────────────────────────────────────────────────────
+  if (typeof contactos.internos === "object" && contactos.internos) {
+    const internos = contactos.internos as Record<string, unknown>;
+    if (Array.isArray(internos.departamentos)) {
+      let deps = internos.departamentos as Record<string, unknown>[];
+
+      // Pasada 1: prepende Comercial + Pricing si aún no están
+      if (deps.length < 6 && (deps.length === 0 || deps[0].area !== "Comercial")) {
+        const vacio = { nombreCargo: "", telefono: "", correo: "", backup: "" };
+        deps = [
+          { area: "Comercial", ...vacio },
+          { area: "Pricing / Inside Sale", ...vacio },
+          ...deps,
+        ];
+        changed = true;
+      }
+
+      // Pasada 2: escalonamiento por dep
+      const { result, changed: c } = agregarEscalamientoADeps(deps);
+      if (c) { changed = true; deps = result; }
+
+      if (changed) newContactos.internos = { ...internos, departamentos: deps };
+    }
   }
 
-  // Pasada 2: agrega escalonamiento por departamento si falta
-  const depsMigradas = deps.map((dep) => {
-    if (typeof dep.escalonamiento === "object" && dep.escalonamiento !== null) return dep;
-    changed = true;
-    return { ...dep, escalonamiento: { nombreCargo: "", telefono: "", correo: "" } };
-  });
+  // ── Cliente ───────────────────────────────────────────────────────────────
+  if (typeof contactos.cliente === "object" && contactos.cliente) {
+    const cliente = contactos.cliente as Record<string, unknown>;
+    if (Array.isArray(cliente.departamentos)) {
+      const { result, changed: c } = agregarEscalamientoADeps(cliente.departamentos as Record<string, unknown>[]);
+      if (c) { changed = true; newContactos.cliente = { ...cliente, departamentos: result }; }
+    }
+  }
 
   if (!changed) return data;
-
-  return {
-    ...d,
-    contactos: {
-      ...contactos,
-      internos: {
-        ...internos,
-        departamentos: depsMigradas,
-      },
-    },
-  };
+  return { ...d, contactos: newContactos };
 }
 
 // Migra registros guardados donde el campo se llamaba `backus` → `backup`.

@@ -147,23 +147,26 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
 
         <DetailsSection index={3} title="Matriz de contactos">
           <h3 className="text-sm font-semibold text-ink">Contactos del cliente</h3>
-          <TablaResumen
-            rows={data.contactos.cliente.departamentos}
-            getTitulo={(r) => r.area}
-            fields={[
-              { key: "nombreCargo", label: "Nombre / Cargo" },
-              { key: "telefono", label: "Teléfono" },
-              { key: "correo", label: "Correo" },
-              { key: "backup", label: "Backup" },
-            ]}
-          />
-          <div className="rounded-lg border border-dashed border-accent/40 bg-accent/5 p-4">
-            <p className="mb-2 text-sm font-medium text-accent">Contacto de escalonamiento</p>
-            <dl className="grid gap-3 sm:grid-cols-3">
-              <Campo label="Nombre / Cargo" value={data.contactos.cliente.escalonamiento.nombreCargo} />
-              <Campo label="Teléfono" value={data.contactos.cliente.escalonamiento.telefono} />
-              <Campo label="Correo" value={data.contactos.cliente.escalonamiento.correo} />
-            </dl>
+          <div className="space-y-3">
+            {data.contactos.cliente.departamentos.map((dep, i) => (
+              <div key={i} className="rounded-lg border border-line bg-surface overflow-hidden">
+                <p className="px-4 pt-3 pb-1 text-sm font-medium text-ink">{dep.area}</p>
+                <dl className="grid gap-3 px-4 pb-3 sm:grid-cols-2">
+                  <Campo label="Nombre / Cargo" value={dep.nombreCargo} />
+                  <Campo label="Teléfono" value={dep.telefono} />
+                  <Campo label="Correo" value={dep.correo} />
+                  <Campo label="Backup" value={dep.backup} />
+                </dl>
+                <div className="border-t border-line/60 bg-white px-4 py-2">
+                  <p className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-ink-muted/60">Escalonamiento</p>
+                  <dl className="grid gap-3 sm:grid-cols-3">
+                    <Campo label="Nombre / Cargo" value={dep.escalonamiento.nombreCargo} />
+                    <Campo label="Teléfono" value={dep.escalonamiento.telefono} />
+                    <Campo label="Correo" value={dep.escalonamiento.correo} />
+                  </dl>
+                </div>
+              </div>
+            ))}
           </div>
         </DetailsSection>
 

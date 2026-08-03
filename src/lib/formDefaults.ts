@@ -29,8 +29,12 @@ export const ALCANCE_POR_SERVICIO: Record<string, string> = {
 const crearContactoVacio = (): Contacto => ({ nombreCargo: "", telefono: "", correo: "" });
 
 const crearTablaContactosVacia = (): TablaContactos => ({
-  departamentos: AREAS_CONTACTO.map((area) => ({ area, backup: "", ...crearContactoVacio() })),
-  escalonamiento: crearContactoVacio(),
+  departamentos: AREAS_CONTACTO.map((area) => ({
+    area,
+    backup: "",
+    ...crearContactoVacio(),
+    escalonamiento: crearContactoVacio(),
+  })),
 });
 
 const crearTablaContactosInternosVacia = (): TablaContactosInternos => ({

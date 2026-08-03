@@ -131,7 +131,7 @@ export async function generarExcelSop(data: SopFormValues, matrizKpi: KpiCliente
     set(`M${row}`, dep.escalonamiento.telefono);
     set(`N${row}`, dep.escalonamiento.correo);
   });
-  // Cliente: escalonamiento compartido para toda la tabla.
+  // Cliente: cada departamento lleva su propio escalonamiento.
   FILAS_CONTACTO.cliente.forEach((row, i) => {
     const dep = data.contactos.cliente.departamentos[i];
     if (!dep) return;
@@ -139,9 +139,9 @@ export async function generarExcelSop(data: SopFormValues, matrizKpi: KpiCliente
     set(`F${row}`, dep.telefono);
     set(`G${row}`, dep.correo);
     set(`I${row}`, dep.backup);
-    set(`K${row}`, data.contactos.cliente.escalonamiento.nombreCargo);
-    set(`M${row}`, data.contactos.cliente.escalonamiento.telefono);
-    set(`N${row}`, data.contactos.cliente.escalonamiento.correo);
+    set(`K${row}`, dep.escalonamiento.nombreCargo);
+    set(`M${row}`, dep.escalonamiento.telefono);
+    set(`N${row}`, dep.escalonamiento.correo);
   });
 
   // 4. Preferencias, protocolos y particularidades

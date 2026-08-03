@@ -226,27 +226,20 @@ function filasContactosInternos(
   ]);
 }
 
-// Cliente: escalonamiento compartido para toda la tabla → rowSpan en primera fila.
+// Cliente: cada departamento lleva su propio escalonamiento (igual que internos).
 function filasContactosCliente(
   deps: SopFormValues["contactos"]["cliente"]["departamentos"],
-  esc: SopFormValues["contactos"]["cliente"]["escalonamiento"],
 ): any[][] {
-  const n = deps.length;
-  return deps.map((dep, i) => {
-    const base = [
-      dc(dep.area, 2), PH,
-      dc(dep.nombreCargo, 2), PH,
-      dc(dep.telefono),
-      dc(dep.correo, 2), PH,
-      dc(dep.backup, 2), PH,
-    ];
-    if (i === 0) {
-      base.push(dc(esc.nombreCargo || "—", 2, n), PH, dc(esc.telefono || "—", 1, n), dc(esc.correo || "—", 2, n), PH);
-    } else {
-      base.push(PH, PH, PH, PH, PH);
-    }
-    return base;
-  });
+  return deps.map((dep) => [
+    dc(dep.area, 2), PH,
+    dc(dep.nombreCargo, 2), PH,
+    dc(dep.telefono),
+    dc(dep.correo, 2), PH,
+    dc(dep.backup, 2), PH,
+    dc(dep.escalonamiento.nombreCargo || "—", 2), PH,
+    dc(dep.escalonamiento.telefono || "—"),
+    dc(dep.escalonamiento.correo || "—", 2), PH,
+  ]);
 }
 
 function buildSec3(c: SopFormValues["contactos"]): any {
@@ -272,7 +265,7 @@ function buildSec3(c: SopFormValues["contactos"]): any {
     subh("CONTACTOS DEL CLIENTE"),
     [...subh("Operativos", 9), ...subh("Escalonamiento", 5)],
     colLabels,
-    ...filasContactosCliente(c.cliente.departamentos, c.cliente.escalonamiento),
+    ...filasContactosCliente(c.cliente.departamentos),
   ], 2);
 }
 
