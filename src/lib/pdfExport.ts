@@ -480,11 +480,7 @@ function buildEncabezado(cliente: string, fecha: string, logo?: string): any {
         fillColor: "#FFFFFF", margin: [2, 4, 2, 4] };
 
   return tbl([
-    // Fila 1: título completo (fila 1 del Excel)
-    [{ text: "STANDARD OPERATING PROCEDURE (SOP) DE CLIENTE LOGÍSTICO",
-       colSpan: 14, bold: true, fontSize: 12, color: C.SEC_BG, alignment: "center",
-       fillColor: "#FFFFFF", margin: [3, 6, 3, 6] }, ...Array(13).fill(PH)],
-    // Fila 2: logo | subtítulo | cliente/fecha | versión (fila 2 del Excel)
+    // Logo | subtítulo | cliente/fecha | versión (igual que fila 2 del Excel)
     [
       logoCell, PH,
       { text: "SOP DE CLIENTE LOGÍSTICO\nOP-F001", bold: true, fontSize: 8.5,
@@ -492,10 +488,10 @@ function buildEncabezado(cliente: string, fecha: string, logo?: string): any {
         fillColor: "#FFFFFF", margin: [2, 3, 2, 3] },
       PH, PH, PH, PH, PH,
       { text: `Cliente: ${cliente}\nFecha:   ${fecha}`, fontSize: 7.5,
-        colSpan: 4, fillColor: "#FFFFFF", margin: [2, 3, 2, 3] },
+        colSpan: 4, alignment: "center", fillColor: "#FFFFFF", margin: [2, 3, 2, 3] },
       PH, PH, PH,
       { text: "Versión: 01\nVigencia: junio 2025", fontSize: 7,
-        colSpan: 2, alignment: "right", fillColor: "#FFFFFF", margin: [2, 3, 2, 3] },
+        colSpan: 2, alignment: "center", fillColor: "#FFFFFF", margin: [2, 3, 2, 3] },
       PH,
     ],
   ], 4);
