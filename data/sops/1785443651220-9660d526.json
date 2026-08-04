@@ -316,5 +316,18 @@
       }
     }
   },
-  "matrizKpi": []
+  "matrizKpi": [],
+  "controlCambios": [
+    {
+      "version": "01",
+      "fecha": "2026-08-03",
+      "seccionModificada": "",
+      "descripcionCambio": "",
+      "motivo": "",
+      "solicitadoPor": "",
+      "responsable": "",
+      "aprobadoPor": "",
+      "estado": "En revisión"
+    }
+  ]
 }
