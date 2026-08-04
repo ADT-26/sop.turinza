@@ -9,6 +9,7 @@ import {
   actualizarAsistentesReunion,
   actualizarInstructivoOdoo,
   actualizarMatrizKpi,
+  actualizarControlCambios,
   actualizarSop,
   eliminarSop,
 } from "@/lib/sopStore";
@@ -40,6 +41,17 @@ const patchSchema = z.object({
     fuente: z.string().default(""),
     responsable: z.string().default(""),
     observaciones: z.string().default(""),
+  })).optional(),
+  controlCambios: z.array(z.object({
+    version: z.string().default(""),
+    fecha: z.string().default(""),
+    seccionModificada: z.string().default(""),
+    descripcionCambio: z.string().default(""),
+    motivo: z.string().default(""),
+    solicitadoPor: z.string().default(""),
+    responsable: z.string().default(""),
+    aprobadoPor: z.string().default(""),
+    estado: z.string().default(""),
   })).optional(),
 });
 
@@ -145,8 +157,8 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     );
   }
 
-  const { nivelCliente, revisoTurinzaComercial, revisoTurinza, aproboTurinza, contactosInternos, asistentesReunionOperativa, instructivoOdooCliente, matrizKpi } = parsed.data;
-  if (nivelCliente === undefined && !revisoTurinzaComercial && !revisoTurinza && !aproboTurinza && !contactosInternos && asistentesReunionOperativa === undefined && instructivoOdooCliente === undefined && matrizKpi === undefined) {
+  const { nivelCliente, revisoTurinzaComercial, revisoTurinza, aproboTurinza, contactosInternos, asistentesReunionOperativa, instructivoOdooCliente, matrizKpi, controlCambios } = parsed.data;
+  if (nivelCliente === undefined && !revisoTurinzaComercial && !revisoTurinza && !aproboTurinza && !contactosInternos && asistentesReunionOperativa === undefined && instructivoOdooCliente === undefined && matrizKpi === undefined && controlCambios === undefined) {
     return NextResponse.json({ success: false, error: "Nada para actualizar" }, { status: 400 });
   }
 
@@ -175,6 +187,9 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     }
     if (matrizKpi !== undefined) {
       actualizado = await actualizarMatrizKpi(id, matrizKpi as import("@/lib/schemas").KpiCliente[]);
+    }
+    if (controlCambios !== undefined) {
+      actualizado = await actualizarControlCambios(id, controlCambios as import("@/lib/schemas").CambioControl);
     }
     if (!actualizado) {
       return NextResponse.json({ success: false, error: "No encontrado" }, { status: 404 });

@@ -5,6 +5,7 @@ import { obtenerSopPorId } from "@/lib/sopStore";
 import { OBJETIVO_SOP_DEFAULT } from "@/lib/formDefaults";
 import { AccionesTurinza } from "@/components/dashboard/AccionesTurinza";
 import { MatrizKpiEditor } from "@/components/dashboard/MatrizKpiEditor";
+import { ControlCambiosEditor } from "@/components/dashboard/ControlCambiosEditor";
 import { EliminarSopButton } from "@/components/dashboard/EliminarSopButton";
 
 export const dynamic = "force-dynamic";
@@ -96,6 +97,8 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
       <AccionesTurinza id={sop.id} data={data} />
 
       <MatrizKpiEditor id={sop.id} valorInicial={sop.matrizKpi} />
+
+      <ControlCambiosEditor id={sop.id} valorInicial={sop.controlCambios} />
 
       <div className="flex items-center gap-4 py-6">
         <div className="h-px flex-1 bg-line" />
