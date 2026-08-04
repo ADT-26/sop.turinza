@@ -4,7 +4,7 @@ import { useState } from "react";
 import { OPCIONES_CARGOS_RESPONSABLE, OPCIONES_ESTADO_DOCUMENTO } from "@/lib/options";
 import type { CambioControl } from "@/lib/schemas";
 
-type Cambio = CambioControl[number];
+type Cambio = CambioControl;
 
 const CAMBIO_VACIO: Cambio = {
   version: "",
@@ -110,9 +110,9 @@ export function ControlCambiosEditor({
   valorInicial,
 }: {
   id: string;
-  valorInicial: CambioControl;
+  valorInicial: CambioControl[];
 }) {
-  const [filas, setFilas] = useState<CambioControl>(valorInicial);
+  const [filas, setFilas] = useState<CambioControl[]>(valorInicial);
   const [guardando, setGuardando] = useState(false);
   const [guardadoOk, setGuardadoOk] = useState(false);
   const [error, setError] = useState<string | null>(null);

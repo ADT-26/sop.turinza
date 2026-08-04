@@ -24,7 +24,7 @@ export interface SopRegistro {
   createdAt: string;
   data: SopFormValues;
   matrizKpi: KpiCliente[];
-  controlCambios: CambioControl;
+  controlCambios: CambioControl[];
 }
 
 export function idValido(id: string): boolean {
@@ -314,7 +314,7 @@ export async function actualizarMatrizKpi(
 
 export async function actualizarControlCambios(
   id: string,
-  controlCambios: CambioControl,
+  controlCambios: CambioControl[],
 ): Promise<SopRegistro | null> {
   if (!idValido(id)) return null;
   const archivo = await leerArchivo(`${SOPS_DIR}/${id}.json`);

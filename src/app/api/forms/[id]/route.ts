@@ -189,7 +189,7 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
       actualizado = await actualizarMatrizKpi(id, matrizKpi as import("@/lib/schemas").KpiCliente[]);
     }
     if (controlCambios !== undefined) {
-      actualizado = await actualizarControlCambios(id, controlCambios as import("@/lib/schemas").CambioControl);
+      actualizado = await actualizarControlCambios(id, controlCambios as unknown as import("@/lib/schemas").CambioControl[]);
     }
     if (!actualizado) {
       return NextResponse.json({ success: false, error: "No encontrado" }, { status: 404 });
