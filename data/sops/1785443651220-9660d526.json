@@ -316,7 +316,18 @@
       }
     }
   },
-  "matrizKpi": [],
+  "matrizKpi": [
+    {
+      "servicio": "OTM / DTA",
+      "indicador": "asmksdsak",
+      "descripcion": "",
+      "meta": "",
+      "frecuencia": "Mensual",
+      "fuente": "",
+      "responsable": "Director Operativo",
+      "observaciones": ""
+    }
+  ],
   "controlCambios": [
     {
       "version": "01",
