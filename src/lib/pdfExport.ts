@@ -475,7 +475,7 @@ function buildSec9(apr: SopFormValues["aprobaciones"]): any {
 }
 
 // ─── ENCABEZADO DEL DOCUMENTO ─────────────────────────────────────────────────
-function buildEncabezado(cliente: string, fecha: string, logo?: string): any {
+function buildEncabezado(logo?: string): any {
   const logoCell: any = logo
     ? { image: logo, fit: [90, 32], colSpan: 2, alignment: "left", margin: [2, 2, 2, 2],
         fillColor: "#FFFFFF" }
@@ -483,16 +483,12 @@ function buildEncabezado(cliente: string, fecha: string, logo?: string): any {
         fillColor: "#FFFFFF", margin: [2, 4, 2, 4] };
 
   return tbl([
-    // Logo | subtítulo | cliente/fecha | versión (igual que fila 2 del Excel)
     [
       logoCell, PH,
       { text: "SOP DE CLIENTE LOGÍSTICO\nOP-F001", bold: true, fontSize: 8.5,
-        color: C.SEC_BG, colSpan: 6, alignment: "center",
+        color: C.SEC_BG, colSpan: 10, alignment: "center",
         fillColor: "#FFFFFF", margin: [2, 3, 2, 3] },
-      PH, PH, PH, PH, PH,
-      { text: `Cliente: ${cliente}\nFecha:   ${fecha}`, fontSize: 7.5,
-        colSpan: 4, alignment: "center", fillColor: "#FFFFFF", margin: [2, 3, 2, 3] },
-      PH, PH, PH,
+      PH, PH, PH, PH, PH, PH, PH, PH, PH,
       { text: "Versión: 01\nVigencia: junio 2025", fontSize: 7,
         colSpan: 2, alignment: "center", fillColor: "#FFFFFF", margin: [2, 3, 2, 3] },
       PH,
@@ -527,7 +523,7 @@ function buildContent(
   fechaHoy: string,
 ): any[] {
   return [
-    buildEncabezado(data.datosGenerales.cliente, fechaHoy, logo),
+    buildEncabezado(logo),
     buildSec1(data.datosGenerales),
     buildSec2(data.resumenEjecutivo),
     buildSec3(data.contactos),
