@@ -243,7 +243,10 @@ function filasContactosCliente(
 }
 
 function buildSec3(c: SopFormValues["contactos"]): any {
-  const colLabels = [
+  // Función en lugar de const para generar objetos frescos en cada llamada:
+  // pdfmake muta los nodos de celda durante el layout, por lo que reusar el
+  // mismo array para dos filas de la misma tabla dejaría la segunda vacía.
+  const mkColLabels = () => [
     cl("Área", 2), PH,
     cl("Nombre / Cargo", 2), PH,
     cl("Teléfono"),
@@ -259,12 +262,12 @@ function buildSec3(c: SopFormValues["contactos"]): any {
     // Internos
     subh("CONTACTOS INTERNOS TURINZA / CUENTAS"),
     [...subh("Operativos", 9), ...subh("Escalonamiento", 5)],
-    colLabels,
+    mkColLabels(),
     ...filasContactosInternos(c.internos.departamentos),
     // Cliente
     subh("CONTACTOS DEL CLIENTE"),
     [...subh("Operativos", 9), ...subh("Escalonamiento", 5)],
-    colLabels,
+    mkColLabels(),
     ...filasContactosCliente(c.cliente.departamentos),
   ], 2);
 }
