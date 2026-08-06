@@ -1,17 +1,17 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef, useState } from "react";
 import { TextInput } from "@/components/ui";
 import { AREAS_CONTACTO_INTERNOS, type TablaContactosInternos } from "@/lib/schemas";
 
 const AREA_OPERACIONES = "Operaciones / Logística";
-const MIN_CHARS = 4;
+const MIN_CHARS = 3;
 
 function normalizar(s: string) {
   return s
     .toLowerCase()
     .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "");
+    .replace(/[\u0300-\u036f]/g, "");
 }
 
 function AutocompleteNombreCargo({
