@@ -4,8 +4,28 @@ import { useEffect, useRef, useState } from "react";
 import { TextInput } from "@/components/ui";
 import { AREAS_CONTACTO_INTERNOS, type TablaContactosInternos } from "@/lib/schemas";
 
-const AREA_OPERACIONES = "Operaciones / Logística";
+// Índice de "Operaciones / Logística" en AREAS_CONTACTO_INTERNOS (0-based)
+const IDX_OPERACIONES = 2;
 const MIN_CHARS = 3;
+
+// Respaldo local — se sobreescribe con los datos de /api/config/equipo si la llamada tiene éxito
+const EQUIPO_FALLBACK = [
+  "Camilo Andres Corredor Mendoza",
+  "Ingrid Lorena Gallo Mendoza",
+  "Jhon Jairo Martinez Ibañez",
+  "Carlos Del Toro Benavides",
+  "Yenifer Alejandra Grisales Reyes",
+  "Juan Carlos Mendoza Patiño",
+  "Elkin Andres Salinas Silva",
+  "Iliana Melissa Garzon Buritica",
+  "Cristian Camilo Martinez Londoño",
+  "Patricia Rincon",
+  "Diego Segura",
+  "Pablo Enrique Cholo Buitrago",
+  "Diana P Méndez García",
+  "Carlos Rodriguez",
+  "VVG",
+];
 
 function normalizar(s: string) {
   return s
@@ -122,12 +142,12 @@ export function ContactosInternosEditor({
   const [guardando, setGuardando] = useState(false);
   const [guardadoOk, setGuardadoOk] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [equipoOps, setEquipoOps] = useState<string[]>([]);
+  const [equipoOps, setEquipoOps] = useState<string[]>(EQUIPO_FALLBACK);
 
   useEffect(() => {
     fetch("/api/config/equipo")
       .then((r) => r.json())
-      .then((j) => { if (j.success) setEquipoOps(j.data); })
+      .then((j) => { if (j.success && Array.isArray(j.data) && j.data.length > 0) setEquipoOps(j.data); })
       .catch(() => {});
   }, []);
 
@@ -155,7 +175,7 @@ export function ContactosInternosEditor({
     <div className="space-y-3">
       {AREAS_CONTACTO_INTERNOS.map((area, index) => {
         const dep = valor.departamentos[index];
-        const esOperaciones = area === AREA_OPERACIONES;
+        const esOperaciones = index === IDX_OPERACIONES;
 
         const actualizarDep = (campo: keyof Omit<typeof dep, "escalonamiento" | "area">, val: string) => {
           setValor((v) => {

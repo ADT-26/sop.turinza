@@ -21,15 +21,19 @@ const EQUIPO_DEFAULT: string[] = [
 ];
 
 export async function obtenerEquipoOperaciones(): Promise<string[]> {
-  const archivo = await leerArchivo(EQUIPO_PATH);
-  if (archivo) {
-    return JSON.parse(archivo.content) as string[];
+  try {
+    const archivo = await leerArchivo(EQUIPO_PATH);
+    if (archivo) {
+      return JSON.parse(archivo.content) as string[];
+    }
+    // Primera llamada: sembrar el archivo en la rama data
+    await escribirArchivo(
+      EQUIPO_PATH,
+      JSON.stringify(EQUIPO_DEFAULT, null, 2),
+      "config: equipo operaciones Turinza (seed inicial)",
+    );
+  } catch {
+    // Si GitHub falla, devolver la lista embebida
   }
-  // Primera llamada: sembrar el archivo en la rama data
-  await escribirArchivo(
-    EQUIPO_PATH,
-    JSON.stringify(EQUIPO_DEFAULT, null, 2),
-    "config: equipo operaciones Turinza (seed inicial)",
-  );
   return EQUIPO_DEFAULT;
 }
