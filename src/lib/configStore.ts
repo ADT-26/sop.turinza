@@ -20,6 +20,16 @@ const EQUIPO_DEFAULT: string[] = [
   "VVG",
 ];
 
+export async function actualizarEquipoOperaciones(nombres: string[]): Promise<void> {
+  const archivo = await leerArchivo(EQUIPO_PATH);
+  await escribirArchivo(
+    EQUIPO_PATH,
+    JSON.stringify(nombres, null, 2),
+    "config: equipo Turinza actualizado",
+    archivo?.sha,
+  );
+}
+
 export async function obtenerEquipoOperaciones(): Promise<string[]> {
   try {
     const archivo = await leerArchivo(EQUIPO_PATH);
