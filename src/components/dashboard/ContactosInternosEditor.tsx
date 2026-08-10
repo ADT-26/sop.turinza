@@ -213,7 +213,7 @@ export function ContactosInternosEditor({
       {AREAS_CONTACTO_INTERNOS.map((area, index) => {
         const dep = valor.departamentos[index];
         return (
-          <div key={area} className="rounded-lg border border-line bg-white overflow-hidden">
+          <div key={area} className="rounded-lg border border-line bg-white">
             <p className="px-4 pt-3 pb-2 text-sm font-semibold text-navy">{area}</p>
             <div className="px-4 pb-3 grid gap-3 sm:grid-cols-2">
               <AutocompleteInput
@@ -239,7 +239,7 @@ export function ContactosInternosEditor({
                 opciones={equipo}
               />
             </div>
-            <div className="border-t border-line/60 bg-surface px-4 py-3">
+            <div className="border-t border-line/60 bg-surface px-4 py-3 rounded-b-lg">
               <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-ink-muted/60">Escalonamiento</p>
               <div className="grid gap-3 sm:grid-cols-3">
                 <AutocompleteInput
