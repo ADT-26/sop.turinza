@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { obtenerConfigDocumento } from "@/lib/configStore";
 import "./globals.css";
 
 const plexSans = IBM_Plex_Sans({
@@ -24,11 +25,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const config = await obtenerConfigDocumento().catch(() => undefined);
+
   return (
     <html
       lang="es"
@@ -41,7 +44,7 @@ export default function RootLayout({
         >
           Saltar al contenido principal
         </a>
-        <Header />
+        <Header config={config} />
         <main id="main-content" className="flex-1">
           {children}
         </main>

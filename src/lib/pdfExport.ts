@@ -8,6 +8,7 @@ import path from "node:path";
 import fs from "node:fs/promises";
 import type { SopFormValues } from "./schemas";
 import { ALCANCE_SOP_DEFAULT, ALCANCE_POR_SERVICIO } from "./formDefaults";
+import { obtenerConfigDocumento } from "./configStore";
 
 const LOGO_PATH = path.join(process.cwd(), "public", "logo_turinza.png");
 
@@ -475,7 +476,7 @@ function buildSec9(apr: SopFormValues["aprobaciones"]): any {
 }
 
 // ─── ENCABEZADO DEL DOCUMENTO ─────────────────────────────────────────────────
-function buildEncabezado(logo?: string): any {
+function buildEncabezado(cfg: { codigoDocumento: string; version: string; vigencia: string }, logo?: string): any {
   const logoCell: any = logo
     ? { image: logo, fit: [90, 32], colSpan: 2, alignment: "left", margin: [2, 2, 2, 2],
         fillColor: "#FFFFFF" }
@@ -485,11 +486,11 @@ function buildEncabezado(logo?: string): any {
   return tbl([
     [
       logoCell, PH,
-      { text: "SOP DE CLIENTE LOGÍSTICO\nOP-F001", bold: true, fontSize: 8.5,
+      { text: `SOP DE CLIENTE LOGÍSTICO\n${cfg.codigoDocumento}`, bold: true, fontSize: 8.5,
         color: C.SEC_BG, colSpan: 10, alignment: "center",
         fillColor: "#FFFFFF", margin: [2, 3, 2, 3] },
       PH, PH, PH, PH, PH, PH, PH, PH, PH,
-      { text: "Versión: 01\nVigencia: junio 2025", fontSize: 7,
+      { text: `Versión: ${cfg.version}\nVigencia: ${cfg.vigencia}`, fontSize: 7,
         colSpan: 2, alignment: "center", fillColor: "#FFFFFF", margin: [2, 3, 2, 3] },
       PH,
     ],
@@ -519,11 +520,12 @@ function countPdfPages(buffer: Buffer): number {
 
 function buildContent(
   data: SopFormValues,
+  cfg: { codigoDocumento: string; version: string; vigencia: string },
   logo: string | undefined,
   fechaHoy: string,
 ): any[] {
   return [
-    buildEncabezado(logo),
+    buildEncabezado(cfg, logo),
     buildSec1(data.datosGenerales),
     buildSec2(data.resumenEjecutivo),
     buildSec3(data.contactos),
@@ -549,6 +551,10 @@ export async function generarPdfSop(data: SopFormValues): Promise<Buffer> {
     // Logo no disponible; se usará texto de respaldo
   }
 
+  const cfg = await obtenerConfigDocumento().catch(() => ({
+    codigoDocumento: "OP-F02", version: "01", vigencia: "junio de 2026",
+  }));
+
   const fechaHoy = new Date().toLocaleDateString("es-CO", {
     day: "2-digit", month: "2-digit", year: "numeric",
   });
@@ -568,7 +574,7 @@ export async function generarPdfSop(data: SopFormValues): Promise<Buffer> {
     pageOrientation: "landscape",
     pageMargins: [20, 20, 20, 28] as any,
     defaultStyle: { font: "Helvetica", fontSize: 7.5 },
-    content: stripPageBreaks(buildContent(data, logo, fechaHoy)),
+    content: stripPageBreaks(buildContent(data, cfg, logo, fechaHoy)),
     footer,
   }).getBuffer();
 
@@ -580,7 +586,7 @@ export async function generarPdfSop(data: SopFormValues): Promise<Buffer> {
     pageSize: { width: 841.89, height: Math.ceil(pageCount * 595.28) } as any,
     pageMargins: [20, 20, 20, 20] as [number, number, number, number],
     defaultStyle: { font: "Helvetica", fontSize: 7.5 },
-    content: stripPageBreaks(buildContent(data, logo, fechaHoy)),
+    content: stripPageBreaks(buildContent(data, cfg, logo, fechaHoy)),
     footer,
   }).getBuffer();
 }

@@ -6,8 +6,9 @@ import { Badge } from "@/components/ui";
 import type { SopResumen } from "@/lib/sopStore";
 import { EliminarSopButton } from "@/components/dashboard/EliminarSopButton";
 import { EquipoTurinzaEditor } from "@/components/dashboard/EquipoTurinzaEditor";
+import { ConfigDocumentoEditor } from "@/components/dashboard/ConfigDocumentoEditor";
 
-type Tab = "sops" | "equipo";
+type Tab = "sops" | "equipo" | "config";
 
 function PendienteDot({ sop }: { sop: SopResumen }) {
   if (sop.nivelCliente) return null;
@@ -34,7 +35,7 @@ export function DashboardTabs({
   return (
     <div className="space-y-5">
       {/* ── Navegación ───────────────────────────────────────── */}
-      <div className="grid grid-cols-2 gap-3 sm:max-w-md">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:max-w-2xl">
         <button
           onClick={() => setTab("sops")}
           className={`rounded-xl border px-5 py-4 text-left transition-all duration-150 ${
@@ -94,6 +95,37 @@ export function DashboardTabs({
             }`}
           >
             Equipo Turinza
+          </p>
+        </button>
+
+        <button
+          onClick={() => setTab("config")}
+          className={`rounded-xl border px-5 py-4 text-left transition-all duration-150 ${
+            tab === "config"
+              ? "border-navy bg-navy shadow-md"
+              : "border-line bg-white shadow-sm hover:border-navy/30 hover:shadow"
+          }`}
+        >
+          <p
+            className={`font-mono text-[10px] font-semibold uppercase tracking-widest ${
+              tab === "config" ? "text-white/50" : "text-navy/40"
+            }`}
+          >
+            General
+          </p>
+          <p
+            className={`mt-1 text-sm font-bold tracking-tight ${
+              tab === "config" ? "text-white" : "text-navy"
+            }`}
+          >
+            Datos generales
+          </p>
+          <p
+            className={`mt-0.5 font-mono text-xs tabular-nums ${
+              tab === "config" ? "text-white/55" : "text-ink-muted"
+            }`}
+          >
+            Código y versión del SOP
           </p>
         </button>
       </div>
@@ -205,6 +237,9 @@ export function DashboardTabs({
 
       {/* ── Panel Equipo ─────────────────────────────────────── */}
       {tab === "equipo" && <EquipoTurinzaEditor />}
+
+      {/* ── Panel Configuración ──────────────────────────────── */}
+      {tab === "config" && <ConfigDocumentoEditor />}
     </div>
   );
 }

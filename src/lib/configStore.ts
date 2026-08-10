@@ -1,6 +1,42 @@
 import { escribirArchivo, leerArchivo } from "./githubStore";
 
-const EQUIPO_PATH = "data/config/equipo-turinza.json";
+const EQUIPO_PATH    = "data/config/equipo-turinza.json";
+const DOCUMENTO_PATH = "data/config/documento.json";
+
+// ── Configuración del documento ───────────────────────────────────────────────
+
+export interface ConfigDocumento {
+  codigoDocumento: string;  // "OP-F02"
+  version: string;          // "01"
+  vigencia: string;         // "junio de 2026"
+  tipoDocumento: string;    // "Doc. controlado"
+}
+
+const DOCUMENTO_DEFAULT: ConfigDocumento = {
+  codigoDocumento: "OP-F02",
+  version: "01",
+  vigencia: "junio de 2026",
+  tipoDocumento: "Doc. controlado",
+};
+
+export async function obtenerConfigDocumento(): Promise<ConfigDocumento> {
+  try {
+    const archivo = await leerArchivo(DOCUMENTO_PATH);
+    if (archivo) return { ...DOCUMENTO_DEFAULT, ...(JSON.parse(archivo.content) as Partial<ConfigDocumento>) };
+    await escribirArchivo(DOCUMENTO_PATH, JSON.stringify(DOCUMENTO_DEFAULT, null, 2), "config: documento (seed inicial)");
+  } catch { /* si GitHub falla usar el default */ }
+  return DOCUMENTO_DEFAULT;
+}
+
+export async function actualizarConfigDocumento(cfg: ConfigDocumento): Promise<void> {
+  const archivo = await leerArchivo(DOCUMENTO_PATH);
+  await escribirArchivo(
+    DOCUMENTO_PATH,
+    JSON.stringify(cfg, null, 2),
+    "config: metadatos del documento actualizados",
+    archivo?.sha,
+  );
+}
 
 export interface MiembroEquipo {
   nombre: string;

@@ -2,10 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { ConfigDocumento } from "@/lib/configStore";
 
-export function Header() {
+interface HeaderProps {
+  config?: Pick<ConfigDocumento, "tipoDocumento" | "codigoDocumento" | "version">;
+}
+
+export function Header({ config }: HeaderProps) {
   const pathname = usePathname();
   const enPanelInterno = pathname?.startsWith("/dashboard") ?? false;
+
+  const badge = config
+    ? `${config.tipoDocumento} · ${config.codigoDocumento} · v.${config.version}`
+    : "Doc. controlado · OP-F02 · v.01";
 
   return (
     <header className="border-b border-primary-dark bg-primary-dark">
@@ -23,7 +32,7 @@ export function Header() {
         <div className="flex items-center gap-3">
           <div className="hidden items-center gap-2 rounded border border-white/25 px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest text-white/90 sm:flex">
             <span className="h-1.5 w-1.5 rounded-full bg-primary-light" aria-hidden="true" />
-            Doc. controlado · OP-F00 · v.01
+            {badge}
           </div>
           {enPanelInterno ? (
             <Link
