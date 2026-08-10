@@ -346,10 +346,12 @@ export function ContactosInternosEditor({
                 value={dep.correo}
                 onChange={(e) => actualizarDep(index, "correo", e.target.value)}
               />
-              <TextInput
-                placeholder="Backup"
+              <AutocompleteInput
                 value={dep.backup}
-                onChange={(e) => actualizarDep(index, "backup", e.target.value)}
+                onChange={(v) => actualizarDep(index, "backup", v)}
+                onSeleccionar={(m) => actualizarDep(index, "backup", m.nombre)}
+                opciones={equipo}
+                onAbrirGestor={abrirGestor}
               />
             </div>
             <div className="border-t border-line/60 bg-surface px-4 py-3">
