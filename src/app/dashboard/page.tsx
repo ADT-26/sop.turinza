@@ -34,17 +34,22 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F7FA]">
+    <div className="min-h-screen bg-[#EEF1F6]">
     <div className="mx-auto max-w-5xl space-y-6 px-6 py-10">
-      <div>
-        <p className="font-mono text-[11px] font-semibold uppercase tracking-widest text-navy/40">
-          Panel interno · Turinza
-        </p>
-        <h1 className="mt-1 text-2xl font-bold tracking-tight text-navy">SOPs recibidos</h1>
-        <p className="mt-1 text-sm text-ink-muted">{sops.length} registro(s)</p>
+      <div className="flex items-end justify-between gap-4">
+        <div>
+          <p className="font-mono text-[11px] font-semibold uppercase tracking-widest text-navy/40">
+            Panel interno · Turinza
+          </p>
+          <h1 className="mt-1 text-2xl font-bold tracking-tight text-navy">SOPs recibidos</h1>
+        </div>
+        <span className="mb-0.5 rounded-full bg-navy/10 px-3 py-1 font-mono text-xs font-semibold text-navy/60">
+          {sops.length} registro{sops.length !== 1 ? "s" : ""}
+        </span>
       </div>
 
       {error ? (
+
         <p className="rounded-lg border border-accent/30 bg-accent/5 p-6 text-sm text-accent">{error}</p>
       ) : sops.length === 0 ? (
         <p className="rounded-lg border border-dashed border-line bg-surface p-6 text-center text-sm text-ink-muted">
@@ -141,6 +146,15 @@ export default async function DashboardPage() {
           </div>
         </>
       )}
+      {/* ── Configuración interna ───────────────────────────────── */}
+      <div className="flex items-center gap-3 pt-4">
+        <div className="h-[3px] w-8 rounded-full bg-navy/30" />
+        <span className="font-mono text-[10px] font-semibold uppercase tracking-widest text-ink-muted/60">
+          Configuración interna
+        </span>
+        <div className="h-px flex-1 bg-line" />
+      </div>
+
       <EquipoTurinzaEditor />
     </div>
     </div>

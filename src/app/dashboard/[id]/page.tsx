@@ -56,42 +56,80 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
   ];
 
   return (
-    <div className="min-h-screen bg-[#F5F7FA]">
-    <div className="mx-auto max-w-5xl space-y-6 px-6 py-10">
-      <div className="flex flex-col gap-4 rounded-md bg-navy p-5 shadow-sm sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <p className="font-mono text-xs text-white/50">SOP #{sop.id}</p>
-          <h1 className="mt-1 text-2xl font-bold tracking-tight text-white">
-            {data.datosGenerales.cliente}
-          </h1>
-          <p className="mt-1 font-mono text-sm text-white/55">
-            {new Date(sop.createdAt).toLocaleString("es-CO")}
-          </p>
-        </div>
-        <div className="flex flex-col items-start gap-3 sm:items-end">
-          <Badge>{sop.estado}</Badge>
-          <div className="flex flex-wrap items-center gap-2">
-            <Link
-              href={`/dashboard/${sop.id}/editar`}
-              className="rounded-md border border-white/30 px-4 py-2 text-sm font-semibold text-white hover:bg-white/10"
-            >
-              Editar datos del cliente
-            </Link>
-            <a
-              href={`/api/forms/${sop.id}/excel`}
-              className="rounded-md bg-white/15 px-4 py-2 text-sm font-semibold text-white hover:bg-white/25"
-            >
-              Descargar Excel
-            </a>
-            <a
-              href={`/api/forms/${sop.id}/pdf`}
-              className="rounded-md border border-white/30 px-4 py-2 text-sm font-semibold text-white hover:bg-white/10"
-            >
-              Descargar PDF
-            </a>
+    <div className="min-h-screen bg-[#EEF1F6]">
+    <div className="mx-auto max-w-5xl space-y-5 px-6 py-10">
+
+      {/* ── Cabecera ─────────────────────────────────────────────── */}
+      <div className="overflow-hidden rounded-xl bg-navy shadow-md">
+        <div className="flex flex-col gap-4 px-6 py-5 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <div className="flex items-center gap-2">
+              <Link href="/dashboard" className="font-mono text-xs text-white/40 hover:text-white/70 transition-colors">
+                ← Panel
+              </Link>
+              <span className="text-white/20">/</span>
+              <span className="font-mono text-xs text-white/40">{sop.id}</span>
+            </div>
+            <h1 className="mt-2 text-2xl font-bold tracking-tight text-white">
+              {data.datosGenerales.cliente}
+            </h1>
+            <div className="mt-1.5 flex flex-wrap items-center gap-3">
+              <Badge>{sop.estado}</Badge>
+              <span className="font-mono text-xs text-white/40">
+                {new Date(sop.createdAt).toLocaleString("es-CO")}
+              </span>
+              {data.datosGenerales.nit && (
+                <span className="font-mono text-xs text-white/40">NIT {data.datosGenerales.nit}</span>
+              )}
+            </div>
           </div>
-          <EliminarSopButton id={sop.id} cliente={data.datosGenerales.cliente} redirectTo="/dashboard" />
+          <div className="flex shrink-0 flex-col items-start gap-2 sm:items-end">
+            <div className="flex flex-wrap items-center gap-2">
+              <Link
+                href={`/dashboard/${sop.id}/editar`}
+                className="rounded-md border border-white/25 px-3 py-1.5 text-xs font-semibold text-white/80 hover:bg-white/10 hover:text-white transition-colors"
+              >
+                Editar datos
+              </Link>
+              <a
+                href={`/api/forms/${sop.id}/excel`}
+                className="rounded-md bg-white/10 px-3 py-1.5 text-xs font-semibold text-white hover:bg-white/20 transition-colors"
+              >
+                ↓ Excel
+              </a>
+              <a
+                href={`/api/forms/${sop.id}/pdf`}
+                className="rounded-md bg-accent px-3 py-1.5 text-xs font-semibold text-white hover:bg-accent/90 transition-colors"
+              >
+                ↓ PDF
+              </a>
+            </div>
+            <div className="mt-1">
+              <EliminarSopButton id={sop.id} cliente={data.datosGenerales.cliente} redirectTo="/dashboard" />
+            </div>
+          </div>
         </div>
+        {/* Metadata bar */}
+        <div className="flex flex-wrap gap-x-6 gap-y-1 border-t border-white/10 bg-white/[0.04] px-6 py-2.5">
+          {[
+            { label: "Sector", value: data.datosGenerales.sectorIndustria },
+            { label: "Operación", value: data.datosGenerales.tipoOperacion },
+            { label: "Nivel", value: data.resumenEjecutivo.nivelCliente || "—" },
+          ].map(({ label, value }) => (
+            <span key={label} className="font-mono text-[11px] text-white/50">
+              {label}: <span className="text-white/75">{value}</span>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Zona Turinza ─────────────────────────────────────────── */}
+      <div className="flex items-center gap-3 pt-1">
+        <div className="h-[3px] w-8 rounded-full bg-accent" />
+        <span className="font-mono text-[10px] font-semibold uppercase tracking-widest text-accent/70">
+          Gestión Turinza
+        </span>
+        <div className="h-px flex-1 bg-line" />
       </div>
 
       <AccionesTurinza id={sop.id} data={data} />
@@ -100,8 +138,9 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
 
       <ControlCambiosEditor id={sop.id} valorInicial={sop.controlCambios} />
 
-      <div className="flex items-center gap-4 py-6">
-        <div className="h-px flex-1 bg-line" />
+      {/* ── Zona cliente ─────────────────────────────────────────── */}
+      <div className="flex items-center gap-3 pt-3">
+        <div className="h-[3px] w-8 rounded-full bg-navy/30" />
         <span className="font-mono text-[10px] font-semibold uppercase tracking-widest text-ink-muted/60">
           Datos enviados por el cliente
         </span>

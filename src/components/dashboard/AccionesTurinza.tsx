@@ -8,35 +8,39 @@ import type { SopFormValues } from "@/lib/schemas";
 
 function Tarea({ numero, titulo, children }: { numero: number; titulo: string; children: ReactNode }) {
   return (
-    <div className="flex gap-4 py-5 first:pt-0 last:pb-0">
-      <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm bg-accent font-mono text-[11px] font-bold text-white">
-        {numero}
+    <div className="overflow-hidden rounded-lg border border-line border-l-4 border-l-accent bg-white shadow-sm">
+      <div className="flex items-center gap-3 border-b border-line/60 bg-accent/[0.03] px-4 py-2.5">
+        <span className="font-mono text-xs font-bold tabular-nums text-accent">
+          {String(numero).padStart(2, "0")}
+        </span>
+        <h3 className="text-sm font-semibold text-ink">{titulo}</h3>
       </div>
-      <div className="flex-1 space-y-3">
-        <p className="text-sm font-semibold text-ink">{titulo}</p>
-        {children}
-      </div>
+      <div className="px-4 py-4">{children}</div>
     </div>
   );
 }
 
-// Las 3 únicas cosas que el cliente NO diligencia y le tocan a Turinza al
-// revisar el SOP. Se agrupan en un solo panel con el rojo institucional
-// (--color-accent, tomado del logo de Turinza) vs. el resto de la página,
-// que es el contenido azul/neutro de solo lectura enviado por el cliente.
 export function AccionesTurinza({ id, data }: { id: string; data: SopFormValues }) {
   return (
-    <section className="overflow-hidden rounded-md border border-line bg-white shadow-sm">
+    <section className="overflow-hidden rounded-lg border border-line shadow-sm">
       <header className="bg-navy px-5 py-4">
-        <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-white/50">
-          Turinza · Pendientes
-        </p>
-        <h2 className="mt-1 text-lg font-bold tracking-tight text-white">Pendientes por diligenciar</h2>
-        <p className="mt-1 text-sm text-white/65">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-white/50">
+              Turinza · Por completar
+            </p>
+            <h2 className="mt-0.5 text-lg font-bold tracking-tight text-white">Pendientes por diligenciar</h2>
+          </div>
+          <span className="shrink-0 rounded-full border border-accent/40 bg-accent/20 px-3 py-1 font-mono text-xs font-semibold text-white/80">
+            5 tareas
+          </span>
+        </div>
+        <p className="mt-2 text-sm text-white/55">
           Estos campos no los llena el cliente — los completa Turinza al revisar el SOP recibido.
         </p>
       </header>
-      <div className="divide-y divide-line px-5">
+
+      <div className="space-y-3 bg-[#EEF1F6] p-4">
         <Tarea numero={1} titulo="Nivel Cliente">
           <NivelClienteEditor id={id} valorInicial={data.resumenEjecutivo.nivelCliente} />
         </Tarea>
@@ -51,24 +55,9 @@ export function AccionesTurinza({ id, data }: { id: string; data: SopFormValues 
         </Tarea>
         <Tarea numero={5} titulo="Revisó / Aprobó Turinza">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <FirmaTurinzaEditor
-              id={id}
-              campo="revisoTurinzaComercial"
-              titulo="Revisó Turinza (Comercial)"
-              valorInicial={data.aprobaciones.revisoTurinzaComercial}
-            />
-            <FirmaTurinzaEditor
-              id={id}
-              campo="revisoTurinza"
-              titulo="Revisó Turinza (Operación)"
-              valorInicial={data.aprobaciones.revisoTurinza}
-            />
-            <FirmaTurinzaEditor
-              id={id}
-              campo="aproboTurinza"
-              titulo="Aprobó Turinza"
-              valorInicial={data.aprobaciones.aproboTurinza}
-            />
+            <FirmaTurinzaEditor id={id} campo="revisoTurinzaComercial" titulo="Revisó Turinza (Comercial)" valorInicial={data.aprobaciones.revisoTurinzaComercial} />
+            <FirmaTurinzaEditor id={id} campo="revisoTurinza" titulo="Revisó Turinza (Operación)" valorInicial={data.aprobaciones.revisoTurinza} />
+            <FirmaTurinzaEditor id={id} campo="aproboTurinza" titulo="Aprobó Turinza" valorInicial={data.aprobaciones.aproboTurinza} />
           </div>
         </Tarea>
       </div>

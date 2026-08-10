@@ -86,7 +86,7 @@ export function EquipoTurinzaEditor() {
   };
 
   return (
-    <section id="equipo" className="overflow-hidden rounded-md border border-line bg-white shadow-sm">
+    <section id="equipo" className="overflow-hidden rounded-lg border border-line border-l-4 border-l-navy/30 bg-white shadow-sm">
       <header className="bg-navy px-5 py-4">
         <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-white/50">
           Turinza · Configuración
