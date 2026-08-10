@@ -177,6 +177,17 @@ export function ContactosInternosEditor({
     });
   }
 
+  function seleccionarEscMiembro(index: number, m: MiembroEquipo) {
+    setValor((v) => {
+      const departamentos = [...v.departamentos];
+      departamentos[index] = {
+        ...departamentos[index],
+        escalonamiento: { nombreCargo: m.nombre, correo: m.correo, telefono: m.telefono },
+      };
+      return { ...v, departamentos };
+    });
+  }
+
   const guardar = async () => {
     setGuardando(true);
     setError(null);
@@ -231,7 +242,12 @@ export function ContactosInternosEditor({
             <div className="border-t border-line/60 bg-surface px-4 py-3">
               <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-ink-muted/60">Escalonamiento</p>
               <div className="grid gap-3 sm:grid-cols-3">
-                <TextInput placeholder="Nombre / Cargo" value={dep.escalonamiento.nombreCargo} onChange={(e) => actualizarEsc(index, "nombreCargo", e.target.value)} />
+                <AutocompleteInput
+                  value={dep.escalonamiento.nombreCargo}
+                  onChange={(v) => actualizarEsc(index, "nombreCargo", v)}
+                  onSeleccionar={(m) => seleccionarEscMiembro(index, m)}
+                  opciones={equipo}
+                />
                 <TextInput placeholder="Teléfono" value={dep.escalonamiento.telefono} onChange={(e) => actualizarEsc(index, "telefono", e.target.value)} />
                 <TextInput placeholder="Correo" value={dep.escalonamiento.correo} onChange={(e) => actualizarEsc(index, "correo", e.target.value)} />
               </div>
