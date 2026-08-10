@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui";
 import { listarSops, type SopResumen } from "@/lib/sopStore";
 import { EliminarSopButton } from "@/components/dashboard/EliminarSopButton";
+import { EquipoTurinzaEditor } from "@/components/dashboard/EquipoTurinzaEditor";
 
 export const dynamic = "force-dynamic";
 
@@ -140,6 +141,7 @@ export default async function DashboardPage() {
           </div>
         </>
       )}
+      <EquipoTurinzaEditor />
     </div>
     </div>
   );

@@ -33,20 +33,16 @@ function normalizar(s: string) {
   return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 }
 
-// ── Autocomplete ──────────────────────────────────────────────────────────────
-
 function AutocompleteInput({
   value,
   onChange,
   onSeleccionar,
   opciones,
-  onAbrirGestor,
 }: {
   value: string;
   onChange: (v: string) => void;
   onSeleccionar: (m: MiembroEquipo) => void;
   opciones: MiembroEquipo[];
-  onAbrirGestor: () => void;
 }) {
   const [abierto, setAbierto] = useState(false);
   const [activo, setActivo] = useState(-1);
@@ -117,13 +113,15 @@ function AutocompleteInput({
           {sinMatch && (
             <li className="px-3 py-2 text-xs text-ink-muted">
               Sin coincidencias —{" "}
-              <button
-                type="button"
-                onMouseDown={(e) => { e.preventDefault(); setAbierto(false); onAbrirGestor(); }}
+              <a
+                href="/dashboard#equipo"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="font-medium text-navy underline-offset-2 hover:underline"
+                onMouseDown={(e) => e.preventDefault()}
               >
-                gestionar equipo
-              </button>
+                gestionar equipo ↗
+              </a>
             </li>
           )}
         </ul>
@@ -131,121 +129,6 @@ function AutocompleteInput({
     </div>
   );
 }
-
-// ── Gestor de equipo ──────────────────────────────────────────────────────────
-
-const MIEMBRO_VACIO: MiembroEquipo = { nombre: "", correo: "", telefono: "" };
-
-function GestorEquipo({
-  lista,
-  onActualizar,
-}: {
-  lista: MiembroEquipo[];
-  onActualizar: (lista: MiembroEquipo[]) => void;
-}) {
-  const [miembros, setMiembros] = useState<MiembroEquipo[]>(lista);
-  const [guardando, setGuardando] = useState(false);
-  const [ok, setOk] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const actualizar = (i: number, campo: keyof MiembroEquipo, val: string) => {
-    setMiembros((prev) => prev.map((m, idx) => (idx === i ? { ...m, [campo]: val } : m)));
-    setOk(false);
-  };
-  const agregar = () => { setMiembros((prev) => [...prev, { ...MIEMBRO_VACIO }]); setOk(false); };
-  const eliminar = (i: number) => { setMiembros((prev) => prev.filter((_, idx) => idx !== i)); setOk(false); };
-
-  const guardar = async () => {
-    setGuardando(true);
-    setError(null);
-    setOk(false);
-    try {
-      const validos = miembros.filter((m) => m.nombre.trim());
-      const res = await fetch("/api/config/equipo", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(validos),
-      });
-      const json = await res.json();
-      if (!res.ok || !json.success) throw new Error(json.error ?? "Error al guardar");
-      setMiembros(validos);
-      onActualizar(validos);
-      setOk(true);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Error al guardar");
-    } finally {
-      setGuardando(false);
-    }
-  };
-
-  const inputCls = "w-full rounded border border-line bg-white px-2 py-1 text-sm text-ink focus:outline-none focus:ring-1 focus:ring-navy/40";
-
-  return (
-    <div className="overflow-hidden rounded-lg border border-navy/20 bg-navy/5">
-      <div className="flex items-center justify-between px-4 py-3">
-        <p className="text-xs font-semibold uppercase tracking-widest text-navy/60">
-          Equipo Turinza — lista de autocompletado
-        </p>
-        <span className="text-xs text-ink-muted">{miembros.length} personas</span>
-      </div>
-
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-y border-navy/10 bg-navy/10">
-              <th className="px-3 py-2 text-left text-xs font-semibold text-navy/70">Nombre</th>
-              <th className="px-3 py-2 text-left text-xs font-semibold text-navy/70">Correo</th>
-              <th className="px-3 py-2 text-left text-xs font-semibold text-navy/70">Teléfono</th>
-              <th className="w-8" />
-            </tr>
-          </thead>
-          <tbody>
-            {miembros.map((m, i) => (
-              <tr key={i} className="border-b border-navy/10 bg-white last:border-0">
-                <td className="px-2 py-1.5">
-                  <input className={inputCls} value={m.nombre} onChange={(e) => actualizar(i, "nombre", e.target.value)} placeholder="Nombre" />
-                </td>
-                <td className="px-2 py-1.5">
-                  <input className={inputCls} value={m.correo} onChange={(e) => actualizar(i, "correo", e.target.value)} placeholder="correo@turinza.com" type="email" />
-                </td>
-                <td className="px-2 py-1.5">
-                  <input className={inputCls} value={m.telefono} onChange={(e) => actualizar(i, "telefono", e.target.value)} placeholder="310..." />
-                </td>
-                <td className="px-2 py-1.5 text-center">
-                  <button type="button" onClick={() => eliminar(i)} aria-label="Eliminar" className="rounded-full p-0.5 text-ink-muted hover:bg-red-50 hover:text-red-500">
-                    ✕
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      <div className="flex flex-wrap items-center gap-3 px-4 py-3">
-        <button
-          type="button"
-          onClick={agregar}
-          className="flex items-center gap-1 rounded-md border border-dashed border-navy/30 px-3 py-1.5 text-xs font-medium text-navy/60 hover:border-navy/50 hover:bg-white"
-        >
-          + Agregar persona
-        </button>
-        <button
-          type="button"
-          onClick={guardar}
-          disabled={guardando}
-          className="rounded-md bg-navy px-4 py-1.5 text-xs font-semibold text-white hover:bg-navy/90 disabled:opacity-50"
-        >
-          {guardando ? "Guardando..." : "Guardar lista"}
-        </button>
-        {ok && !guardando && <span className="text-xs text-emerald-600">Lista guardada en la rama data</span>}
-        {error && <span className="text-xs text-accent">{error}</span>}
-      </div>
-    </div>
-  );
-}
-
-// ── Editor principal ──────────────────────────────────────────────────────────
 
 export function ContactosInternosEditor({
   id,
@@ -259,8 +142,6 @@ export function ContactosInternosEditor({
   const [guardadoOk, setGuardadoOk] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [equipo, setEquipo] = useState<MiembroEquipo[]>(EQUIPO_FALLBACK);
-  const [gestorAbierto, setGestorAbierto] = useState(false);
-  const gestorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetch("/api/config/equipo")
@@ -268,11 +149,6 @@ export function ContactosInternosEditor({
       .then((j) => { if (j.success && Array.isArray(j.data) && j.data.length > 0) setEquipo(j.data); })
       .catch(() => {});
   }, []);
-
-  function abrirGestor() {
-    setGestorAbierto(true);
-    setTimeout(() => gestorRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" }), 80);
-  }
 
   function seleccionarMiembro(index: number, m: MiembroEquipo) {
     setValor((v) => {
@@ -334,7 +210,6 @@ export function ContactosInternosEditor({
                 onChange={(v) => actualizarDep(index, "nombreCargo", v)}
                 onSeleccionar={(m) => seleccionarMiembro(index, m)}
                 opciones={equipo}
-                onAbrirGestor={abrirGestor}
               />
               <TextInput
                 placeholder="Teléfono"
@@ -351,7 +226,6 @@ export function ContactosInternosEditor({
                 onChange={(v) => actualizarDep(index, "backup", v)}
                 onSeleccionar={(m) => actualizarDep(index, "backup", m.nombre)}
                 opciones={equipo}
-                onAbrirGestor={abrirGestor}
               />
             </div>
             <div className="border-t border-line/60 bg-surface px-4 py-3">
@@ -367,22 +241,16 @@ export function ContactosInternosEditor({
       })}
 
       <div className="flex flex-wrap items-center gap-3 pt-1">
-        <button type="button" onClick={guardar} disabled={guardando}
-          className="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-white hover:bg-accent/90 disabled:opacity-50">
+        <button
+          type="button"
+          onClick={guardar}
+          disabled={guardando}
+          className="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-white hover:bg-accent/90 disabled:opacity-50"
+        >
           {guardando ? "Guardando..." : "Guardar contactos internos"}
         </button>
         {guardadoOk && !guardando && <span className="text-xs text-emerald-600">Guardado</span>}
         {error && <span role="alert" className="text-xs text-accent">{error}</span>}
-        <button type="button" onClick={() => setGestorAbierto((v) => !v)}
-          className="ml-auto text-xs text-navy/50 hover:text-navy">
-          {gestorAbierto ? "Ocultar gestor de equipo" : "Gestionar equipo Turinza ↓"}
-        </button>
-      </div>
-
-      <div ref={gestorRef}>
-        {gestorAbierto && (
-          <GestorEquipo lista={equipo} onActualizar={setEquipo} />
-        )}
       </div>
     </div>
   );
