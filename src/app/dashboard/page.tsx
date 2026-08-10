@@ -1,27 +1,7 @@
-import Link from "next/link";
-import { Badge } from "@/components/ui";
 import { listarSops, type SopResumen } from "@/lib/sopStore";
-import { EliminarSopButton } from "@/components/dashboard/EliminarSopButton";
-import { EquipoTurinzaEditor } from "@/components/dashboard/EquipoTurinzaEditor";
+import { DashboardTabs } from "@/components/dashboard/DashboardTabs";
 
 export const dynamic = "force-dynamic";
-
-// Mismo lenguaje visual del detalle (rojo institucional --color-accent):
-// marca de un vistazo qué SOPs todavía tienen pendiente el Nivel Cliente (la
-// primera de las 3 acciones que le corresponden a Turinza), antes de entrar
-// al registro.
-function PendienteDot({ sop }: { sop: SopResumen }) {
-  if (sop.nivelCliente) return null;
-  return (
-    <span
-      className="inline-flex items-center gap-1 rounded-full border border-accent/30 bg-accent/5 px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wide text-accent"
-      title="Falta asignar el Nivel Cliente"
-    >
-      <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
-      Pendiente
-    </span>
-  );
-}
 
 export default async function DashboardPage() {
   let sops: SopResumen[] = [];
@@ -35,128 +15,16 @@ export default async function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-[#EEF1F6]">
-    <div className="mx-auto max-w-5xl space-y-6 px-6 py-10">
-      <div className="flex items-end justify-between gap-4">
+      <div className="mx-auto max-w-5xl space-y-6 px-6 py-10">
         <div>
           <p className="font-mono text-[11px] font-semibold uppercase tracking-widest text-navy/40">
             Panel interno · Turinza
           </p>
-          <h1 className="mt-1 text-2xl font-bold tracking-tight text-navy">SOPs recibidos</h1>
+          <h1 className="mt-1 text-2xl font-bold tracking-tight text-navy">Panel de gestión</h1>
         </div>
-        <span className="mb-0.5 rounded-full bg-navy/10 px-3 py-1 font-mono text-xs font-semibold text-navy/60">
-          {sops.length} registro{sops.length !== 1 ? "s" : ""}
-        </span>
+
+        <DashboardTabs sops={sops} error={error} />
       </div>
-
-      {error ? (
-
-        <p className="rounded-lg border border-accent/30 bg-accent/5 p-6 text-sm text-accent">{error}</p>
-      ) : sops.length === 0 ? (
-        <p className="rounded-lg border border-dashed border-line bg-surface p-6 text-center text-sm text-ink-muted">
-          Todavía no hay SOPs guardados.
-        </p>
-      ) : (
-        <>
-          {/* Tarjetas: pantallas angostas */}
-          <ul className="space-y-3 md:hidden">
-            {sops.map((sop) => (
-              <li key={sop.id} className="rounded-md border border-line bg-white p-4">
-                <div className="flex items-start justify-between gap-3">
-                  <Link
-                    href={`/dashboard/${sop.id}`}
-                    className="font-semibold text-navy hover:underline"
-                  >
-                    {sop.cliente}
-                  </Link>
-                  <div className="flex items-center gap-2">
-                    <PendienteDot sop={sop} />
-                    <Badge>{sop.estado}</Badge>
-                  </div>
-                </div>
-                <dl className="mt-3 grid grid-cols-2 gap-2 text-xs text-ink-muted">
-                  <div>
-                    <dt className="text-[10px] uppercase">NIT</dt>
-                    <dd className="font-mono text-ink">{sop.nit}</dd>
-                  </div>
-                  <div>
-                    <dt className="text-[10px] uppercase">Tipo operación</dt>
-                    <dd className="text-ink">{sop.tipoOperacion}</dd>
-                  </div>
-                  <div>
-                    <dt className="text-[10px] uppercase">Nivel</dt>
-                    <dd className="text-ink">{sop.nivelCliente}</dd>
-                  </div>
-                  <div>
-                    <dt className="text-[10px] uppercase">Fecha</dt>
-                    <dd className="font-mono text-ink">
-                      {new Date(sop.createdAt).toLocaleString("es-CO")}
-                    </dd>
-                  </div>
-                </dl>
-                <div className="mt-3 border-t border-line pt-3">
-                  <EliminarSopButton id={sop.id} cliente={sop.cliente} />
-                </div>
-              </li>
-            ))}
-          </ul>
-
-          {/* Tabla: pantallas medianas en adelante */}
-          <div className="hidden overflow-hidden rounded-md border border-line bg-white md:block">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-navy font-mono text-[11px] uppercase tracking-wide text-white/70">
-                <tr>
-                  <th className="px-4 py-3 font-semibold">Cliente</th>
-                  <th className="px-4 py-3 font-semibold">NIT</th>
-                  <th className="px-4 py-3 font-semibold">Tipo operación</th>
-                  <th className="px-4 py-3 font-semibold">Nivel</th>
-                  <th className="px-4 py-3 font-semibold">Estado</th>
-                  <th className="px-4 py-3 font-semibold">Fecha</th>
-                  <th className="px-4 py-3 font-semibold">Acciones</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-line">
-                {sops.map((sop) => (
-                  <tr key={sop.id} className="hover:bg-surface">
-                    <td className="px-4 py-3">
-                      <Link
-                        href={`/dashboard/${sop.id}`}
-                        className="font-semibold text-navy hover:underline"
-                      >
-                        {sop.cliente}
-                      </Link>
-                    </td>
-                    <td className="px-4 py-3 font-mono text-ink-muted">{sop.nit}</td>
-                    <td className="px-4 py-3 text-ink-muted">{sop.tipoOperacion}</td>
-                    <td className="px-4 py-3 text-ink-muted">
-                      {sop.nivelCliente || <PendienteDot sop={sop} />}
-                    </td>
-                    <td className="px-4 py-3">
-                      <Badge>{sop.estado}</Badge>
-                    </td>
-                    <td className="px-4 py-3 font-mono text-ink-muted">
-                      {new Date(sop.createdAt).toLocaleString("es-CO")}
-                    </td>
-                    <td className="px-4 py-3">
-                      <EliminarSopButton id={sop.id} cliente={sop.cliente} />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </>
-      )}
-      {/* ── Configuración interna ───────────────────────────────── */}
-      <div className="flex items-center gap-3 pt-4">
-        <div className="h-[3px] w-8 rounded-full bg-navy/30" />
-        <span className="font-mono text-[10px] font-semibold uppercase tracking-widest text-ink-muted/60">
-          Configuración interna
-        </span>
-        <div className="h-px flex-1 bg-line" />
-      </div>
-
-      <EquipoTurinzaEditor />
-    </div>
     </div>
   );
 }
