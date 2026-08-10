@@ -218,7 +218,10 @@ export function ContactosInternosEditor({
             <div className="px-4 pb-3 grid gap-3 sm:grid-cols-2">
               <AutocompleteInput
                 value={dep.nombreCargo}
-                onChange={(v) => actualizarDep(index, "nombreCargo", v)}
+                onChange={(v) => {
+                  if (!v) seleccionarMiembro(index, { nombre: "", correo: "", telefono: "" });
+                  else actualizarDep(index, "nombreCargo", v);
+                }}
                 onSeleccionar={(m) => seleccionarMiembro(index, m)}
                 opciones={equipo}
               />
@@ -244,7 +247,10 @@ export function ContactosInternosEditor({
               <div className="grid gap-3 sm:grid-cols-3">
                 <AutocompleteInput
                   value={dep.escalonamiento.nombreCargo}
-                  onChange={(v) => actualizarEsc(index, "nombreCargo", v)}
+                  onChange={(v) => {
+                    if (!v) seleccionarEscMiembro(index, { nombre: "", correo: "", telefono: "" });
+                    else actualizarEsc(index, "nombreCargo", v);
+                  }}
                   onSeleccionar={(m) => seleccionarEscMiembro(index, m)}
                   opciones={equipo}
                 />
