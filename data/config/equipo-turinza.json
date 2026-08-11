@@ -1,10 +1,5 @@
 [
   {
-    "nombre": "Andrea Camila Curiel Borrego",
-    "correo": "camila.curiel@turinza.com",
-    "telefono": ""
-  },
-  {
     "nombre": "Andres Felipe Gómez Chaguala",
     "correo": "andres.gomez@turinza.com",
     "telefono": "3188110743"
@@ -20,19 +15,9 @@
     "telefono": "3133671357"
   },
   {
-    "nombre": "Carlos Rodriguez",
-    "correo": "carlos.rodriguez@turinza.com",
-    "telefono": ""
-  },
-  {
     "nombre": "Cristian Camilo Martinez Londoño",
     "correo": "C.martinez@turinza.com",
     "telefono": "3188834025"
-  },
-  {
-    "nombre": "Diana P Méndez García",
-    "correo": "comercial5@turinza.com",
-    "telefono": "3186805730"
   },
   {
     "nombre": "Diego Segura",
@@ -85,13 +70,28 @@
     "telefono": "3187157757"
   },
   {
-    "nombre": "VVG",
-    "correo": "",
-    "telefono": ""
+    "nombre": "Alex Alberto Beltrán Arrieta",
+    "correo": "alex.beltran@turinza.com",
+    "telefono": "3166116397"
   },
   {
-    "nombre": "Yenifer Alejandra Grisales Reyes",
-    "correo": "yenifer.grisales@turinza.com",
-    "telefono": ""
+    "nombre": "Paola Andrea Cavanzo",
+    "correo": "paola.cavanzo@turinza.com",
+    "telefono": "316 4687241"
+  },
+  {
+    "nombre": "Paola Rodríguez  Rodríguez  ",
+    "correo": "paola.rodriguez@turinza.com",
+    "telefono": "318 3099566"
+  },
+  {
+    "nombre": "Daniela Bustos Gómez ",
+    "correo": "daniela.bustos@turinza.com",
+    "telefono": "315 8081850"
+  },
+  {
+    "nombre": "Jaime Andrés Ordoñez ",
+    "correo": "andres.ordonez@turinza.com",
+    "telefono": "315 9466307"
   }
 ]
