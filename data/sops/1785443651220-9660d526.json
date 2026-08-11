@@ -33,39 +33,78 @@
       "internos": {
         "departamentos": [
           {
-            "nombreCargo": "ssssss",
-            "telefono": "ssss",
-            "correo": "sssss",
+            "nombreCargo": "Iliana Melissa Garzon Buritica",
+            "telefono": "3168964763",
+            "correo": "melissa.garzon@turinza.com",
+            "area": "Comercial",
+            "backup": "Juan Carlos Mendoza Patiño",
+            "escalonamiento": {
+              "nombreCargo": "Ingrid Lorena Gallo Mendoza",
+              "telefono": "3186174500",
+              "correo": "lorena.mendoza@turinza.com"
+            }
+          },
+          {
+            "nombreCargo": "Sara Valentina Santamaria",
+            "telefono": "3187157757",
+            "correo": "Sara.santamaria@turinza.com",
+            "area": "Pricing / Inside Sale",
+            "backup": "Elkin Andrés Salinas Silva",
+            "escalonamiento": {
+              "nombreCargo": "Cristian Camilo Martinez Londoño",
+              "telefono": "3188834025",
+              "correo": "C.martinez@turinza.com"
+            }
+          },
+          {
+            "nombreCargo": "Andrés Felipe Gómez Chaguala",
+            "telefono": "3188110743",
+            "correo": "andres.gomez@turinza.com",
             "area": "Operaciones / Logística",
-            "backus": "sssss"
+            "backup": "Paola Andrea Cavanzo",
+            "escalonamiento": {
+              "nombreCargo": "Paola Andrea Cavanzo",
+              "telefono": "316 4687241",
+              "correo": "paola.cavanzo@turinza.com"
+            }
           },
           {
-            "nombreCargo": "ssssss",
-            "telefono": "ssssss",
-            "correo": "sssss",
+            "nombreCargo": "Gabriel Vanegas Cortes",
+            "telefono": "",
+            "correo": "luis.vanegas@turinza.com",
             "area": "Contabilidad / Facturación",
-            "backus": "sssss"
+            "backup": "Fabber Torres Bejarano",
+            "escalonamiento": {
+              "nombreCargo": "Faiver Gustavo Quintana ",
+              "telefono": "",
+              "correo": "faiver.quintana@turinza.com"
+            }
           },
           {
-            "nombreCargo": "ssssss",
-            "telefono": "ssssss",
-            "correo": "sssss",
+            "nombreCargo": "Liliana Garzón Manosalva",
+            "telefono": "",
+            "correo": "liliana.garzon@turinza.com",
             "area": "Tesorería / Pagos",
-            "backus": "sdsssssss"
+            "backup": "",
+            "escalonamiento": {
+              "nombreCargo": "Faiver Gustavo Quintana ",
+              "telefono": "",
+              "correo": "faiver.quintana@turinza.com"
+            }
           },
           {
-            "nombreCargo": "sssssss",
-            "telefono": "ssssss",
-            "correo": "ssssss",
+            "nombreCargo": "Alex Alberto Beltrán Arrieta",
+            "telefono": "3166116397",
+            "correo": "alex.beltran@turinza.com",
             "area": "Calidad / Servicio al cliente",
-            "backus": "ssssssss"
+            "backup": "",
+            "escalonamiento": {
+              "nombreCargo": "Paola Andrea Cavanzo",
+              "telefono": "316 4687241",
+              "correo": "paola.cavanzo@turinza.com"
+            }
           }
-        ],
-        "escalonamiento": {
-          "nombreCargo": "dfdfff",
-          "telefono": "sdsssss",
-          "correo": "ssssss"
-        }
+        ]
       },
       "cliente": {
         "departamentos": [
