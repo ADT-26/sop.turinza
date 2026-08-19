@@ -38,11 +38,13 @@ function AutocompleteInput({
   onChange,
   onSeleccionar,
   opciones,
+  placeholder = "Nombre / Cargo",
 }: {
   value: string;
   onChange: (v: string) => void;
   onSeleccionar: (m: MiembroEquipo) => void;
   opciones: MiembroEquipo[];
+  placeholder?: string;
 }) {
   const [abierto, setAbierto] = useState(false);
   const [activo, setActivo] = useState(-1);
@@ -84,7 +86,7 @@ function AutocompleteInput({
   return (
     <div ref={ref} className="relative">
       <TextInput
-        placeholder="Nombre / Cargo"
+        placeholder={placeholder}
         value={value}
         onChange={(e) => { onChange(e.target.value); setAbierto(true); setActivo(-1); }}
         onKeyDown={tecla}
@@ -238,8 +240,9 @@ export function ContactosInternosEditor({
               <AutocompleteInput
                 value={dep.backup}
                 onChange={(v) => actualizarDep(index, "backup", v)}
-                onSeleccionar={(m) => actualizarDep(index, "backup", m.nombre)}
+                onSeleccionar={(m) => actualizarDep(index, "backup", m.correo || m.nombre)}
                 opciones={equipo}
+                placeholder="Backup (busca por nombre)"
               />
             </div>
             <div className="border-t border-line/60 bg-surface px-4 py-3 rounded-b-lg">
