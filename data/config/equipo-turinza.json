@@ -1,7 +1,7 @@
 [
   {
     "nombre": "Andres Felipe Gómez Chaguala",
-    "correo": "andres.gomez@turinza.com",
+    "correo": "kas2@turinza.com",
     "telefono": "3188110743"
   },
   {
@@ -16,7 +16,7 @@
   },
   {
     "nombre": "Cristian Camilo Martinez Londoño",
-    "correo": "C.martinez@turinza.com",
+    "correo": "liderpricing@turinza.com",
     "telefono": "3188834025"
   },
   {
@@ -31,12 +31,12 @@
   },
   {
     "nombre": "Iliana Melissa Garzon Buritica",
-    "correo": "melissa.garzon@turinza.com",
+    "correo": "comercial4@turinza.com",
     "telefono": "3168964763"
   },
   {
     "nombre": "Ingrid Lorena Gallo Mendoza",
-    "correo": "lorena.mendoza@turinza.com",
+    "correo": "dircomercial@turinza.com",
     "telefono": "3186174500"
   },
   {
@@ -46,17 +46,17 @@
   },
   {
     "nombre": "Juan Carlos Mendoza Patiño",
-    "correo": "juan.mendoza@turinza.com",
+    "correo": "comercial3@turinza.com",
     "telefono": "3182132700"
   },
   {
     "nombre": "Pablo Enrique Cholo Buitrago",
-    "correo": "pablo.cholo@turinza.com",
+    "correo": "dirlogistico@turinza.com",
     "telefono": "3183115959"
   },
   {
     "nombre": "Patricia Rincon",
-    "correo": "P.rincon@turinza.com",
+    "correo": "comercial6@turinza.com",
     "telefono": "3057437492"
   },
   {
@@ -66,37 +66,37 @@
   },
   {
     "nombre": "Sara Valentina Santamaria",
-    "correo": "Sara.santamaria@turinza.com",
+    "correo": "Insidesale1@turinza.com",
     "telefono": "3187157757"
   },
   {
     "nombre": "Alex Alberto Beltrán Arrieta",
-    "correo": "alex.beltran@turinza.com",
+    "correo": "lidersig@turinza.com",
     "telefono": "3166116397"
   },
   {
     "nombre": "Paola Andrea Cavanzo",
-    "correo": "paola.cavanzo@turinza.com",
+    "correo": "diroperaciones@turinza.com",
     "telefono": "316 4687241"
   },
   {
     "nombre": "Paola Rodríguez  Rodríguez  ",
-    "correo": "paola.rodriguez@turinza.com",
+    "correo": "kas4@turinza.com",
     "telefono": "318 3099566"
   },
   {
     "nombre": "Daniela Bustos Gómez ",
-    "correo": "daniela.bustos@turinza.com",
+    "correo": "kas1@turinza.com",
     "telefono": "315 8081850"
   },
   {
     "nombre": "Jaime Andrés Ordoñez ",
-    "correo": "andres.ordonez@turinza.com",
+    "correo": "kas3@turinza.com",
     "telefono": "315 9466307"
   },
   {
     "nombre": "Gabriel Vanegas Cortes",
-    "correo": "luis.vanegas@turinza.com",
+    "correo": "Analistafacturacion@turinza.com",
     "telefono": ""
   },
   {
@@ -106,12 +106,17 @@
   },
   {
     "nombre": "Liliana Garzón Manosalva",
-    "correo": "liliana.garzon@turinza.com",
+    "correo": "tesoreria@turinza.com",
     "telefono": ""
   },
   {
     "nombre": "Fabber Torres Bejarano",
     "correo": "contabilidad@turinza.com",
+    "telefono": ""
+  },
+  {
+    "nombre": "Leidy Jiovana Panche Mora",
+    "correo": "acontable1@turinza.com",
     "telefono": ""
   }
 ]
