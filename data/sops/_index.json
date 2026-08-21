@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": "1787327046416-d94b1060",
+    "cliente": "SOLDADURAS WEST ARCO",
+    "nit": "900.216.225-3",
+    "tipoOperacion": "Ambos",
+    "nivelCliente": "",
+    "estado": "Abierto",
+    "createdAt": "2026-08-21T15:44:06.416Z"
+  }
+]
