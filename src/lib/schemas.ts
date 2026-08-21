@@ -216,14 +216,14 @@ const requisitoCumplimientoSchema = z
 export const cumplimientoSchema = z.array(requisitoCumplimientoSchema);
 
 const riesgoSchema = z.object({
-  riesgoCambioIdentificado: z.string().min(1, REQUERIDO),
-  impacto: z.string().min(1, REQUERIDO),
+  riesgoCambioIdentificado: z.string(),
+  impacto: z.string(),
   accionCorrectiva: z.string(),
-  responsable: opcionRequerida(OPCIONES_CARGOS_RESPONSABLE),
+  responsable: z.string(),
   eficacia: z.string(),
 });
 
-export const riesgosSchema = z.array(riesgoSchema).min(1, "Agrega al menos un riesgo");
+export const riesgosSchema = z.array(riesgoSchema);
 
 const firmaSchema = z.object({
   nombre: z.string().min(1, REQUERIDO),
