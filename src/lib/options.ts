@@ -69,6 +69,8 @@ export const OPCIONES_CARGOS_RESPONSABLE = [
   "Líder Contable",
   "Director Financiero Y Contable",
   "Asistente De Operaciones",
+  "KAS Key Account Supervisor",
+  "Coordinador Operativo",
 ] as const;
 
 export const OPCIONES_SERVICIOS = [
