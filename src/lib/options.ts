@@ -71,6 +71,7 @@ export const OPCIONES_CARGOS_RESPONSABLE = [
   "Asistente De Operaciones",
   "KAS Key Account Supervisor",
   "Coordinador Operativo",
+  "Ejecutivo Comercial",
 ] as const;
 
 export const OPCIONES_SERVICIOS = [
