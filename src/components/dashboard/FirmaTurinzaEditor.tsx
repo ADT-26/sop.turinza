@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TextInput } from "@/components/ui";
+import type { MiembroEquipo } from "@/lib/configStore";
+import { AutocompleteInput, EQUIPO_FALLBACK } from "@/components/dashboard/AutocompleteInput";
 
 export function FirmaTurinzaEditor({
   id,
@@ -18,6 +20,14 @@ export function FirmaTurinzaEditor({
   const [guardando, setGuardando] = useState(false);
   const [guardadoOk, setGuardadoOk] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [equipo, setEquipo] = useState<MiembroEquipo[]>(EQUIPO_FALLBACK);
+
+  useEffect(() => {
+    fetch("/api/config/equipo")
+      .then((r) => r.json())
+      .then((j) => { if (j.success && Array.isArray(j.data) && j.data.length > 0) setEquipo(j.data); })
+      .catch(() => {});
+  }, []);
 
   const guardar = async () => {
     setGuardando(true);
@@ -43,10 +53,12 @@ export function FirmaTurinzaEditor({
     <div className="rounded-lg border border-line bg-white p-4">
       <p className="mb-3 text-sm font-semibold text-ink">{titulo}</p>
       <div className="grid gap-3 sm:grid-cols-2">
-        <TextInput
-          placeholder="Nombre"
+        <AutocompleteInput
           value={valor.nombre}
-          onChange={(e) => setValor((v) => ({ ...v, nombre: e.target.value }))}
+          onChange={(v) => setValor((prev) => ({ ...prev, nombre: v }))}
+          onSeleccionar={(m) => setValor((prev) => ({ ...prev, nombre: m.nombre }))}
+          opciones={equipo}
+          placeholder="Nombre"
         />
         <TextInput
           placeholder="Cargo"
