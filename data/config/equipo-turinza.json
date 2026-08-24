@@ -1,121 +1,145 @@
 [
   {
     "nombre": "Andres Felipe Gómez Chaguala",
+    "cargo": "KAS",
     "correo": "kas2@turinza.com",
     "telefono": "3188110743"
   },
   {
     "nombre": "Camilo Andres Corredor Mendoza",
+    "cargo": "Asesor Comercial",
     "correo": "camilo.corredor@turinza.com",
     "telefono": "3183101488"
   },
   {
     "nombre": "Carlos Del Toro Benavides",
+    "cargo": "Director de Desarrollo y Expansion",
     "correo": "comercial@turinza.com",
     "telefono": "3133671357"
   },
   {
     "nombre": "Cristian Camilo Martinez Londoño",
+    "cargo": "Lider Pricing",
     "correo": "liderpricing@turinza.com",
     "telefono": "3188834025"
   },
   {
     "nombre": "Diego Segura",
+    "cargo": "COO",
     "correo": "comercial2@turinza.com",
     "telefono": "3160598633"
   },
   {
     "nombre": "Elkin Andres Salinas Silva",
+    "cargo": "Inside Sale",
     "correo": "Insidesale2@turinza.com",
     "telefono": "3184648172"
   },
   {
     "nombre": "Iliana Melissa Garzon Buritica",
+    "cargo": "Ejecutivo Comercial",
     "correo": "comercial4@turinza.com",
     "telefono": "3168964763"
   },
   {
     "nombre": "Ingrid Lorena Gallo Mendoza",
+    "cargo": "Asesor Comercial",
     "correo": "dircomercial@turinza.com",
     "telefono": "3186174500"
   },
   {
     "nombre": "Jhon Jairo Martinez Ibañez",
+    "cargo": "CEO",
     "correo": "j.martinez@turinza.com",
     "telefono": ""
   },
   {
     "nombre": "Juan Carlos Mendoza Patiño",
+    "cargo": "Ejecutivo Comercial",
     "correo": "comercial3@turinza.com",
     "telefono": "3182132700"
   },
   {
     "nombre": "Pablo Enrique Cholo Buitrago",
+    "cargo": "Ejecutivo Comercial",
     "correo": "dirlogistico@turinza.com",
     "telefono": "3183115959"
   },
   {
     "nombre": "Patricia Rincon",
+    "cargo": "Ejecutivo Comercial",
     "correo": "comercial6@turinza.com",
     "telefono": "3057437492"
   },
   {
     "nombre": "Sandra Juliette Hernandez Parga",
+    "cargo": "CFO",
     "correo": "sandra.hernandez@turinza.com",
     "telefono": ""
   },
   {
     "nombre": "Sara Valentina Santamaria",
+    "cargo": "Inside Sale",
     "correo": "Insidesale1@turinza.com",
     "telefono": "3187157757"
   },
   {
     "nombre": "Alex Alberto Beltrán Arrieta",
+    "cargo": "Lider SIG",
     "correo": "lidersig@turinza.com",
     "telefono": "3166116397"
   },
   {
     "nombre": "Paola Andrea Cavanzo",
+    "cargo": "Director de Operaciones",
     "correo": "diroperaciones@turinza.com",
     "telefono": "316 4687241"
   },
   {
     "nombre": "Paola Rodríguez  Rodríguez  ",
+    "cargo": "KAS",
     "correo": "kas4@turinza.com",
     "telefono": "318 3099566"
   },
   {
     "nombre": "Daniela Bustos Gómez ",
+    "cargo": "KAS",
     "correo": "kas1@turinza.com",
     "telefono": "315 8081850"
   },
   {
     "nombre": "Jaime Andrés Ordoñez ",
+    "cargo": "KAS",
     "correo": "kas3@turinza.com",
     "telefono": "315 9466307"
   },
   {
     "nombre": "Gabriel Vanegas Cortes",
+    "cargo": "Analista de Facturacion",
     "correo": "Analistafacturacion@turinza.com",
     "telefono": ""
   },
   {
     "nombre": "Faiver Gustavo Quintana ",
+    "cargo": "",
     "correo": "faiver.quintana@turinza.com",
     "telefono": ""
   },
   {
     "nombre": "Liliana Garzón Manosalva",
+    "cargo": "Jefe Administrativo",
     "correo": "tesoreria@turinza.com",
     "telefono": ""
   },
   {
     "nombre": "Fabber Torres Bejarano",
+    "cargo": "Lider Contable",
     "correo": "contabilidad@turinza.com",
     "telefono": ""
   },
   {
     "nombre": "Leidy Jiovana Panche Mora",
+    "cargo": "Analista Contable",
     "correo": "acontable1@turinza.com",
     "telefono": ""
   }
