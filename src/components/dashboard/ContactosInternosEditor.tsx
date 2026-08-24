@@ -95,7 +95,7 @@ export function ContactosInternosEditor({
               <AutocompleteInput
                 value={dep.nombreCargo}
                 onChange={(v) => {
-                  if (!v) seleccionarMiembro(index, { nombre: "", correo: "", telefono: "" });
+                  if (!v) seleccionarMiembro(index, { nombre: "", cargo: "", correo: "", telefono: "" });
                   else actualizarDep(index, "nombreCargo", v);
                 }}
                 onSeleccionar={(m) => seleccionarMiembro(index, m)}
@@ -125,7 +125,7 @@ export function ContactosInternosEditor({
                 <AutocompleteInput
                   value={dep.escalonamiento.nombreCargo}
                   onChange={(v) => {
-                    if (!v) seleccionarEscMiembro(index, { nombre: "", correo: "", telefono: "" });
+                    if (!v) seleccionarEscMiembro(index, { nombre: "", cargo: "", correo: "", telefono: "" });
                     else actualizarEsc(index, "nombreCargo", v);
                   }}
                   onSeleccionar={(m) => seleccionarEscMiembro(index, m)}

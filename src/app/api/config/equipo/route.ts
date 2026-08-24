@@ -4,6 +4,7 @@ import { actualizarEquipoTurinza, obtenerEquipoTurinza } from "@/lib/configStore
 
 const miembroSchema = z.object({
   nombre:   z.string().min(1),
+  cargo:    z.string().default(""),
   correo:   z.string().default(""),
   telefono: z.string().default(""),
 });

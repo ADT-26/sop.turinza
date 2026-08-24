@@ -5,25 +5,25 @@ import { TextInput } from "@/components/ui";
 import type { MiembroEquipo } from "@/lib/configStore";
 
 export const EQUIPO_FALLBACK: MiembroEquipo[] = [
-  { nombre: "Andrea Camila Curiel Borrego",     correo: "camila.curiel@turinza.com",    telefono: "" },
-  { nombre: "Andres Felipe Gómez Chaguala",     correo: "andres.gomez@turinza.com",     telefono: "3188110743" },
-  { nombre: "Camilo Andres Corredor Mendoza",   correo: "camilo.corredor@turinza.com",  telefono: "3183101488" },
-  { nombre: "Carlos Del Toro Benavides",        correo: "comercial@turinza.com",        telefono: "3133671357" },
-  { nombre: "Carlos Rodriguez",                 correo: "carlos.rodriguez@turinza.com", telefono: "" },
-  { nombre: "Cristian Camilo Martinez Londoño", correo: "C.martinez@turinza.com",       telefono: "3188834025" },
-  { nombre: "Diana P Méndez García",            correo: "comercial5@turinza.com",       telefono: "3186805730" },
-  { nombre: "Diego Segura",                     correo: "comercial2@turinza.com",       telefono: "3160598633" },
-  { nombre: "Elkin Andres Salinas Silva",       correo: "Insidesale2@turinza.com",      telefono: "3184648172" },
-  { nombre: "Iliana Melissa Garzon Buritica",   correo: "melissa.garzon@turinza.com",   telefono: "3168964763" },
-  { nombre: "Ingrid Lorena Gallo Mendoza",      correo: "lorena.mendoza@turinza.com",   telefono: "3186174500" },
-  { nombre: "Jhon Jairo Martinez Ibañez",       correo: "j.martinez@turinza.com",       telefono: "" },
-  { nombre: "Juan Carlos Mendoza Patiño",       correo: "juan.mendoza@turinza.com",     telefono: "3182132700" },
-  { nombre: "Pablo Enrique Cholo Buitrago",     correo: "pablo.cholo@turinza.com",      telefono: "3183115959" },
-  { nombre: "Patricia Rincon",                  correo: "P.rincon@turinza.com",         telefono: "3057437492" },
-  { nombre: "Sandra Juliette Hernandez Parga",  correo: "sandra.hernandez@turinza.com", telefono: "" },
-  { nombre: "Sara Valentina Santamaria",        correo: "Sara.santamaria@turinza.com",  telefono: "3187157757" },
-  { nombre: "VVG",                              correo: "",                             telefono: "" },
-  { nombre: "Yenifer Alejandra Grisales Reyes", correo: "yenifer.grisales@turinza.com", telefono: "" },
+  { nombre: "Andrea Camila Curiel Borrego",     cargo: "", correo: "camila.curiel@turinza.com",    telefono: "" },
+  { nombre: "Andres Felipe Gómez Chaguala",     cargo: "", correo: "andres.gomez@turinza.com",     telefono: "3188110743" },
+  { nombre: "Camilo Andres Corredor Mendoza",   cargo: "", correo: "camilo.corredor@turinza.com",  telefono: "3183101488" },
+  { nombre: "Carlos Del Toro Benavides",        cargo: "", correo: "comercial@turinza.com",        telefono: "3133671357" },
+  { nombre: "Carlos Rodriguez",                 cargo: "", correo: "carlos.rodriguez@turinza.com", telefono: "" },
+  { nombre: "Cristian Camilo Martinez Londoño", cargo: "", correo: "C.martinez@turinza.com",       telefono: "3188834025" },
+  { nombre: "Diana P Méndez García",            cargo: "", correo: "comercial5@turinza.com",       telefono: "3186805730" },
+  { nombre: "Diego Segura",                     cargo: "", correo: "comercial2@turinza.com",       telefono: "3160598633" },
+  { nombre: "Elkin Andres Salinas Silva",       cargo: "", correo: "Insidesale2@turinza.com",      telefono: "3184648172" },
+  { nombre: "Iliana Melissa Garzon Buritica",   cargo: "", correo: "melissa.garzon@turinza.com",   telefono: "3168964763" },
+  { nombre: "Ingrid Lorena Gallo Mendoza",      cargo: "", correo: "lorena.mendoza@turinza.com",   telefono: "3186174500" },
+  { nombre: "Jhon Jairo Martinez Ibañez",       cargo: "", correo: "j.martinez@turinza.com",       telefono: "" },
+  { nombre: "Juan Carlos Mendoza Patiño",       cargo: "", correo: "juan.mendoza@turinza.com",     telefono: "3182132700" },
+  { nombre: "Pablo Enrique Cholo Buitrago",     cargo: "", correo: "pablo.cholo@turinza.com",      telefono: "3183115959" },
+  { nombre: "Patricia Rincon",                  cargo: "", correo: "P.rincon@turinza.com",         telefono: "3057437492" },
+  { nombre: "Sandra Juliette Hernandez Parga",  cargo: "", correo: "sandra.hernandez@turinza.com", telefono: "" },
+  { nombre: "Sara Valentina Santamaria",        cargo: "", correo: "Sara.santamaria@turinza.com",  telefono: "3187157757" },
+  { nombre: "VVG",                              cargo: "", correo: "",                             telefono: "" },
+  { nombre: "Yenifer Alejandra Grisales Reyes", cargo: "", correo: "yenifer.grisales@turinza.com", telefono: "" },
 ];
 
 const MIN_CHARS = 3;
@@ -104,9 +104,9 @@ export function AutocompleteInput({
               className={`cursor-pointer px-3 py-2 ${i === activo ? "bg-navy text-white" : "hover:bg-surface"}`}
             >
               <p className={`text-sm font-medium ${i === activo ? "text-white" : "text-ink"}`}>{m.nombre}</p>
-              {(m.correo || m.telefono) && (
+              {(m.cargo || m.correo) && (
                 <p className={`text-xs ${i === activo ? "text-white/70" : "text-ink-muted"}`}>
-                  {[m.correo, m.telefono].filter(Boolean).join(" · ")}
+                  {[m.cargo, m.correo].filter(Boolean).join(" · ")}
                 </p>
               )}
             </li>

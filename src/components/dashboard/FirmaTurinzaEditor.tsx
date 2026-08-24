@@ -56,7 +56,7 @@ export function FirmaTurinzaEditor({
         <AutocompleteInput
           value={valor.nombre}
           onChange={(v) => setValor((prev) => ({ ...prev, nombre: v }))}
-          onSeleccionar={(m) => setValor((prev) => ({ ...prev, nombre: m.nombre }))}
+          onSeleccionar={(m) => setValor({ nombre: m.nombre, cargo: m.cargo || "" })}
           opciones={equipo}
           placeholder="Nombre"
         />

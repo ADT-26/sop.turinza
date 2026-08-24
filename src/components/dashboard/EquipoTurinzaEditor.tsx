@@ -3,30 +3,9 @@
 import { useEffect, useState } from "react";
 import { TextInput } from "@/components/ui";
 import type { MiembroEquipo } from "@/lib/configStore";
+import { EQUIPO_FALLBACK } from "@/components/dashboard/AutocompleteInput";
 
-const EQUIPO_FALLBACK: MiembroEquipo[] = [
-  { nombre: "Andrea Camila Curiel Borrego",     correo: "camila.curiel@turinza.com",    telefono: "" },
-  { nombre: "Andres Felipe Gómez Chaguala",     correo: "andres.gomez@turinza.com",     telefono: "3188110743" },
-  { nombre: "Camilo Andres Corredor Mendoza",   correo: "camilo.corredor@turinza.com",  telefono: "3183101488" },
-  { nombre: "Carlos Del Toro Benavides",        correo: "comercial@turinza.com",        telefono: "3133671357" },
-  { nombre: "Carlos Rodriguez",                 correo: "carlos.rodriguez@turinza.com", telefono: "" },
-  { nombre: "Cristian Camilo Martinez Londoño", correo: "C.martinez@turinza.com",       telefono: "3188834025" },
-  { nombre: "Diana P Méndez García",            correo: "comercial5@turinza.com",       telefono: "3186805730" },
-  { nombre: "Diego Segura",                     correo: "comercial2@turinza.com",       telefono: "3160598633" },
-  { nombre: "Elkin Andres Salinas Silva",       correo: "Insidesale2@turinza.com",      telefono: "3184648172" },
-  { nombre: "Iliana Melissa Garzon Buritica",   correo: "melissa.garzon@turinza.com",   telefono: "3168964763" },
-  { nombre: "Ingrid Lorena Gallo Mendoza",      correo: "lorena.mendoza@turinza.com",   telefono: "3186174500" },
-  { nombre: "Jhon Jairo Martinez Ibañez",       correo: "j.martinez@turinza.com",       telefono: "" },
-  { nombre: "Juan Carlos Mendoza Patiño",       correo: "juan.mendoza@turinza.com",     telefono: "3182132700" },
-  { nombre: "Pablo Enrique Cholo Buitrago",     correo: "pablo.cholo@turinza.com",      telefono: "3183115959" },
-  { nombre: "Patricia Rincon",                  correo: "P.rincon@turinza.com",         telefono: "3057437492" },
-  { nombre: "Sandra Juliette Hernandez Parga",  correo: "sandra.hernandez@turinza.com", telefono: "" },
-  { nombre: "Sara Valentina Santamaria",        correo: "Sara.santamaria@turinza.com",  telefono: "3187157757" },
-  { nombre: "VVG",                              correo: "",                             telefono: "" },
-  { nombre: "Yenifer Alejandra Grisales Reyes", correo: "yenifer.grisales@turinza.com", telefono: "" },
-];
-
-const VACIO: MiembroEquipo = { nombre: "", correo: "", telefono: "" };
+const VACIO: MiembroEquipo = { nombre: "", cargo: "", correo: "", telefono: "" };
 
 const inputCls =
   "w-full rounded border border-line bg-white px-2 py-1.5 text-sm text-ink focus:outline-none focus:ring-1 focus:ring-navy/40 placeholder:text-ink-muted/50";
@@ -104,6 +83,7 @@ export function EquipoTurinzaEditor() {
             <tr className="border-b border-line bg-surface">
               <th className="px-4 py-2.5 text-left text-xs font-semibold text-ink-muted">#</th>
               <th className="px-4 py-2.5 text-left text-xs font-semibold text-ink-muted">Nombre</th>
+              <th className="px-4 py-2.5 text-left text-xs font-semibold text-ink-muted">Cargo</th>
               <th className="px-4 py-2.5 text-left text-xs font-semibold text-ink-muted">Correo</th>
               <th className="px-4 py-2.5 text-left text-xs font-semibold text-ink-muted">Teléfono</th>
               <th className="w-10" />
@@ -126,6 +106,14 @@ export function EquipoTurinzaEditor() {
                       value={m.nombre}
                       onChange={(e) => actualizar(i, "nombre", e.target.value)}
                       placeholder="Nombre completo"
+                    />
+                  </td>
+                  <td className="px-2 py-1.5 min-w-[160px]">
+                    <input
+                      className={inputCls}
+                      value={m.cargo}
+                      onChange={(e) => actualizar(i, "cargo", e.target.value)}
+                      placeholder="Cargo"
                     />
                   </td>
                   <td className="px-2 py-1.5 min-w-[200px]">
