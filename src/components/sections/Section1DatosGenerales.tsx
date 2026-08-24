@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { Field, TextInput, Select, TextArea } from "@/components/ui";
+import { SectorAutocomplete } from "@/components/sections/SectorAutocomplete";
 import {
   CIUDADES_SUGERIDAS_COLOMBIA,
   OPCIONES_PAIS,
@@ -45,7 +46,13 @@ export function Section1DatosGenerales() {
           <TextInput id="nit" {...register("datosGenerales.nit")} />
         </Field>
         <Field label="Sector o Industria" htmlFor="sector" nota={NOTAS["datosGenerales.sectorIndustria"]}>
-          <TextInput id="sector" {...register("datosGenerales.sectorIndustria")} />
+          <Controller
+            control={control}
+            name="datosGenerales.sectorIndustria"
+            render={({ field }) => (
+              <SectorAutocomplete value={field.value ?? ""} onChange={field.onChange} />
+            )}
+          />
         </Field>
         <Field label="Tipo de operación" htmlFor="tipoOperacion" required error={e?.tipoOperacion?.message} nota={NOTAS["datosGenerales.tipoOperacion"]}>
           <Select
