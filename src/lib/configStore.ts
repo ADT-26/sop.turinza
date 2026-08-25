@@ -8,6 +8,15 @@ export interface ClienteCatalogo {
   nit: string;
 }
 
+function getSatisfaccionConfig() {
+  return {
+    token:  process.env.GITHUB_TOKEN_SATISFACCION ?? process.env.GITHUB_TOKEN ?? "",
+    owner:  process.env.GITHUB_REPO_OWNER ?? "",
+    repo:   process.env.GITHUB_SATISFACCION ?? "",
+    branch: process.env.GITHUB_DATA_BRANCH ?? "data",
+  };
+}
+
 async function leerArchivoRepoConToken(token: string, owner: string, repo: string, branch: string, path: string) {
   const res = await fetch(
     `https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`,
@@ -23,20 +32,55 @@ async function leerArchivoRepoConToken(token: string, owner: string, repo: strin
   if (res.status === 404) return null;
   if (!res.ok) return null;
   const json = await res.json();
-  return Buffer.from(json.content, "base64").toString("utf-8");
+  return { content: Buffer.from(json.content, "base64").toString("utf-8"), sha: json.sha as string };
+}
+
+async function escribirArchivoRepoConToken(
+  token: string, owner: string, repo: string, branch: string,
+  path: string, content: string, message: string, sha?: string,
+) {
+  const res = await fetch(
+    `https://api.github.com/repos/${owner}/${repo}/contents/${path}`,
+    {
+      method: "PUT",
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message, branch,
+        content: Buffer.from(content, "utf-8").toString("base64"),
+        ...(sha ? { sha } : {}),
+      }),
+    },
+  );
+  if (!res.ok) throw new Error(`Error escribiendo ${path}: ${await res.text()}`);
 }
 
 export async function getClientes(): Promise<ClienteCatalogo[]> {
-  const owner  = process.env.GITHUB_REPO_OWNER;
-  const repo   = process.env.GITHUB_SATISFACCION;
-  const token  = process.env.GITHUB_TOKEN_SATISFACCION ?? process.env.GITHUB_TOKEN;
-  const branch = process.env.GITHUB_DATA_BRANCH ?? "data";
-  if (!owner || !repo || !token) return [];
+  const { token, owner, repo, branch } = getSatisfaccionConfig();
+  if (!token || !owner || !repo) return [];
   try {
-    const content = await leerArchivoRepoConToken(token, owner, repo, branch, "data/cliente.json");
-    if (content) return JSON.parse(content) as ClienteCatalogo[];
+    const leido = await leerArchivoRepoConToken(token, owner, repo, branch, "data/cliente.json");
+    if (leido) return JSON.parse(leido.content) as ClienteCatalogo[];
   } catch { /* si falla devuelve vacío */ }
   return [];
+}
+
+export async function actualizarClientes(clientes: ClienteCatalogo[]): Promise<void> {
+  const { token, owner, repo, branch } = getSatisfaccionConfig();
+  if (!token || !owner || !repo) throw new Error("Faltan variables de entorno del repo de satisfacción");
+  const leido = await leerArchivoRepoConToken(token, owner, repo, branch, "data/cliente.json");
+  await escribirArchivoRepoConToken(
+    token, owner, repo, branch,
+    "data/cliente.json",
+    JSON.stringify(clientes, null, 2),
+    "config: catálogo de clientes actualizado desde SOP",
+    leido?.sha,
+  );
 }
 
 const EQUIPO_PATH    = "data/config/equipo-turinza.json";

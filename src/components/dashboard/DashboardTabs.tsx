@@ -7,8 +7,9 @@ import type { SopResumen } from "@/lib/sopStore";
 import { EliminarSopButton } from "@/components/dashboard/EliminarSopButton";
 import { EquipoTurinzaEditor } from "@/components/dashboard/EquipoTurinzaEditor";
 import { ConfigDocumentoEditor } from "@/components/dashboard/ConfigDocumentoEditor";
+import { ClientesEditor } from "@/components/dashboard/ClientesEditor";
 
-type Tab = "sops" | "equipo" | "config";
+type Tab = "sops" | "equipo" | "config" | "clientes";
 
 function PendienteDot({ sop }: { sop: SopResumen }) {
   if (sop.nivelCliente) return null;
@@ -35,7 +36,7 @@ export function DashboardTabs({
   return (
     <div className="space-y-5">
       {/* ── Navegación ───────────────────────────────────────── */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:max-w-2xl">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:max-w-3xl">
         <button
           onClick={() => setTab("sops")}
           className={`rounded-xl border px-5 py-4 text-left transition-all duration-150 ${
@@ -126,6 +127,37 @@ export function DashboardTabs({
             }`}
           >
             Código y versión del SOP
+          </p>
+        </button>
+
+        <button
+          onClick={() => setTab("clientes")}
+          className={`rounded-xl border px-5 py-4 text-left transition-all duration-150 ${
+            tab === "clientes"
+              ? "border-navy bg-navy shadow-md"
+              : "border-line bg-white shadow-sm hover:border-navy/30 hover:shadow"
+          }`}
+        >
+          <p
+            className={`font-mono text-[10px] font-semibold uppercase tracking-widest ${
+              tab === "clientes" ? "text-white/50" : "text-navy/40"
+            }`}
+          >
+            Catálogo
+          </p>
+          <p
+            className={`mt-1 text-sm font-bold tracking-tight ${
+              tab === "clientes" ? "text-white" : "text-navy"
+            }`}
+          >
+            Clientes
+          </p>
+          <p
+            className={`mt-0.5 font-mono text-xs tabular-nums ${
+              tab === "clientes" ? "text-white/55" : "text-ink-muted"
+            }`}
+          >
+            Razón social y NIT
           </p>
         </button>
       </div>
@@ -240,6 +272,9 @@ export function DashboardTabs({
 
       {/* ── Panel Configuración ──────────────────────────────── */}
       {tab === "config" && <ConfigDocumentoEditor />}
+
+      {/* ── Panel Clientes ───────────────────────────────────── */}
+      {tab === "clientes" && <ClientesEditor />}
     </div>
   );
 }
