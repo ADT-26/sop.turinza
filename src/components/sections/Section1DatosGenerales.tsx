@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { Field, TextInput, Select, TextArea } from "@/components/ui";
 import { SectorAutocomplete } from "@/components/sections/SectorAutocomplete";
+import { ClienteAutocomplete } from "@/components/sections/ClienteAutocomplete";
 import {
   CIUDADES_SUGERIDAS_COLOMBIA,
   OPCIONES_PAIS,
@@ -40,7 +41,20 @@ export function Section1DatosGenerales() {
     <div className="space-y-5">
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Cliente / Razón social" htmlFor="cliente" required error={e?.cliente?.message} nota={NOTAS["datosGenerales.cliente"]}>
-          <TextInput id="cliente" {...register("datosGenerales.cliente")} />
+          <Controller
+            control={control}
+            name="datosGenerales.cliente"
+            render={({ field }) => (
+              <ClienteAutocomplete
+                value={field.value ?? ""}
+                onChange={field.onChange}
+                onSeleccionar={(c) => {
+                  field.onChange(c.razon_social);
+                  if (c.nit) setValue("datosGenerales.nit", c.nit, { shouldValidate: false });
+                }}
+              />
+            )}
+          />
         </Field>
         <Field label="NIT / ID" htmlFor="nit" required error={e?.nit?.message} nota={NOTAS["datosGenerales.nit"]}>
           <TextInput id="nit" {...register("datosGenerales.nit")} />

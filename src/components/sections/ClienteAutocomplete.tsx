@@ -1,0 +1,133 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+
+const LARGO_MINIMO = 3;
+const DEBOUNCE_MS = 300;
+
+interface ResultadoCliente {
+  id: number;
+  razon_social: string;
+  nit: string;
+}
+
+export function ClienteAutocomplete({
+  value,
+  onChange,
+  onSeleccionar,
+}: {
+  value: string;
+  onChange: (razonSocial: string) => void;
+  onSeleccionar?: (cliente: ResultadoCliente) => void;
+}) {
+  const [resultados, setResultados] = useState<ResultadoCliente[]>([]);
+  const [buscando, setBuscando] = useState(false);
+  const [abierto, setAbierto] = useState(false);
+  const [activo, setActivo] = useState(-1);
+  const ref = useRef<HTMLDivElement>(null);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const peticionIdRef = useRef(0);
+
+  useEffect(() => {
+    function cerrar(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setAbierto(false);
+    }
+    document.addEventListener("mousedown", cerrar);
+    return () => document.removeEventListener("mousedown", cerrar);
+  }, []);
+
+  useEffect(() => {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    const q = value.trim();
+    if (q.length < LARGO_MINIMO) { setResultados([]); setBuscando(false); return; }
+
+    setBuscando(true);
+    const id = ++peticionIdRef.current;
+    debounceRef.current = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/clientes/buscar?q=${encodeURIComponent(q)}`);
+        const json = await res.json();
+        if (id === peticionIdRef.current) setResultados(json.success ? json.data : []);
+      } catch {
+        if (id === peticionIdRef.current) setResultados([]);
+      } finally {
+        if (id === peticionIdRef.current) setBuscando(false);
+      }
+    }, DEBOUNCE_MS);
+
+    return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
+  }, [value]);
+
+  function seleccionar(c: ResultadoCliente) {
+    onChange(c.razon_social);
+    onSeleccionar?.(c);
+    setResultados([]);
+    setAbierto(false);
+    setActivo(-1);
+  }
+
+  function tecla(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (!abierto || resultados.length === 0) return;
+    if (e.key === "ArrowDown") { e.preventDefault(); setActivo((a) => Math.min(a + 1, resultados.length - 1)); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); setActivo((a) => Math.max(a - 1, 0)); }
+    else if (e.key === "Enter" && activo >= 0) { e.preventDefault(); seleccionar(resultados[activo]); }
+    else if (e.key === "Escape") { setAbierto(false); setActivo(-1); }
+  }
+
+  const q = value.trim();
+  const mostrarMin = abierto && q.length > 0 && q.length < LARGO_MINIMO;
+  const mostrarBuscando = abierto && buscando && q.length >= LARGO_MINIMO;
+  const mostrarResultados = abierto && !buscando && q.length >= LARGO_MINIMO && resultados.length > 0;
+  const sinResultados = abierto && !buscando && q.length >= LARGO_MINIMO && resultados.length === 0;
+
+  return (
+    <div ref={ref} className="relative">
+      <input
+        type="text"
+        role="combobox"
+        aria-expanded={abierto}
+        autoComplete="off"
+        placeholder="Escribe el nombre del cliente…"
+        value={value}
+        onChange={(e) => { onChange(e.target.value); setAbierto(true); setActivo(-1); }}
+        onFocus={() => setAbierto(true)}
+        onKeyDown={tecla}
+        className="w-full rounded border border-line bg-white px-3 py-2 text-sm text-ink placeholder:text-ink-muted/50 focus:outline-none focus:ring-2 focus:ring-navy/30"
+      />
+      {mostrarMin && (
+        <div className="absolute z-50 mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink-muted shadow-md">
+          Escribe al menos {LARGO_MINIMO} letras para buscar
+        </div>
+      )}
+      {mostrarBuscando && (
+        <div className="absolute z-50 mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink-muted shadow-md">
+          Buscando…
+        </div>
+      )}
+      {mostrarResultados && (
+        <ul role="listbox" className="absolute z-50 mt-1 w-full max-h-60 overflow-y-auto rounded-md border border-line bg-white shadow-lg">
+          {resultados.map((c, i) => (
+            <li
+              key={c.id}
+              role="option"
+              aria-selected={i === activo}
+              onMouseDown={(e) => { e.preventDefault(); seleccionar(c); }}
+              onMouseEnter={() => setActivo(i)}
+              className={`cursor-pointer px-3 py-2 ${i === activo ? "bg-navy text-white" : "hover:bg-surface"}`}
+            >
+              <p className={`text-sm font-medium ${i === activo ? "text-white" : "text-ink"}`}>{c.razon_social}</p>
+              {c.nit && (
+                <p className={`text-xs ${i === activo ? "text-white/70" : "text-ink-muted"}`}>NIT {c.nit}</p>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+      {sinResultados && (
+        <div className="absolute z-50 mt-1 w-full rounded-md border border-line bg-white px-3 py-2 text-xs text-ink-muted shadow-md">
+          No se encontraron clientes con ese nombre
+        </div>
+      )}
+    </div>
+  );
+}

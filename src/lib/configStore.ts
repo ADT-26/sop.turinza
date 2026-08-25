@@ -1,5 +1,21 @@
 import { escribirArchivo, leerArchivo } from "./githubStore";
 
+// ── Catálogo de clientes ──────────────────────────────────────────────────────
+
+export interface ClienteCatalogo {
+  id: number;
+  razon_social: string;
+  nit: string;
+}
+
+export async function getClientes(): Promise<ClienteCatalogo[]> {
+  try {
+    const archivo = await leerArchivo("data/cliente.json");
+    if (archivo) return JSON.parse(archivo.content) as ClienteCatalogo[];
+  } catch { /* si falla devuelve vacío */ }
+  return [];
+}
+
 const EQUIPO_PATH    = "data/config/equipo-turinza.json";
 const DOCUMENTO_PATH = "data/config/documento.json";
 
