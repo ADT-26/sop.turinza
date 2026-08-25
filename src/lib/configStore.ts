@@ -1,6 +1,6 @@
 import { escribirArchivo, leerArchivo } from "./githubStore";
 
-// ── Catálogo de clientes ──────────────────────────────────────────────────────
+// ── Catálogo de clientes (lee del repo de satisfacción, repo separado) ───────
 
 export interface ClienteCatalogo {
   id: number;
@@ -8,10 +8,34 @@ export interface ClienteCatalogo {
   nit: string;
 }
 
+async function leerArchivoRepo(owner: string, repo: string, branch: string, path: string) {
+  const token = process.env.GITHUB_TOKEN;
+  if (!token) throw new Error("Falta GITHUB_TOKEN");
+  const res = await fetch(
+    `https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`,
+    {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+    },
+  );
+  if (res.status === 404) return null;
+  if (!res.ok) return null;
+  const json = await res.json();
+  return Buffer.from(json.content, "base64").toString("utf-8");
+}
+
 export async function getClientes(): Promise<ClienteCatalogo[]> {
+  const owner = process.env.CLIENTES_REPO_OWNER_SATISFACCION ?? process.env.GITHUB_REPO_OWNER;
+  const repo  = process.env.CLIENTES_REPO_NAME_SATISFACCION  ?? process.env.GITHUB_REPO_NAME;
+  const branch = process.env.CLIENTES_DATA_BRANCH_SATISFACCION ?? process.env.GITHUB_DATA_BRANCH ?? "data";
+  if (!owner || !repo) return [];
   try {
-    const archivo = await leerArchivo("data/cliente.json");
-    if (archivo) return JSON.parse(archivo.content) as ClienteCatalogo[];
+    const content = await leerArchivoRepo(owner, repo, branch, "data/cliente.json");
+    if (content) return JSON.parse(content) as ClienteCatalogo[];
   } catch { /* si falla devuelve vacío */ }
   return [];
 }
