@@ -45,7 +45,7 @@ export function ClienteAutocomplete({
     const id = ++peticionIdRef.current;
     debounceRef.current = setTimeout(async () => {
       try {
-        const res = await fetch(`https://encuesta-satisfaccion-turinza.vercel.app/api/clientes/buscar?q=${encodeURIComponent(q)}`);
+        const res = await fetch(`/api/clientes/buscar?q=${encodeURIComponent(q)}`);
         const json = await res.json();
         if (id === peticionIdRef.current) setResultados(json.success ? json.data : []);
       } catch {

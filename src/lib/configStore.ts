@@ -8,9 +8,7 @@ export interface ClienteCatalogo {
   nit: string;
 }
 
-async function leerArchivoRepo(owner: string, repo: string, branch: string, path: string) {
-  const token = process.env.GITHUB_TOKEN;
-  if (!token) throw new Error("Falta GITHUB_TOKEN");
+async function leerArchivoRepoConToken(token: string, owner: string, repo: string, branch: string, path: string) {
   const res = await fetch(
     `https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`,
     {
@@ -29,12 +27,13 @@ async function leerArchivoRepo(owner: string, repo: string, branch: string, path
 }
 
 export async function getClientes(): Promise<ClienteCatalogo[]> {
-  const owner = process.env.CLIENTES_REPO_OWNER_SATISFACCION ?? process.env.GITHUB_REPO_OWNER;
-  const repo  = process.env.CLIENTES_REPO_NAME_SATISFACCION  ?? process.env.GITHUB_REPO_NAME;
-  const branch = process.env.CLIENTES_DATA_BRANCH_SATISFACCION ?? process.env.GITHUB_DATA_BRANCH ?? "data";
-  if (!owner || !repo) return [];
+  const owner  = process.env.GITHUB_REPO_OWNER;
+  const repo   = process.env.GITHUB_SATISFACCION;
+  const token  = process.env.GITHUB_TOKEN_SATISFACCION ?? process.env.GITHUB_TOKEN;
+  const branch = process.env.GITHUB_DATA_BRANCH ?? "data";
+  if (!owner || !repo || !token) return [];
   try {
-    const content = await leerArchivoRepo(owner, repo, branch, "data/cliente.json");
+    const content = await leerArchivoRepoConToken(token, owner, repo, branch, "data/cliente.json");
     if (content) return JSON.parse(content) as ClienteCatalogo[];
   } catch { /* si falla devuelve vacío */ }
   return [];
