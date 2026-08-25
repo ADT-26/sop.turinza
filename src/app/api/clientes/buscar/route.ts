@@ -11,9 +11,10 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ success: true, data: [] });
   }
 
-  // Si está configurada la URL de satisfacción, hace proxy directo a su API
-  const satisfaccionUrl = process.env.SATISFACCION_BASE_URL;
-  if (satisfaccionUrl) {
+  // Proxy directo a la API de satisfacción (fuente única de verdad del catálogo)
+  const satisfaccionUrl =
+    process.env.SATISFACCION_BASE_URL ?? "https://encuesta-satisfaccion-turinza.vercel.app";
+  {
     try {
       const res = await fetch(
         `${satisfaccionUrl.replace(/\/$/, "")}/api/clientes/buscar?q=${encodeURIComponent(q)}`,
