@@ -68,10 +68,8 @@ export function ClienteAutocomplete({
 
   function tecla(e: React.KeyboardEvent<HTMLInputElement>) {
     if (!abierto || resultados.length === 0) return;
-    if (e.key === "ArrowDown") { e.preventDefault(); setActivo((a) => Math.min(a + 1, resultados.length - 1)); }
-    else if (e.key === "ArrowUp") { e.preventDefault(); setActivo((a) => Math.max(a - 1, 0)); }
-    else if (e.key === "Enter" && activo >= 0) { e.preventDefault(); seleccionar(resultados[activo]); }
-    else if (e.key === "Escape") { setAbierto(false); setActivo(-1); }
+    if (e.key === "Enter" || e.key === "Tab") { e.preventDefault(); seleccionar(resultados[0]); }
+    else if (e.key === "Escape") { setAbierto(false); }
   }
 
   const q = value.trim();
@@ -104,23 +102,19 @@ export function ClienteAutocomplete({
           Buscando…
         </div>
       )}
-      {mostrarResultados && (
-        <ul role="listbox" className="absolute z-50 mt-1 w-full max-h-60 overflow-y-auto rounded-md border border-line bg-white shadow-lg">
-          {resultados.map((c, i) => (
-            <li
-              key={c.id}
-              role="option"
-              aria-selected={i === activo}
-              onMouseDown={(e) => { e.preventDefault(); seleccionar(c); }}
-              onMouseEnter={() => setActivo(i)}
-              className={`cursor-pointer px-3 py-2 ${i === activo ? "bg-navy text-white" : "hover:bg-surface"}`}
-            >
-              <p className={`text-sm font-medium ${i === activo ? "text-white" : "text-ink"}`}>{c.razon_social}</p>
-              {c.nit && (
-                <p className={`text-xs ${i === activo ? "text-white/70" : "text-ink-muted"}`}>NIT {c.nit}</p>
-              )}
-            </li>
-          ))}
+      {mostrarResultados && resultados[0] && (
+        <ul role="listbox" className="absolute z-50 mt-1 w-full rounded-md border border-line bg-white shadow-lg">
+          <li
+            role="option"
+            aria-selected
+            onMouseDown={(e) => { e.preventDefault(); seleccionar(resultados[0]); }}
+            className="cursor-pointer px-3 py-2 hover:bg-surface"
+          >
+            <p className="text-sm font-medium text-ink">{resultados[0].razon_social}</p>
+            {resultados[0].nit && (
+              <p className="text-xs text-ink-muted">NIT {resultados[0].nit}</p>
+            )}
+          </li>
         </ul>
       )}
       {sinResultados && (
