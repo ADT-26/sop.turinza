@@ -432,55 +432,24 @@ function EditorClientes() {
 
 // ── componente principal ──────────────────────────────────────────────────────
 
-type SubTab = "relaciones" | "clientes" | "comerciales" | "grupos" | "burbujas";
+export type ClientesSubTab = "relaciones" | "clientes" | "comerciales" | "grupos" | "burbujas";
 
-const SUB_TABS: { key: SubTab; label: string; desc: string }[] = [
-  { key: "relaciones",  label: "Relaciones",  desc: "Cliente / Comercial" },
-  { key: "clientes",    label: "Clientes",    desc: "Razón social y NIT" },
-  { key: "comerciales", label: "Comerciales", desc: "Equipo de ventas" },
-  { key: "grupos",      label: "Grupos",      desc: "Grupos empresariales" },
-  { key: "burbujas",    label: "Burbujas",    desc: "Burbujas operativas" },
-];
-
-export function ClientesEditor() {
-  const [sub, setSub] = useState<SubTab>("relaciones");
-
+export function ClientesEditor({ subTab }: { subTab: ClientesSubTab }) {
   return (
     <section className="space-y-4">
-      <header className="overflow-hidden rounded-lg border border-line bg-navy px-5 py-4 shadow-sm">
-        <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-white/50">
-          Turinza · Satisfacción
-        </p>
-        <h2 className="mt-1 text-lg font-bold tracking-tight text-white">Gestión de clientes</h2>
-        <p className="mt-1 text-sm text-white/65">
+      <div
+        className="rounded-md border border-navy/10 bg-navy/5 px-4 py-2.5"
+      >
+        <p className="text-xs text-navy/55">
           Datos compartidos con el formulario de satisfacción — los cambios se guardan directamente en el repositorio de satisfacción.
         </p>
-      </header>
-
-      {/* Sub-navegación */}
-      <div className="flex flex-wrap gap-2">
-        {SUB_TABS.map(({ key, label, desc }) => (
-          <button
-            key={key}
-            onClick={() => setSub(key)}
-            className={`rounded-lg border px-4 py-2.5 text-left transition-all duration-150 ${
-              sub === key
-                ? "border-navy bg-navy text-white shadow-sm"
-                : "border-line bg-white text-ink hover:border-navy/30 hover:shadow-sm"
-            }`}
-          >
-            <p className={`text-xs font-bold ${sub === key ? "text-white" : "text-navy"}`}>{label}</p>
-            <p className={`text-[11px] ${sub === key ? "text-white/60" : "text-ink-muted"}`}>{desc}</p>
-          </button>
-        ))}
       </div>
 
-      {/* Contenido */}
-      {sub === "relaciones"  && <EditorRelaciones />}
-      {sub === "clientes"    && <EditorClientes />}
-      {sub === "comerciales" && <EditorSimple<Vendedor> tabla="vendedores" titulo="Nombre comercial" />}
-      {sub === "grupos"      && <EditorSimple<Grupo>    tabla="grupos"     titulo="Nombre del grupo" />}
-      {sub === "burbujas"    && <EditorSimple<Burbuja>  tabla="burbujas"   titulo="Nombre de burbuja" />}
+      {subTab === "relaciones"  && <EditorRelaciones />}
+      {subTab === "clientes"    && <EditorClientes />}
+      {subTab === "comerciales" && <EditorSimple<Vendedor> tabla="vendedores" titulo="Nombre comercial" />}
+      {subTab === "grupos"      && <EditorSimple<Grupo>    tabla="grupos"     titulo="Nombre del grupo" />}
+      {subTab === "burbujas"    && <EditorSimple<Burbuja>  tabla="burbujas"   titulo="Nombre de burbuja" />}
     </section>
   );
 }
