@@ -77,7 +77,6 @@ export const OPCIONES_CARGOS_RESPONSABLE = [
 // Opciones de Actividad/Hito por proceso operativo (índice = posición en PROCESOS_OPERATIVOS)
 export const ACTIVIDADES_POR_PROCESO: Record<number, string[]> = {
   0: [ // Transporte nacional
-    "Coordinación en origen",
     "Seguimiento en la operación",
     "Control durante la operación",
     "Solicitudes Financieras",
