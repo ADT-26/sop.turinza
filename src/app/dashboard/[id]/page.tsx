@@ -56,8 +56,7 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
   ];
 
   return (
-    <div className="min-h-screen bg-[#EEF1F6]">
-    <div className="mx-auto max-w-5xl space-y-5 px-6 py-10">
+    <div className="mx-auto w-full max-w-5xl space-y-5 px-6 py-8">
 
       {/* ── Cabecera ─────────────────────────────────────────────── */}
       <div className="overflow-hidden rounded-xl bg-navy shadow-md">
@@ -324,7 +323,6 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
           </div>
         </DetailsSection>
       </div>
-    </div>
     </div>
   );
 }
