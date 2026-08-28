@@ -1,13 +1,13 @@
 [
   {
     "nombre": "Andres Felipe Gómez Chaguala",
-    "cargo": "KAS",
+    "cargo": "Key Account Supervisor (KAS) ",
     "correo": "kas2@turinza.com",
     "telefono": "3188110743"
   },
   {
     "nombre": "Camilo Andres Corredor Mendoza",
-    "cargo": "Asesor Comercial",
+    "cargo": "Analista señior de Control",
     "correo": "camilo.corredor@turinza.com",
     "telefono": "3183101488"
   },
@@ -25,7 +25,7 @@
   },
   {
     "nombre": "Diego Segura",
-    "cargo": "COO",
+    "cargo": "COO (Chief Operating Officer)",
     "correo": "comercial2@turinza.com",
     "telefono": "3160598633"
   },
@@ -43,13 +43,13 @@
   },
   {
     "nombre": "Ingrid Lorena Gallo Mendoza",
-    "cargo": "Asesor Comercial",
+    "cargo": "Director Comercial",
     "correo": "dircomercial@turinza.com",
     "telefono": "3186174500"
   },
   {
     "nombre": "Jhon Jairo Martinez Ibañez",
-    "cargo": "CEO",
+    "cargo": "CEO (Chief Executive Officer)",
     "correo": "j.martinez@turinza.com",
     "telefono": ""
   },
@@ -73,7 +73,7 @@
   },
   {
     "nombre": "Sandra Juliette Hernandez Parga",
-    "cargo": "CFO",
+    "cargo": "CFO (Chief Financial Officer)",
     "correo": "sandra.hernandez@turinza.com",
     "telefono": ""
   },
@@ -97,19 +97,19 @@
   },
   {
     "nombre": "Paola Rodríguez  Rodríguez  ",
-    "cargo": "KAS",
+    "cargo": "Key Account Supervisor (KAS) ",
     "correo": "kas4@turinza.com",
     "telefono": "318 3099566"
   },
   {
     "nombre": "Daniela Bustos Gómez ",
-    "cargo": "KAS",
+    "cargo": "Key Account Supervisor (KAS) ",
     "correo": "kas1@turinza.com",
     "telefono": "315 8081850"
   },
   {
     "nombre": "Jaime Andrés Ordoñez ",
-    "cargo": "KAS",
+    "cargo": "Key Account Supervisor (KAS) ",
     "correo": "kas3@turinza.com",
     "telefono": "315 9466307"
   },
@@ -121,13 +121,13 @@
   },
   {
     "nombre": "Faiver Gustavo Quintana ",
-    "cargo": "",
+    "cargo": "Director Financiero",
     "correo": "faiver.quintana@turinza.com",
     "telefono": ""
   },
   {
     "nombre": "Liliana Garzón Manosalva",
-    "cargo": "Jefe Administrativo",
+    "cargo": "Líder de Tesorería ",
     "correo": "tesoreria@turinza.com",
     "telefono": ""
   },
