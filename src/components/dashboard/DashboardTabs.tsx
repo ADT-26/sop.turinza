@@ -164,7 +164,7 @@ function Sidebar({
   ];
 
   const sidebarBody = (
-    <div className="flex h-full flex-col bg-navy">
+    <div className="flex flex-1 flex-col bg-navy">
       {/* Brand */}
       <div
         className="flex items-center gap-3 px-4 py-5"
@@ -334,7 +334,7 @@ function Sidebar({
       {/* Desktop sidebar */}
       <aside
         className={[
-          "hidden flex-shrink-0 transition-all duration-200 ease-in-out lg:block",
+          "hidden flex-col flex-shrink-0 transition-all duration-200 ease-in-out lg:flex",
           collapsed ? "w-[52px]" : "w-[220px]",
         ].join(" ")}
       >
@@ -477,10 +477,7 @@ export function DashboardTabs({
   const clientesSubTab = CLIENTES_VIEW_MAP[view];
 
   return (
-    <div
-      className="flex overflow-hidden rounded-xl border border-line shadow-sm"
-      style={{ minHeight: 540 }}
-    >
+    <div className="flex min-h-0 flex-1">
       <Sidebar
         view={view}
         onNavigate={setView}
