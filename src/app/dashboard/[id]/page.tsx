@@ -73,7 +73,7 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
               {data.datosGenerales.cliente}
             </h1>
             <div className="mt-1.5 flex flex-wrap items-center gap-3">
-              <Badge>{sop.estado}</Badge>
+              <Badge dark>{sop.estado}</Badge>
               <span className="font-mono text-xs text-white/40">
                 {new Date(sop.createdAt).toLocaleString("es-CO")}
               </span>
