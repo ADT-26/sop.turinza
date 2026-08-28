@@ -187,7 +187,7 @@ export function MatrizKpiEditor({
   return (
     <section className="overflow-hidden rounded-lg border border-line border-l-4 border-l-primary bg-white shadow-sm">
       <header className="bg-primary-dark px-5 py-4">
-        <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-white/60">
+        <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-white/70">
           Turinza · Indicadores
         </p>
         <h2 className="mt-1 text-lg font-bold tracking-tight text-white">Matriz KPI del cliente</h2>

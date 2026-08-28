@@ -63,22 +63,22 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
         <div className="flex flex-col gap-4 px-6 py-5 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <Link href="/dashboard" className="font-mono text-xs text-white/40 hover:text-white/70 transition-colors">
+              <Link href="/dashboard" className="font-mono text-xs text-white/70 hover:text-white transition-colors">
                 ← Panel
               </Link>
-              <span className="text-white/20">/</span>
-              <span className="font-mono text-xs text-white/40">{sop.id}</span>
+              <span className="text-white/35">/</span>
+              <span className="font-mono text-xs text-white/60">{sop.id}</span>
             </div>
             <h1 className="mt-2 text-2xl font-bold tracking-tight text-white">
               {data.datosGenerales.cliente}
             </h1>
             <div className="mt-1.5 flex flex-wrap items-center gap-3">
               <Badge dark>{sop.estado}</Badge>
-              <span className="font-mono text-xs text-white/40">
+              <span className="font-mono text-xs text-white">
                 {new Date(sop.createdAt).toLocaleString("es-CO")}
               </span>
               {data.datosGenerales.nit && (
-                <span className="font-mono text-xs text-white/40">NIT {data.datosGenerales.nit}</span>
+                <span className="font-mono text-xs text-white">NIT {data.datosGenerales.nit}</span>
               )}
             </div>
           </div>
@@ -104,7 +104,7 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
               </a>
             </div>
             <div className="mt-1">
-              <EliminarSopButton id={sop.id} cliente={data.datosGenerales.cliente} redirectTo="/dashboard" />
+              <EliminarSopButton id={sop.id} cliente={data.datosGenerales.cliente} redirectTo="/dashboard" dark />
             </div>
           </div>
         </div>
@@ -115,8 +115,8 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
             { label: "Operación", value: data.datosGenerales.tipoOperacion },
             { label: "Nivel", value: data.resumenEjecutivo.nivelCliente || "—" },
           ].map(({ label, value }) => (
-            <span key={label} className="font-mono text-[11px] text-white/50">
-              {label}: <span className="text-white/75">{value}</span>
+            <span key={label} className="font-mono text-[11px] text-white/70">
+              {label}: <span className="text-white">{value}</span>
             </span>
           ))}
         </div>

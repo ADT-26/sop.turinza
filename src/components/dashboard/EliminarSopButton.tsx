@@ -7,10 +7,12 @@ export function EliminarSopButton({
   id,
   cliente,
   redirectTo,
+  dark,
 }: {
   id: string;
   cliente: string;
   redirectTo?: string;
+  dark?: boolean;
 }) {
   const router = useRouter();
   const [eliminando, setEliminando] = useState(false);
@@ -37,13 +39,17 @@ export function EliminarSopButton({
     }
   };
 
+  const btnCls = dark
+    ? "rounded-md border border-accent/60 bg-accent/20 px-3 py-1.5 text-xs font-semibold text-white hover:bg-accent/35 disabled:opacity-50 transition-colors"
+    : "rounded-md border border-accent/40 px-3 py-1.5 text-xs font-semibold text-accent hover:bg-accent/5 disabled:opacity-50 transition-colors";
+
   return (
     <div className="flex items-center gap-2">
       <button
         type="button"
         onClick={eliminar}
         disabled={eliminando}
-        className="rounded-md border border-accent/40 px-3 py-1.5 text-xs font-semibold text-accent hover:bg-accent/5 disabled:opacity-50"
+        className={btnCls}
       >
         {eliminando ? "Eliminando..." : "Eliminar SOP"}
       </button>
