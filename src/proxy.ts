@@ -50,5 +50,6 @@ export const config = {
     "/dashboard/:path*",
     "/api/forms/:path*",
     "/api/config/:path*",
+    "/api/analytics/:path*",
   ],
 };
