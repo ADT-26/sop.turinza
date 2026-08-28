@@ -10,9 +10,11 @@ import { EquipoTurinzaEditor } from "@/components/dashboard/EquipoTurinzaEditor"
 import { ConfigDocumentoEditor } from "@/components/dashboard/ConfigDocumentoEditor";
 import { ClientesEditor } from "@/components/dashboard/ClientesEditor";
 import type { ClientesSubTab } from "@/components/dashboard/ClientesEditor";
+import { IndicadoresPanel } from "@/components/dashboard/IndicadoresPanel";
 
 type View =
   | "sops"
+  | "indicadores"
   | "equipo"
   | "config"
   | "clientes_relaciones"
@@ -77,6 +79,15 @@ function IconMenu() {
   return (
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round">
       <path d="M2 5h14M2 9h14M2 13h14" />
+    </svg>
+  );
+}
+
+function IconChart() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M2 12l3.5-4 3 2.5L12 5l2 2.5" />
+      <rect x="1.5" y="1.5" width="13" height="13" rx="1.5" />
     </svg>
   );
 }
@@ -149,6 +160,7 @@ function Sidebar({
 
   const allNavItems: NavItem[] = [
     { kind: "leaf", view: "sops", label: "SOPs recibidos", icon: <IconSOPs /> },
+    { kind: "leaf", view: "indicadores", label: "Indicadores", icon: <IconChart /> },
     {
       kind: "group", key: "comerciales", label: "Gestión comerciales", icon: <IconTeam />,
       children: [{ view: "equipo", label: "Equipo Turinza" }],
@@ -453,6 +465,7 @@ function PanelSops({ sops, error }: { sops: SopResumen[]; error: string | null }
 
 const VIEW_META: Record<View, { label: string; subtitle: string }> = {
   sops:                 { label: "SOPs recibidos",              subtitle: "Formularios enviados por el equipo comercial" },
+  indicadores:          { label: "Indicadores",                 subtitle: "Participación, cobertura y tendencia de SOPs" },
   equipo:               { label: "Equipo Turinza",              subtitle: "Gestión comerciales · Directorio interno" },
   config:               { label: "Datos generales",             subtitle: "Código, versión y vigencia del documento SOP" },
   clientes_relaciones:  { label: "Relaciones cliente / comercial", subtitle: "Vínculos entre clientes, comerciales, grupos y burbujas" },
@@ -529,6 +542,7 @@ export function DashboardTabs({
         {/* Panel */}
         <div className="flex-1 overflow-auto p-5">
           {safeView === "sops" && <PanelSops sops={sops} error={error} />}
+          {safeView === "indicadores" && <IndicadoresPanel />}
           {safeView === "equipo" && <EquipoTurinzaEditor />}
           {safeView === "config" && <ConfigDocumentoEditor />}
           {clientesSubTab && <ClientesEditor subTab={clientesSubTab} />}
