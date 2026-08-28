@@ -184,7 +184,7 @@ function Sidebar({
     : allNavItems.slice(0, 1);
 
   const sidebarBody = (
-    <div className="flex flex-1 flex-col bg-navy">
+    <div className="flex flex-1 flex-col" style={{ background: "#004F78" }}>
       {/* Brand */}
       <div
         className="flex items-center gap-3 px-4 py-5"
@@ -215,12 +215,12 @@ function Sidebar({
                   "group relative flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-left transition-all duration-150",
                   active
                     ? "bg-white/10 text-white"
-                    : "text-white/55 hover:bg-white/[0.07] hover:text-white/80",
+                    : "text-white/55 hover:bg-white/[0.10] hover:text-white/90",
                 ].join(" ")}
               >
                 {active && (
                   <span
-                    className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r bg-accent"
+                    className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r bg-primary"
                     aria-hidden="true"
                   />
                 )}
@@ -260,12 +260,12 @@ function Sidebar({
                     ? "bg-white/10 text-white"
                     : groupActive
                     ? "text-white/80"
-                    : "text-white/55 hover:bg-white/[0.07] hover:text-white/80",
+                    : "text-white/55 hover:bg-white/[0.10] hover:text-white/90",
                 ].join(" ")}
               >
                 {groupActive && !open && (
                   <span
-                    className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r bg-accent"
+                    className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r bg-primary"
                     aria-hidden="true"
                   />
                 )}
@@ -300,7 +300,7 @@ function Sidebar({
                       >
                         {childActive && (
                           <span
-                            className="absolute left-0 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-r bg-accent"
+                            className="absolute left-0 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-r bg-primary"
                             aria-hidden="true"
                           />
                         )}
@@ -321,7 +321,7 @@ function Sidebar({
           <button
             onClick={onToggleCollapse}
             title={collapsed ? "Expandir menú" : "Contraer menú"}
-            className="flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-white/30 transition-all duration-150 hover:bg-white/[0.07] hover:text-white/60"
+            className="flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-white/35 transition-all duration-150 hover:bg-white/[0.10] hover:text-white/70"
           >
             <span className="ml-px flex-shrink-0">
               <IconArrow collapsed={collapsed} />
@@ -517,7 +517,7 @@ export function DashboardTabs({
       />
 
       {/* Content */}
-      <div className="flex min-w-0 flex-1 flex-col bg-[#EEF1F6]">
+      <div className="flex min-w-0 flex-1 flex-col bg-surface">
         {/* Topbar */}
         <div className="flex items-center gap-3 border-b border-line/60 bg-white px-5 py-3.5">
           {role === "admin" && (
