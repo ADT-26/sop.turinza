@@ -60,28 +60,56 @@ async function escribirArchivoRepoConToken(
   if (!res.ok) throw new Error(`Error escribiendo ${path}: ${await res.text()}`);
 }
 
-export async function getClientes(): Promise<ClienteCatalogo[]> {
+// ── Helpers genéricos para el repo de satisfacción ───────────────────────────
+
+async function leerCatalogoSat<T>(path: string): Promise<T[]> {
   const { token, owner, repo, branch } = getSatisfaccionConfig();
   if (!token || !owner || !repo) return [];
   try {
-    const leido = await leerArchivoRepoConToken(token, owner, repo, branch, "data/cliente.json");
-    if (leido) return JSON.parse(leido.content) as ClienteCatalogo[];
+    const leido = await leerArchivoRepoConToken(token, owner, repo, branch, path);
+    if (leido) return JSON.parse(leido.content) as T[];
   } catch { /* si falla devuelve vacío */ }
   return [];
 }
 
-export async function actualizarClientes(clientes: ClienteCatalogo[]): Promise<void> {
+async function guardarCatalogoSat<T>(path: string, data: T[], mensaje: string): Promise<void> {
   const { token, owner, repo, branch } = getSatisfaccionConfig();
   if (!token || !owner || !repo) throw new Error("Faltan variables de entorno del repo de satisfacción");
-  const leido = await leerArchivoRepoConToken(token, owner, repo, branch, "data/cliente.json");
+  const leido = await leerArchivoRepoConToken(token, owner, repo, branch, path);
   await escribirArchivoRepoConToken(
-    token, owner, repo, branch,
-    "data/cliente.json",
-    JSON.stringify(clientes, null, 2),
-    "config: catálogo de clientes actualizado desde SOP",
-    leido?.sha,
+    token, owner, repo, branch, path,
+    JSON.stringify(data, null, 2), mensaje, leido?.sha,
   );
 }
+
+// ── Entidades del catálogo de satisfacción ────────────────────────────────────
+
+export interface Vendedor { id: number; nombre: string; }
+export interface Grupo    { id: number; nombre: string; }
+export interface Burbuja  { id: number; nombre: string; }
+export interface ClienteVendedor {
+  id: number;
+  grupo_id: number | null;
+  cliente_id: number;
+  vendedor_id: number;
+  servicio_id: number | null;
+  burbuja_id: number | null;
+  fecha_creacion: string | null;
+  ultima_actualizacion: string | null;
+  estado_operativo: string;
+}
+
+export const getClientes      = () => leerCatalogoSat<ClienteCatalogo>("data/cliente.json");
+export const getVendedores    = () => leerCatalogoSat<Vendedor>("data/vendedor.json");
+export const getGrupos        = () => leerCatalogoSat<Grupo>("data/grupo.json");
+export const getBurbujas      = () => leerCatalogoSat<Burbuja>("data/burbuja.json");
+export const getClienteVendedor = () => leerCatalogoSat<ClienteVendedor>("data/cliente_vendedor.json");
+
+export const actualizarClientes       = (d: ClienteCatalogo[]) => guardarCatalogoSat("data/cliente.json",          d, "catálogo clientes actualizado");
+export const actualizarVendedores     = (d: Vendedor[])        => guardarCatalogoSat("data/vendedor.json",         d, "catálogo comerciales actualizado");
+export const actualizarGrupos         = (d: Grupo[])           => guardarCatalogoSat("data/grupo.json",            d, "catálogo grupos actualizado");
+export const actualizarBurbujas       = (d: Burbuja[])         => guardarCatalogoSat("data/burbuja.json",          d, "catálogo burbujas actualizado");
+export const actualizarClienteVendedor = (d: ClienteVendedor[]) => guardarCatalogoSat("data/cliente_vendedor.json", d, "relaciones cliente/comercial actualizadas");
 
 const EQUIPO_PATH    = "data/config/equipo-turinza.json";
 const DOCUMENTO_PATH = "data/config/documento.json";

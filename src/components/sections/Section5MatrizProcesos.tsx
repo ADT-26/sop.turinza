@@ -2,7 +2,7 @@
 
 import { Controller, useFormContext, useWatch, useFieldArray } from "react-hook-form";
 import { Field, TextInput, Select, RadioGroup } from "@/components/ui";
-import { OPCIONES_CARGOS_RESPONSABLE, OPCIONES_SI_NO_NA } from "@/lib/options";
+import { OPCIONES_CARGOS_RESPONSABLE, OPCIONES_SI_NO_NA, ACTIVIDADES_POR_PROCESO } from "@/lib/options";
 import { PROCESOS_OPERATIVOS } from "@/lib/schemas";
 import { NOTAS } from "@/lib/formNotes";
 import type { SopFormValues } from "@/lib/schemas";
@@ -56,7 +56,10 @@ function FilasGrupo({ grupoIndex }: { grupoIndex: number }) {
                 />
               </Field>
               <Field label="Actividad / Hito" nota={NOTAS["matrizProcesos.actividadHito"]}>
-                <TextInput {...register(`matrizProcesos.${grupoIndex}.filas.${j}.actividadHito`)} />
+                <Select
+                  options={ACTIVIDADES_POR_PROCESO[grupoIndex] ?? []}
+                  {...register(`matrizProcesos.${grupoIndex}.filas.${j}.actividadHito`)}
+                />
               </Field>
               <Field label="Personalización acordada" nota={NOTAS["matrizProcesos.personalizacionAcordada"]}>
                 <TextInput {...register(`matrizProcesos.${grupoIndex}.filas.${j}.personalizacionAcordada`)} />

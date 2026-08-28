@@ -74,6 +74,41 @@ export const OPCIONES_CARGOS_RESPONSABLE = [
   "Ejecutivo Comercial",
 ] as const;
 
+// Opciones de Actividad/Hito por proceso operativo (índice = posición en PROCESOS_OPERATIVOS)
+export const ACTIVIDADES_POR_PROCESO: Record<number, string[]> = {
+  0: [ // Transporte nacional
+    "Coordinación en origen",
+    "Seguimiento en la operación",
+    "Control durante la operación",
+    "Solicitudes Financieras",
+    "Operaciones Especiales",
+    "Documentación",
+  ],
+  1: [ // Transporte internacional
+    "Coordinación en origen",
+    "Seguimiento en la operación",
+    "Control durante la operación",
+    "Solicitudes Financieras",
+    "Operaciones Especiales",
+    "Documentación",
+  ],
+  2: [ // Agenciamiento aduanero
+    "Clasificación",
+    "Costeo",
+    "Coordinación",
+    "Aprobación de documentos",
+    "Procesos aduaneros puntuales",
+  ],
+  3: [ // Almacenamiento / Bodega
+    "Procesos Físicos",
+  ],
+  4: [ // OTM / DTA
+    "Coordinación",
+    "Seguridad",
+    "Trazabilidad",
+  ],
+};
+
 export const OPCIONES_SERVICIOS = [
   "OTM / DTA",
   "Transporte terrestre",
