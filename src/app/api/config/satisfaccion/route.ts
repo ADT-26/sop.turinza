@@ -7,6 +7,13 @@ import {
   getClienteVendedor, actualizarClienteVendedor,
 } from "@/lib/configStore";
 
+function soloAdmin(req: NextRequest) {
+  if (req.headers.get("x-dashboard-role") !== "admin") {
+    return NextResponse.json({ success: false, error: "No autorizado" }, { status: 403 });
+  }
+  return null;
+}
+
 const TABLAS = {
   clientes:          { get: getClientes,          put: actualizarClientes },
   vendedores:        { get: getVendedores,         put: actualizarVendedores },
@@ -22,6 +29,9 @@ function esTablaValida(t: string): t is TablaKey {
 }
 
 export async function GET(req: NextRequest) {
+  const denegado = soloAdmin(req);
+  if (denegado) return denegado;
+
   const tabla = req.nextUrl.searchParams.get("tabla") ?? "";
   if (!esTablaValida(tabla)) {
     return NextResponse.json({ success: false, error: "Tabla no válida" }, { status: 400 });
@@ -35,6 +45,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
+  const denegado = soloAdmin(req);
+  if (denegado) return denegado;
+
   const tabla = req.nextUrl.searchParams.get("tabla") ?? "";
   if (!esTablaValida(tabla)) {
     return NextResponse.json({ success: false, error: "Tabla no válida" }, { status: 400 });

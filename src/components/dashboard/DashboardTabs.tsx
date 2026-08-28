@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Badge } from "@/components/ui";
 import type { SopResumen } from "@/lib/sopStore";
+import type { DashboardRole } from "@/proxy";
 import { EliminarSopButton } from "@/components/dashboard/EliminarSopButton";
 import { EquipoTurinzaEditor } from "@/components/dashboard/EquipoTurinzaEditor";
 import { ConfigDocumentoEditor } from "@/components/dashboard/ConfigDocumentoEditor";
@@ -112,6 +113,7 @@ function Sidebar({
   mobileOpen,
   onCloseMobile,
   sopCount,
+  role,
 }: {
   view: View;
   onNavigate: (v: View) => void;
@@ -120,6 +122,7 @@ function Sidebar({
   mobileOpen: boolean;
   onCloseMobile: () => void;
   sopCount: number;
+  role: DashboardRole;
 }) {
   const [openGroups, setOpenGroups] = useState<Set<string>>(() => {
     const s = new Set<string>();
@@ -144,7 +147,7 @@ function Sidebar({
   const isActive = (v: View) => view === v;
   const isGroupActive = (children: { view: View }[]) => children.some((c) => c.view === view);
 
-  const navItems: NavItem[] = [
+  const allNavItems: NavItem[] = [
     { kind: "leaf", view: "sops", label: "SOPs recibidos", icon: <IconSOPs /> },
     {
       kind: "group", key: "comerciales", label: "Gestión comerciales", icon: <IconTeam />,
@@ -162,6 +165,11 @@ function Sidebar({
       ],
     },
   ];
+
+  // Viewer solo puede acceder a SOPs recibidos
+  const navItems: NavItem[] = role === "admin"
+    ? allNavItems
+    : allNavItems.slice(0, 1);
 
   const sidebarBody = (
     <div className="flex flex-1 flex-col bg-navy">
@@ -295,19 +303,21 @@ function Sidebar({
         })}
       </div>
 
-      {/* Collapse toggle */}
-      <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }} className="px-2 py-3">
-        <button
-          onClick={onToggleCollapse}
-          title={collapsed ? "Expandir menú" : "Contraer menú"}
-          className="flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-white/30 transition-all duration-150 hover:bg-white/[0.07] hover:text-white/60"
-        >
-          <span className="ml-px flex-shrink-0">
-            <IconArrow collapsed={collapsed} />
-          </span>
-          {!collapsed && <span className="text-xs font-medium">Contraer</span>}
-        </button>
-      </div>
+      {/* Collapse toggle — solo para admin */}
+      {role === "admin" && (
+        <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }} className="px-2 py-3">
+          <button
+            onClick={onToggleCollapse}
+            title={collapsed ? "Expandir menú" : "Contraer menú"}
+            className="flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-white/30 transition-all duration-150 hover:bg-white/[0.07] hover:text-white/60"
+          >
+            <span className="ml-px flex-shrink-0">
+              <IconArrow collapsed={collapsed} />
+            </span>
+            {!collapsed && <span className="text-xs font-medium">Contraer</span>}
+          </button>
+        </div>
+      )}
     </div>
   );
 
@@ -465,44 +475,51 @@ const CLIENTES_VIEW_MAP: Partial<Record<View, ClientesSubTab>> = {
 export function DashboardTabs({
   sops,
   error,
+  role,
 }: {
   sops: SopResumen[];
   error: string | null;
+  role: DashboardRole;
 }) {
   const [view, setView] = useState<View>("sops");
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const meta = VIEW_META[view];
-  const clientesSubTab = CLIENTES_VIEW_MAP[view];
+  // Viewer solo puede ver SOPs — protección adicional en cliente
+  const safeView: View = role === "viewer" ? "sops" : view;
+  const meta = VIEW_META[safeView];
+  const clientesSubTab = CLIENTES_VIEW_MAP[safeView];
 
   return (
     <div className="flex min-h-0 flex-1">
       <Sidebar
-        view={view}
-        onNavigate={setView}
+        view={safeView}
+        onNavigate={role === "admin" ? setView : () => {}}
         collapsed={collapsed}
         onToggleCollapse={() => setCollapsed((c) => !c)}
         mobileOpen={mobileOpen}
         onCloseMobile={() => setMobileOpen(false)}
         sopCount={sops.length}
+        role={role}
       />
 
       {/* Content */}
       <div className="flex min-w-0 flex-1 flex-col bg-[#EEF1F6]">
         {/* Topbar */}
         <div className="flex items-center gap-3 border-b border-line/60 bg-white px-5 py-3.5">
-          <button
-            className="flex-shrink-0 rounded-md p-1.5 text-ink-muted hover:bg-surface hover:text-navy lg:hidden"
-            onClick={() => setMobileOpen(true)}
-          >
-            <IconMenu />
-          </button>
+          {role === "admin" && (
+            <button
+              className="flex-shrink-0 rounded-md p-1.5 text-ink-muted hover:bg-surface hover:text-navy lg:hidden"
+              onClick={() => setMobileOpen(true)}
+            >
+              <IconMenu />
+            </button>
+          )}
           <div className="min-w-0 flex-1">
             <h2 className="truncate text-sm font-bold leading-tight text-navy">{meta.label}</h2>
             <p className="truncate text-xs text-ink-muted">{meta.subtitle}</p>
           </div>
-          {view === "sops" && (
+          {safeView === "sops" && (
             <span className="flex-shrink-0 rounded-full bg-navy/8 px-2.5 py-0.5 font-mono text-xs font-semibold text-navy/70">
               {sops.length} registro{sops.length !== 1 ? "s" : ""}
             </span>
@@ -511,9 +528,9 @@ export function DashboardTabs({
 
         {/* Panel */}
         <div className="flex-1 overflow-auto p-5">
-          {view === "sops" && <PanelSops sops={sops} error={error} />}
-          {view === "equipo" && <EquipoTurinzaEditor />}
-          {view === "config" && <ConfigDocumentoEditor />}
+          {safeView === "sops" && <PanelSops sops={sops} error={error} />}
+          {safeView === "equipo" && <EquipoTurinzaEditor />}
+          {safeView === "config" && <ConfigDocumentoEditor />}
           {clientesSubTab && <ClientesEditor subTab={clientesSubTab} />}
         </div>
       </div>

@@ -2,6 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { actualizarEquipoTurinza, obtenerEquipoTurinza } from "@/lib/configStore";
 
+function soloAdmin(req: NextRequest) {
+  if (req.headers.get("x-dashboard-role") !== "admin") {
+    return NextResponse.json({ success: false, error: "No autorizado" }, { status: 403 });
+  }
+  return null;
+}
+
 const miembroSchema = z.object({
   nombre:   z.string().min(1),
   cargo:    z.string().default(""),
@@ -9,7 +16,10 @@ const miembroSchema = z.object({
   telefono: z.string().default(""),
 });
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const denegado = soloAdmin(request);
+  if (denegado) return denegado;
+
   try {
     const miembros = await obtenerEquipoTurinza();
     return NextResponse.json({ success: true, data: miembros });
@@ -20,6 +30,9 @@ export async function GET() {
 }
 
 export async function PUT(request: NextRequest) {
+  const denegado = soloAdmin(request);
+  if (denegado) return denegado;
+
   let body: unknown;
   try { body = await request.json(); }
   catch { return NextResponse.json({ success: false, error: "JSON inválido" }, { status: 400 }); }

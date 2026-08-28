@@ -1,6 +1,13 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { obtenerConfigDocumento, actualizarConfigDocumento } from "@/lib/configStore";
+
+function soloAdmin(req: NextRequest) {
+  if (req.headers.get("x-dashboard-role") !== "admin") {
+    return NextResponse.json({ success: false, error: "No autorizado" }, { status: 403 });
+  }
+  return null;
+}
 
 const schema = z.object({
   codigoDocumento: z.string().min(1),
@@ -9,7 +16,10 @@ const schema = z.object({
   tipoDocumento: z.string().min(1),
 });
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const denegado = soloAdmin(req);
+  if (denegado) return denegado;
+
   try {
     const data = await obtenerConfigDocumento();
     return NextResponse.json({ success: true, data });
@@ -18,7 +28,10 @@ export async function GET() {
   }
 }
 
-export async function PUT(req: Request) {
+export async function PUT(req: NextRequest) {
+  const denegado = soloAdmin(req);
+  if (denegado) return denegado;
+
   try {
     const body = await req.json();
     const parsed = schema.safeParse(body);
