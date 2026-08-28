@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="border-t border-line bg-surface">
+    <footer className="border-t border-line bg-white">
       <div className="mx-auto flex max-w-5xl flex-col items-start gap-2 px-6 py-4 text-xs text-ink-muted sm:flex-row sm:items-center sm:justify-between sm:gap-4">
         <span>
           Documento controlado del SIG · Turinza — Toda modificación debe registrarse en el Control

@@ -54,8 +54,8 @@ export function ConfigDocumentoEditor() {
   };
 
   return (
-    <section className="overflow-hidden rounded-lg border border-line border-l-4 border-l-navy/30 bg-white shadow-sm">
-      <header className="bg-navy px-5 py-4">
+    <section className="overflow-hidden rounded-lg border border-line border-l-4 border-l-primary bg-white shadow-sm">
+      <header className="bg-primary-dark px-5 py-4">
         <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-white/50">
           Turinza · Configuración
         </p>
@@ -98,7 +98,7 @@ export function ConfigDocumentoEditor() {
             <p className="mb-1.5 font-mono text-[10px] font-semibold uppercase tracking-widest text-ink-muted/60">
               Vista previa — header web
             </p>
-            <div className="inline-flex items-center gap-2 rounded border border-navy/25 bg-navy px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest text-white/90">
+            <div className="inline-flex items-center gap-2 rounded border border-primary-dark/25 bg-primary-dark px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest text-white/90">
               <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
               {cfg.tipoDocumento} · {cfg.codigoDocumento} · v.{cfg.version}
             </div>

@@ -23,7 +23,7 @@ function Tarea({ numero, titulo, children }: { numero: number; titulo: string; c
 export function AccionesTurinza({ id, data }: { id: string; data: SopFormValues }) {
   return (
     <section className="overflow-hidden rounded-lg border border-line shadow-sm">
-      <header className="bg-navy px-5 py-4">
+      <header className="bg-primary-dark px-5 py-4">
         <div className="flex items-center justify-between gap-4">
           <div>
             <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-white/50">

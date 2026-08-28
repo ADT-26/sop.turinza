@@ -59,7 +59,7 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
     <div className="mx-auto w-full max-w-5xl space-y-5 px-6 py-8">
 
       {/* ── Cabecera ─────────────────────────────────────────────── */}
-      <div className="overflow-hidden rounded-xl bg-navy shadow-md">
+      <div className="overflow-hidden rounded-xl bg-primary-dark shadow-md">
         <div className="flex flex-col gap-4 px-6 py-5 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <div className="flex items-center gap-2">
@@ -139,7 +139,7 @@ export default async function DetalleSopPage({ params }: { params: Promise<{ id:
 
       {/* ── Zona cliente ─────────────────────────────────────────── */}
       <div className="flex items-center gap-3 pt-3">
-        <div className="h-[3px] w-8 rounded-full bg-navy/30" />
+        <div className="h-[3px] w-8 rounded-full bg-primary/30" />
         <span className="font-mono text-[10px] font-semibold uppercase tracking-widest text-ink-muted/60">
           Datos enviados por el cliente
         </span>

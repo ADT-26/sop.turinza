@@ -101,7 +101,7 @@ export function AutocompleteInput({
               aria-selected={i === activo}
               onMouseDown={(e) => { e.preventDefault(); seleccionar(m); }}
               onMouseEnter={() => setActivo(i)}
-              className={`cursor-pointer px-3 py-2 ${i === activo ? "bg-navy text-white" : "hover:bg-surface"}`}
+              className={`cursor-pointer px-3 py-2 ${i === activo ? "bg-primary-dark text-white" : "hover:bg-surface"}`}
             >
               <p className={`text-sm font-medium ${i === activo ? "text-white" : "text-ink"}`}>{m.nombre}</p>
               {(m.cargo || m.correo) && (

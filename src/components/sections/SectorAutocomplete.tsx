@@ -77,7 +77,7 @@ export function SectorAutocomplete({
               aria-selected={i === activo}
               onMouseDown={(e) => { e.preventDefault(); seleccionar(s); }}
               onMouseEnter={() => setActivo(i)}
-              className={`cursor-pointer px-3 py-2 text-sm ${i === activo ? "bg-navy text-white" : "text-ink hover:bg-surface"}`}
+              className={`cursor-pointer px-3 py-2 text-sm ${i === activo ? "bg-primary-dark text-white" : "text-ink hover:bg-surface"}`}
             >
               {s}
             </li>

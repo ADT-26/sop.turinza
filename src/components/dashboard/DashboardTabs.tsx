@@ -427,7 +427,7 @@ function PanelSops({ sops, error }: { sops: SopResumen[]; error: string | null }
       {/* Table: medium screens + */}
       <div className="hidden overflow-hidden rounded-lg border border-line bg-white shadow-sm md:block">
         <table className="w-full text-left text-sm">
-          <thead className="bg-navy font-mono text-[11px] uppercase tracking-wide text-white/70">
+          <thead className="bg-primary-dark font-mono text-[11px] uppercase tracking-wide text-white/75">
             <tr>
               <th className="px-4 py-3 font-semibold">Cliente</th>
               <th className="px-4 py-3 font-semibold">NIT</th>
